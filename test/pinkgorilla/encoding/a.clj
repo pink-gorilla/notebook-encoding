@@ -11,10 +11,11 @@ nb
 
 (def token
   (insta/parser
-   "NOTEBOOK = HEADER SEGMENT*
-     SEGMENT = CODE | MD | VAL | CON
+   "NOTEBOOK = HEADER SEGMENTS
+     SEGMENT = MD | CODE
+     SEGMENTS = SEGMENT (<N> SEGMENT)*
 
-     HEADER = <F> VERSION <N> 
+     HEADER = <F> VERSION <N> <N>
      F = ';; gorilla-repl.fileformat = '
      VERSION = #'[1-9]'
      
@@ -23,23 +24,24 @@ nb
      DATA = #'[.\\w\\d\\s\\-\\+()]'
      LINES = LINE (<N> LINE)*
 
-     CODE = <CODE-B> LINES <CODE-E>
-     CODE-B =  N ';; @@' N
-     CODE-E =  N ';; @@' N 
-
      MD = <MD-B> LINES <MD-E>
-     MD-B =  N ';; **' N
+     MD-B =   ';; **' N
      MD-E =  N ';; **' N 
 
-     VAL = <VAL-B> LINES <VAL-E>
-     VAL-B =  N ';; =>' N
-     VAL-E =  N ';; >=' N 
+     CODE = INP CON VAL
+
+     INP = <INP-B> LINES <INP-E>
+     INP-B =   ';; @@' N
+     INP-E =  N ';; @@' N 
 
      CON = <CON-B> LINES <CON-E>
-     CON-B =  N ';; ->' N
-     CON-E =  N ';; >-' N 
+     CON-B =   ';; ->' N
+     CON-E =  N ';; <-' N 
 
-    
+     VAL = <VAL-B> LINES <VAL-E>
+     VAL-B =   ';; =>' N
+     VAL-E =  N ';; <=' N 
+
      <IN>   = #'[a-zA-Z0-9]+[\r\n]'
      <OUT>  = #'[a-zA-Z0-9]+[\r\n]'  "))
 

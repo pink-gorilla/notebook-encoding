@@ -1,18 +1,16 @@
 (ns pinkgorilla.encoding.encode
-  (:require 
+  (:require
    [clojure.string :as str]
-      [cognitect.transit :as t]
-   ))
+   [cognitect.transit :as t]))
 
-;; pegjs calls
-(defn ^:export make-clojure-comment
+(defn make-clojure-comment
   [code]
   (->> (str/split-lines code)
        (map #(str ";;; " %))
        (str/join "\n")))
 
 ;; pegjs calls
-(defn ^:export unmake-clojure-comment
+(defn unmake-clojure-comment
   [code]
   (->> (str/split-lines code)
        (map #(.slice % 4))
@@ -47,11 +45,11 @@
        (make-clojure-comment (get-in free-segment [:content :value]))
        "\n;; **\n"))
 
-(defn ws-to-clojure
+(defn encode-worksheet
   [worksheet]
-  (let [segments (:segments worksheet)]
+  (let [segments-unsorted (:segments worksheet)
+        segment-ids (:segment-order worksheet)
+        segments (map #(get segments-unsorted %) segment-ids)]
     (str ";; gorilla-repl.fileformat = 2\n\n"
-         (->>
-          (map #(to-clojure (get segments %))
-               (:segment-order worksheet))
-          (str/join "\n")))))
+         (->> (map to-clojure segments)
+              (str/join "\n")))))
