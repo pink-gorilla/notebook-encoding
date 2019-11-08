@@ -5,37 +5,41 @@
    [pinkgorilla.encoding.decode :refer [decode]]))
 
 ; (def nb (slurp "resources/notebook1.cljw"))
-(def nb (slurp "resources/demo.cljw"))
+;(def nb (slurp "resources/demo.cljw"))
+(def nb (slurp "resources/reagent-manipulate.clj"))
 nb
 
 (def token
   (insta/parser
    "NOTEBOOK = HEADER SEGMENT*
-     HEADER = F VERSION NEWLINE NEWLINE
+     SEGMENT = CODE | MD | VAL | CON
+
+     HEADER = <F> VERSION <N> 
      F = ';; gorilla-repl.fileformat = '
-     <VERSION> = #'[1-9]'
-     NEWLINE = '\n'   
-
-     SEGMENT = CODE | MD | OUT-VAL | OUT-CON
-
-     CODE = CODE-B DATA* CODE-E
-     CODE-B =  ';; @@' NEWLINE
-     CODE-E =  ';; @@' NEWLINE NEWLINE
-
-     MD = MD-B DATA* MD-E
-     MD-B =  ';; **' NEWLINE
-     MD-E =  ';; ****' NEWLINE NEWLINE
-
-     OUT-VAL = VAL-B DATA VAL-E
-     VAL-B =  ';; =>' NEWLINE
-     VAL-E =  ';; >=' NEWLINE NEWLINE
-
-     OUT-CON = CON-B DATA CON-E
-     CON-B =  ';; ->' NEWLINE
-     CON-E =  ';; >-' NEWLINE NEWLINE
-
-     DATA2 = #'/.'
+     VERSION = #'[1-9]'
+     
+     N = '\n'
+     LINE = #'.*'
      DATA = #'[.\\w\\d\\s\\-\\+()]'
+     LINES = LINE (<N> LINE)*
+
+     CODE = <CODE-B> LINES <CODE-E>
+     CODE-B =  N ';; @@' N
+     CODE-E =  N ';; @@' N 
+
+     MD = <MD-B> LINES <MD-E>
+     MD-B =  N ';; **' N
+     MD-E =  N ';; **' N 
+
+     VAL = <VAL-B> LINES <VAL-E>
+     VAL-B =  N ';; =>' N
+     VAL-E =  N ';; >=' N 
+
+     CON = <CON-B> LINES <CON-E>
+     CON-B =  N ';; ->' N
+     CON-E =  N ';; >-' N 
+
+    
      <IN>   = #'[a-zA-Z0-9]+[\r\n]'
      <OUT>  = #'[a-zA-Z0-9]+[\r\n]'  "))
 
