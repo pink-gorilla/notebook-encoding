@@ -1,7 +1,9 @@
 (ns pinkgorilla.notebook.core
   (:require
    [clojure.string :as str]
-   [pinkgorilla.notebook.uuid :refer [uuid]]))
+   [pinkgorilla.notebook.uuid :refer [uuid]]
+   [pinkgorilla.encoding.decode :refer [decode]]
+   [pinkgorilla.encoding.encode :refer [encode-notebook]]))
 
 
 (defn empty-notebook
@@ -22,7 +24,25 @@
 (defn dehydrate-notebook [notebook]
   (let [segments (segments-ordered notebook)
         segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))]
-     {:segments segments-no-id}))
+    {:segments segments-no-id}))
+
+(defn to-key [segment]
+  {(:id segment) segment})
+
+(defn hydrate-notebook [notebook]
+  (let [segments (:segments notebook)
+        segments-with-id (vec (map #(assoc % :id (uuid) :exception nil :error-text nil) segments))
+        ids (vec (map :id segments-with-id))
+        m (reduce conj (map to-key segments-with-id))]
+    (conj empty-notebook
+          :segment-order ids
+          :segments m)))
+
+(defn load-notebook-hydrated [str]
+  (hydrate-notebook (decode str)))
+
+(defn save-notebook-hydrated [notebook]
+  (encode-notebook (dehydrate-notebook notebook)))
 
 
 
