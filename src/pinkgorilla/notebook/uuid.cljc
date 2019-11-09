@@ -6,4 +6,4 @@
 
 (defn uuid []
   #?(:clj (-> (.toString (java.util.UUID/randomUUID)) keyword)
-     :cljs  (-> (uuid-cljs/make-random-uuid) uuid/uuid-string keyword)))
+     :cljs  (-> (uuid-cljs/make-random-uuid) uuid-cljs/uuid-string keyword)))

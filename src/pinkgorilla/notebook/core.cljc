@@ -34,7 +34,7 @@
         segments-with-id (vec (map #(assoc % :id (uuid) :exception nil :error-text nil) segments))
         ids (vec (map :id segments-with-id))
         m (reduce conj (map to-key segments-with-id))]
-    (conj empty-notebook
+    (assoc (empty-notebook)
           :segment-order ids
           :segments m)))
 
