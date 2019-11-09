@@ -18,7 +18,7 @@ lein doo
 
 
 ## Todo:
-- unit test for clojurescript persistence
+- unit test clojurescript - inject notebook strings via macro to code
 - add spec from notebook here
 - extract clojure / clojurescript routine move here from notebook
 - add kernel type 

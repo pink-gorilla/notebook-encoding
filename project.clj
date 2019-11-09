@@ -1,5 +1,5 @@
-(defproject org.pinkgorilla/encoding "2.0.15"
-  :description "The encoding of PinkGgorilla Notebook."
+(defproject org.pinkgorilla/encoding "0.0.1"
+  :description "The encoding of PinkGorilla Notebook."
   :url "https://github.com/pink-gorilla/notebook-encoding"
   :license {:name "MIT"}
   ;:deploy-repositories [["releases" :clojars]]
@@ -9,7 +9,6 @@
   :dependencies
   [[org.clojure/clojure "1.10.1"]
    [org.clojure/clojurescript "1.10.520"]
-   [org.clojure/data.json "0.2.6"] ; used by old vega renderer
    [instaparse "1.4.10"] ; used in decoding
    [com.cognitect/transit-clj "0.8.319"] ; used in encoding - clojure
    [com.cognitect/transit-cljs "0.8.256"] ; used in encoding - clojurescript

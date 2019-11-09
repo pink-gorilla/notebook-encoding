@@ -13,7 +13,7 @@
 
   ; (def nb (slurp "resources/notebook1.cljw"))
 ;(def nb (slurp "resources/demo.cljw"))
-(def f "resources/reagent-manipulate.clj")
+(def f "resources/reagent-manipulate.cljw")
 
 
 (deftest reload-existing-notebook
