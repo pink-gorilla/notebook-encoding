@@ -3,7 +3,7 @@
    [clojure.string :as str]
    [cognitect.transit :as t]))
 
-;; Coginitec TRANSIT WRITER
+;; Cognitec TRANSIT WRITER
 
 #?(:clj (import '[java.io ByteArrayInputStream ByteArrayOutputStream]))
 

@@ -2,14 +2,17 @@
   (:require
    [doo.runner :refer-macros [doo-tests]]
 
-[pinkgorilla.encoding.a]
-   
-   ))
+   [pinkgorilla.encoding.dummy]
+   [pinkgorilla.encoding.helper-test]
+   [pinkgorilla.encoding.simple]
+   [pinkgorilla.encoding.disk-reload]))
 
 
 (println "doo cljs tests..")
 
-(doo-tests 'pinkgorilla.encoding.a
-           ;'your-project.util-test
+(doo-tests '[pinkgorilla.encoding.dummy]
+           ;'[pinkgorilla.encoding.helper-test]
+           ;'[pinkgorilla.encoding.simple]
+           ;'[pinkgorilla.encoding.disk-reload]
            )
 
