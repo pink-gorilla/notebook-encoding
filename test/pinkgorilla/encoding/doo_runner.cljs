@@ -11,7 +11,7 @@
 
 (println "doo cljs tests..")
 
-(doo-tests '[pinkgorilla.encoding.bongo]
+(doo-tests 'pinkgorilla.encoding.bongo
            ;'[pinkgorilla.encoding.dummy]
            ;'[pinkgorilla.encoding.helper-test]
            ;'[pinkgorilla.encoding.simple]

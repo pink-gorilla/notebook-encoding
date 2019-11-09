@@ -15,10 +15,9 @@
    [com.cognitect/transit-cljs "0.8.256"] ; used in encoding - clojurescript
    ] 
 
-
   :source-paths ["src"]
   :test-paths ["test"]
-  :plugins [[lein-doo "0.1.10"]]
+  :plugins [[lein-doo "0.1.11"]]
   :doo {:build "test"
         :default  [#_:chrome #_:phantom :karma-phantom]
         :browsers [:chrome #_:firefox]
