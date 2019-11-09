@@ -56,7 +56,7 @@
          (str "# PinkGorilla \n\n"
               "Shift + enter evaluates code. "
               "Hit CTRL+g twice in quick succession or click the menu icon (upper-right corner) for more commands.\n\n"
-              "It's a good habit to run each worksheet in its own namespace. We created a random namespace for you; you can keep using it.\n\n"))
+              "It's a good habit to run each worksheet in its own namespace. We created a random namespace for you; you can keep using it."))
         code-dependencies
         (notebook/create-code-segment
          (str  "; Automatically Download Dependencies (if they are not installed already) \n "

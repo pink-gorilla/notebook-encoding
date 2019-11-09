@@ -4,14 +4,26 @@
    [pinkgorilla.notebook.uuid :refer [uuid]]))
 
 
-(defn empty-notebook 
-  "creates an empty notebook" 
+(defn empty-notebook
+  "creates an empty notebook"
   []
   {:ns                   nil
    :segments             {}
    :segment-order        []
    :queued-code-segments #{}
    :active-segment       nil})
+
+(defn segments-ordered [notebook]
+  (let [segments (:segments notebook)
+        segment-ids-ordered (:segment-order notebook)]
+    (vec (map #(get segments %) segment-ids-ordered))))
+
+
+(defn dehydrate-notebook [notebook]
+  (let [segments (segments-ordered notebook)
+        segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))]
+     {:segments segments-no-id}))
+
 
 
 (defn create-free-segment
@@ -25,15 +37,15 @@
 
 (defn create-code-segment
   ([content]
-     {:id               (uuid)
-      :type             :code
-      :kernel           :clj                        ;; default-cljs
-      :content          {:value (or content "")
-                         :type  "text/x-clojure"}
-      :console-response nil
-      :value-response   nil
-      :error-text       nil
-      :exception        nil}))
+   {:id               (uuid)
+    :type             :code
+    :kernel           :clj                        ;; default-cljs
+    :content          {:value (or content "")
+                       :type  "text/x-clojure"}
+    :console-response ""
+    :value-response   {:type "html" :value [:span]}
+    :error-text       nil
+    :exception        nil}))
 
 (defn to-code-segment
   [free-segment]
