@@ -12,6 +12,7 @@
    [instaparse "1.4.10"] ; used in decoding
    [com.cognitect/transit-clj "0.8.319"] ; used in encoding - clojure
    [com.cognitect/transit-cljs "0.8.256"] ; used in encoding - clojurescript
+   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
    ] 
 
   :source-paths ["src"]
