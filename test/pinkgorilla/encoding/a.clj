@@ -1,9 +1,14 @@
 (ns pinkgorilla.encoding.a
   (:require
-   ;[cljs.test :refer-macros [async deftest is testing]]
+   ;[clj.test :refer-macros [async deftest is testing]]
+   [clojure.test :refer :all]
    [clojure.string :as str]
+   [cognitect.transit :as t]
    [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]]))
+   [pinkgorilla.encoding.encode :refer [encode-notebook]])
+  (:import
+   [java.io ByteArrayInputStream ByteArrayOutputStream]))
+
 
 
 (defn load-notebook [f]
@@ -14,14 +19,26 @@
   (let [s (encode-notebook notebook)]
     (spit f s)))
 
+
+(def notebook-simple
+  {:segments
+   [{:type :free :content {:value "test"}}
+    {:type :code :content {:value "(+ 7 7)"}}
+    {:type :free :content {:value "test"} :console-response "" :value-response "14"}]})
+
+(deftest encode-simple
+  (let [f "/tmp/notebook-simple.cljs"
+        _ (save-notebook f notebook-simple)]
+    (is (= notebook-simple (load-notebook f)))))
+
+
   ; (def nb (slurp "resources/notebook1.cljw"))
 ;(def nb (slurp "resources/demo.cljw"))
 (def f "resources/reagent-manipulate.clj")
 
-(let [notebook (load-notebook f)
+#_(let [notebook (load-notebook f)
       f-out "/tmp/notebook-unittest.cljw"
-      _ (save-notebook f-out notebook)
-      ]
+      _ (save-notebook f-out notebook)]
   true)
 
 

@@ -2,14 +2,17 @@
   (:require
    [clojure.string :as str]
    [cognitect.transit :as t]
-   [pinkgorilla.encoding.helper :refer [make-clojure-comment]]))
+   [pinkgorilla.encoding.helper :refer [make-clojure-comment create-writer]]))
+
+
+
 
 
 (defmulti to-clojure :type)
 
 (defmethod to-clojure :code
   [code-segment]
-  (let [w (t/writer :json)
+  (let [w (create-writer)
         start-tag ";; @@\n"
         end-tag "\n;; @@\n"
         output-start ";; =>\n"
