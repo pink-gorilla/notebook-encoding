@@ -1,20 +1,10 @@
 (ns pinkgorilla.encoding.encode
   (:require
    [clojure.string :as str]
-   [cognitect.transit :as t]))
+   [cognitect.transit :as t]
+   [pinkgorilla.encoding.helper :refer [make-clojure-comment]]))
 
-(defn make-clojure-comment
-  [code]
-  (->> (str/split-lines code)
-       (map #(str ";;; " %))
-       (str/join "\n")))
 
-;; pegjs calls
-(defn unmake-clojure-comment
-  [code]
-  (->> (str/split-lines code)
-       (map #(.slice % 4))
-       (str/join "\n")))
 
 (defmulti to-clojure :type)
 
