@@ -22,9 +22,9 @@
 
 (def notebook-simple
   {:segments
-   [{:type :free :content {:value "test"}}
-    {:type :code :content {:value "(+ 7 7)"}}
-    {:type :free :content {:value "test"} :console-response "" :value-response "14"}]})
+   [{:type :free :content {:value "#test" :type "text/x-markdown"} :markup-visible false}
+   ; {:type :code :content {:value "(+ 7 7)"} :console-response "" :value-response "14"}
+  ]})
 
 (deftest encode-simple
   (let [f "/tmp/notebook-simple.cljs"

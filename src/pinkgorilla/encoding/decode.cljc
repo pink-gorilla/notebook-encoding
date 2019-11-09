@@ -68,7 +68,7 @@
   {:type :free
    :markup-visible false
    :content
-   {:value (or (get-lines seg) "")
+   {:value (or (unmake-clojure-comment (get-lines seg)) "")
     :type  "text/x-markdown"}})
 
 (defn process-code [seg]

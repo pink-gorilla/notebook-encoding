@@ -52,15 +52,4 @@
     (encode-notebook {:segments segments})))
 
 
-(comment
-  
-  (encode-notebook 
-   {:segments 
-    [{:type :free :content {:value "test"}}
-     {:type :code :content {:value "(+ 7 7)"}}
-     {:type :free :content {:value "test"} :console-response "" :value-response "14"}
-     ]})
-  
-  )
-
 
