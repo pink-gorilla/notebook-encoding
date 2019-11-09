@@ -8,7 +8,7 @@
 #?(:clj (import '[java.io ByteArrayInputStream ByteArrayOutputStream]))
 
 (defn create-writer []
-  #?(:clj  (do (def out (ByteArrayOutputStream. 4096))
+  #?(:clj  (do (def out (ByteArrayOutputStream. (* 4096 1024)))
                (t/writer out :json))
      :cljs (t/writer :json)))
 
@@ -16,15 +16,24 @@
 
 (defn make-clojure-comment
   [code]
+  (if (nil? code)
+    ";;; "
   (->> (str/split-lines code)
        (map #(str ";;; " %))
-       (str/join "\n")))
+       (str/join "\n"))))
 
+
+
+
+(defn unmake-clojure-comment-x
+  [code]
+  (if (nil? code)
+    ""
+    (->> (str/split-lines code)
+         (map #(subs % 4 (count code)))
+         (str/join "\n"))
+    ))
 
 (defn unmake-clojure-comment
   [code]
-  (if (nil? code)
-    nil
-    (->> (str/split-lines code)
-         (map #(subs % 4 (count code)))
-         (str/join "\n"))))
+  (try (unmake-clojure-comment-x code) (catch Exception e code)))

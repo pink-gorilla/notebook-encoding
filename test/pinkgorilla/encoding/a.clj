@@ -24,7 +24,7 @@
   {:segments
    [{:type :free :content {:value "#test" :type "text/x-markdown"} :markup-visible false}
    ; {:type :code :content {:value "(+ 7 7)"} :console-response "" :value-response "14"}
-  ]})
+    ]})
 
 (deftest encode-simple
   (let [f "/tmp/notebook-simple.cljs"
@@ -36,9 +36,12 @@
 ;(def nb (slurp "resources/demo.cljw"))
 (def f "resources/reagent-manipulate.clj")
 
-#_(let [notebook (load-notebook f)
-      f-out "/tmp/notebook-unittest.cljw"
-      _ (save-notebook f-out notebook)]
-  true)
+
+(deftest reload-existing-notebook
+  (let [notebook (load-notebook f)
+        f-out "/tmp/notebook-unittest.cljw"
+        _ (save-notebook f-out notebook)
+        notebook-reloaded (load-notebook f-out)]
+    (is (= notebook notebook-reloaded))))
 
 
