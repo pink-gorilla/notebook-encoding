@@ -2,7 +2,7 @@
   (:require  
    [clojure.string :as str]
    [instaparse.core :as insta]
-   [pinkgorilla.encoding.helper :refer [unmake-clojure-comment]]))
+   [pinkgorilla.encoding.helper :refer [unmake-clojure-comment from-json]]))
 
 (def parse-notebook
   "parse-notebook gets passed in a string and returns an intermediary output format.
@@ -83,7 +83,7 @@
      :content    {:value (or (get-lines  (second inp)) "")
                   :type  "text/x-clojure"}
      :console-response (or (unmake-clojure-comment (get-lines (second con))) "")
-     :value-response (or (unmake-clojure-comment (get-lines (second val))) "")}))
+     :value-response (from-json (or (unmake-clojure-comment (get-lines (second val))) ""))}))
 
 
 (defn process-segment [seg]
@@ -99,7 +99,7 @@
 (defn decode [s]
    (let [nb (parse-notebook s)
          segments (rest (nth nb 2))]
-  {:segments (map process-segment segments)})
+  {:segments (vec (map process-segment segments))})
   )
 
 

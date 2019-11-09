@@ -22,12 +22,19 @@
 
 (def notebook-simple
   {:segments
-   [{:type :free :content {:value "#test" :type "text/x-markdown"} :markup-visible false}
-   ; {:type :code :content {:value "(+ 7 7)"} :console-response "" :value-response "14"}
+   [{:type :free 
+     :content {:value "#test" :type "text/x-markdown"} 
+     :markup-visible false}
+    {:type :code 
+     :kernel :clj 
+     :content {:value "(+ 7 7)"
+               :type "text/x-clojure"} 
+     :console-response "adding numbers.." 
+     :value-response {:type "html" :content [:span "14"]}}
     ]})
 
 (deftest encode-simple
-  (let [f "/tmp/notebook-simple.cljs"
+  (let [f "/tmp/notebook-simple.cljw"
         _ (save-notebook f notebook-simple)]
     (is (= notebook-simple (load-notebook f)))))
 
@@ -37,7 +44,7 @@
 (def f "resources/reagent-manipulate.clj")
 
 
-(deftest reload-existing-notebook
+#_(deftest reload-existing-notebook
   (let [notebook (load-notebook f)
         f-out "/tmp/notebook-unittest.cljw"
         _ (save-notebook f-out notebook)
