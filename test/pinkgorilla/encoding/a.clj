@@ -44,7 +44,7 @@
 (def f "resources/reagent-manipulate.clj")
 
 
-#_(deftest reload-existing-notebook
+(deftest reload-existing-notebook
   (let [notebook (load-notebook f)
         f-out "/tmp/notebook-unittest.cljw"
         _ (save-notebook f-out notebook)
@@ -52,3 +52,9 @@
     (is (= notebook notebook-reloaded))))
 
 
+(comment
+  (let [notebook (load-notebook f) ]
+    (count notebook)
+;    (nth (:segments notebook) 0)
+    )
+)

@@ -1,8 +1,7 @@
 (ns pinkgorilla.encoding.helper
   (:require
    [clojure.string :as str]
-   [cognitect.transit :as t]
-   [cheshire.core]))
+   [cognitect.transit :as t]))
 
 ;; Coginitec TRANSIT WRITER
 
@@ -25,7 +24,7 @@
 
 
 (defn from-json [s]
-  #?(:clj  ;(cheshire.core/parse-string s)
+  #?(:clj
      (do
        (def in (ByteArrayInputStream. (.getBytes s "UTF-8")))
        (def reader (t/reader in :json))
@@ -38,7 +37,7 @@
 
 (defn make-clojure-comment
   [code]
-  (println "make-clojure-comment for: " code)
+  #_(println "make-clojure-comment for: " code)
   (if (nil? code)
     ";;; "
     (->> (str/split-lines code)
@@ -46,14 +45,22 @@
          (str/join "\n"))))
 
 
-
+(defn unmake-line [l]
+  (if (nil? l)
+    (do (println "unmake-line called with nil.")
+        "")
+    (let [c (count l)]
+      (if (< c 4)
+        (do (println "unmake-line called with less than 4 characters: " l)
+            l)
+        (subs l 4 c)))))
 
 (defn unmake-clojure-comment-x
   [code]
   (if (nil? code)
     ""
     (->> (str/split-lines code)
-         (map #(subs % 4 (count code)))
+         (map unmake-line)
          (str/join "\n"))))
 
 (defn unmake-clojure-comment
@@ -61,3 +68,11 @@
   (try
     (unmake-clojure-comment-x code)
     (catch Exception e code)))
+
+
+(comment
+  (unmake-clojure-comment ";;; 66\n;;; 88\n;;")
+  ;; => "66\n88\n;;"
+
+  
+  )
