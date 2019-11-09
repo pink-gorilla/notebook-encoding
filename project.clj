@@ -10,7 +10,10 @@
   [[org.clojure/clojure "1.10.1"]
    [org.clojure/clojurescript "1.10.520"]
    [org.clojure/data.json "0.2.6"] ; used by old vega renderer
-   [instaparse "1.4.10"]] 
+   [instaparse "1.4.10"] ; used in decoding
+   [com.cognitect/transit-clj "0.8.319"] ; used in encoding - clojure
+   [com.cognitect/transit-cljs "0.8.256"] ; used in encoding - clojurescript
+   ] 
 
 
   :source-paths ["src"]

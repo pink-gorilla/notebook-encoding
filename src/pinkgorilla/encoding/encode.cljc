@@ -5,7 +5,6 @@
    [pinkgorilla.encoding.helper :refer [make-clojure-comment]]))
 
 
-
 (defmulti to-clojure :type)
 
 (defmethod to-clojure :code
@@ -35,11 +34,30 @@
        (make-clojure-comment (get-in free-segment [:content :value]))
        "\n;; **\n"))
 
-(defn encode-worksheet
+(defn encode-notebook
+  [worksheet]
+  (let [segments (:segments worksheet)]
+    (str ";; gorilla-repl.fileformat = 2\n\n"
+         (->> (map to-clojure segments)
+              (str/join "\n")))))
+
+(defn encode-notebook-ui
   [worksheet]
   (let [segments-unsorted (:segments worksheet)
         segment-ids (:segment-order worksheet)
         segments (map #(get segments-unsorted %) segment-ids)]
-    (str ";; gorilla-repl.fileformat = 2\n\n"
-         (->> (map to-clojure segments)
-              (str/join "\n")))))
+    (encode-notebook {:segments segments})))
+
+
+(comment
+  
+  (encode-notebook 
+   {:segments 
+    [{:type :free :content {:value "test"}}
+     {:type :code :content {:value "(+ 7 7)"}}
+     {:type :free :content {:value "test"} :console-response "" :value-response "14"}
+     ]})
+  
+  )
+
+
