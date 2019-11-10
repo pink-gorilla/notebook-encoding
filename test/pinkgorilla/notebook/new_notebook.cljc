@@ -4,7 +4,7 @@
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]
    [pinkgorilla.notebook.core  :refer [dehydrate-notebook]]
-   [pinkgorilla.notebook.new  :refer [create-new-worksheet]]
+   [pinkgorilla.notebook.newnb  :refer [create-new-worksheet]]
    )
 )
 
