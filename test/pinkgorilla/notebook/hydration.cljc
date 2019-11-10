@@ -20,4 +20,4 @@
 
 
 (deftest hydration
-  (is (= (notebook/hydrate-notebook notebook-dehydrated) {:segments []})))
+  (is (= 4 (count (:segments (notebook/hydrate-notebook notebook-dehydrated))) )))

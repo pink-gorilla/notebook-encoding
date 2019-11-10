@@ -1,5 +1,5 @@
 (ns pinkgorilla.encoding.decode
-  (:require  
+  (:require
    [clojure.string :as str]
    [instaparse.core :as insta]
    [pinkgorilla.encoding.helper :refer [unmake-clojure-comment from-json]]))
@@ -64,6 +64,7 @@
     (str/join "\n" slines)))
 
 
+
 (defn process-md [seg]
   {:type :free
    :markup-visible false
@@ -96,11 +97,24 @@
       :CODE (process-code data)
       nil)))
 
+
+(def vector-type
+   #?(:clj clojure.lang.PersistentVector
+     :cljs cljs.core/PersistentVector))
+
 (defn decode [s]
-   (let [nb (parse-notebook s)
-         segments (rest (nth nb 2))]
-  {:segments (vec (map process-segment segments))})
-  )
+  (let [nb (parse-notebook s)
+        ;_ (println "parse result type is: " (type nb))
+        ]
+    ; awb99: a case would be good here, however it does not work
+    ; cheshire has condp - but only for cloure, nut we also need cljs
+    (if (= (type nb) vector-type)
+      (let [segments (rest (nth nb 2))]
+        {:segments (vec (map process-segment segments))})
+      (do (when (not (nil? nb))
+            ; ;instaparse.gll.Failure
+            (println "notebook format is invalid. error:" nb))
+          nil))))
 
 
 ; (process-segment (first segments))

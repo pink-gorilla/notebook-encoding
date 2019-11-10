@@ -1,4 +1,4 @@
-(ns pinkgorilla.encoding.new-notebook
+(ns pinkgorilla.notebook.new-notebook
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
@@ -13,8 +13,11 @@
   (let [nb-hydrated (create-new-worksheet)
         nb (dehydrate-notebook nb-hydrated)
         f "/tmp/notebook-new.cljw"
-        _ (save-notebook f nb)]
-    (is (= nb (load-notebook f)))))
+        _ (save-notebook f nb)
+        nb-reloaded (load-notebook f)
+        ;_ (println "reloaded notebook: " nb-reloaded)
+        ]
+    (is (= nb nb-reloaded))))
 
 
 (comment

@@ -4,10 +4,14 @@
    ; modules that contain tests
    [pinkgorilla.bongo]
    [pinkgorilla.dummy]
+   ;encoding
    [pinkgorilla.encoding.helper-test]
+   [pinkgorilla.encoding.decoding-bad-format]
    [pinkgorilla.encoding.simple]
    #_[pinkgorilla.encoding.disk-reload]
+   ;notebook
    [pinkgorilla.notebook.hydration]
+   [pinkgorilla.notebook.new-notebook]
    ))
 
 (doo-tests
@@ -16,9 +20,11 @@
  
  ; encoding
  'pinkgorilla.encoding.helper-test
+ 'pinkgorilla.encoding.decoding-bad-format
  'pinkgorilla.encoding.simple
  #_'pinkgorilla.encoding.disk-reload
  
  ;notebook
- 'pinkgorilla.notebook.hydration)
+ 'pinkgorilla.notebook.hydration
+ 'pinkgorilla.notebook.new-notebook)
 
