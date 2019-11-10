@@ -4,6 +4,7 @@
    [cognitect.transit :as t]))
 
 ;; Cognitec TRANSIT WRITER
+;; make json encoding indepenent of clj/cljs
 
 #?(:clj (import '[java.io ByteArrayInputStream ByteArrayOutputStream]))
 
@@ -18,9 +19,6 @@
   #?(:clj  (do (t/write (:writer writer) o)
                (String. (.toByteArray (:out writer))))
      :cljs (t/write writer o)))
-
-
-
 
 
 (defn from-json [s]
@@ -68,11 +66,3 @@
   (try
     (unmake-clojure-comment-x code)
     (catch Exception e code)))
-
-
-(comment
-  (unmake-clojure-comment ";;; 66\n;;; 88\n;;")
-  ;; => "66\n88\n;;"
-
-  
-  )

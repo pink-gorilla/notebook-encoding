@@ -13,5 +13,8 @@
 
 
 (deftest decode-comment
-  (is (= "#test" (unmake-clojure-comment ";;; #test"))))
+  (is (= "#test" (unmake-clojure-comment ";;; #test"))) ; simple comment with crazy character #
+  (is (= "66\n88\n" (unmake-clojure-comment ";;; 66\n;;; 88\n;;; "))) ; multi line comment with last line empty
+  )
+
 
