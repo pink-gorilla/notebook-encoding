@@ -35,8 +35,8 @@
         ids (vec (map :id segments-with-id))
         m (reduce conj (map to-key segments-with-id))]
     (assoc (empty-notebook)
-          :segment-order ids
-          :segments m)))
+           :segment-order ids
+           :segments m)))
 
 (defn load-notebook-hydrated [str]
   (hydrate-notebook (decode str)))
@@ -59,7 +59,7 @@
   ([content]
    {:id               (uuid)
     :type             :code
-    :kernel           :clj                        ;; default-cljs
+    :kernel           :clj
     :content          {:value (or content "")
                        :type  "text/x-clojure"}
     :console-response ""
@@ -71,7 +71,6 @@
   [free-segment]
   {:id               (:id free-segment)
    :type             :code
-   ;; TODO forcing :default-clj is not so nice
    :kernel           :clj
    :content          {:value (get-in free-segment [:content :value])
                       :type  "text/x-clojure"}
@@ -81,8 +80,6 @@
    :exception        nil})
 
 
-
-
 (defn to-free-segment
   [code-segment]
   {:id             (:id code-segment)
@@ -90,8 +87,6 @@
    :markup-visible false
    :content        {:value (get-in code-segment [:content :value])
                     :type  "text/x-markdown"}})
-
-
 
 
 (defn insert-segment-at

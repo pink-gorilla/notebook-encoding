@@ -36,7 +36,7 @@
      MD-B =   ';; **' N
      MD-E =  N ';; **' N 
 
-     CODE = INP CON VAL
+     CODE = INP CON? VAL?
 
      INP = <INP-B> LINES <INP-E>
      INP-B =   ';; @@' N
@@ -72,19 +72,44 @@
    {:value (or (unmake-clojure-comment (get-lines seg)) "")
     :type  "text/x-markdown"}})
 
+
+(defn create-code-segment [inp]
+  {:type :code
+   :kernel :clj
+   :content    {:value (or (get-lines  (second inp)) "")
+                :type  "text/x-clojure"}})
+
+(defn add-console-response [segment con]
+  (assoc segment
+         :console-response
+         (or (unmake-clojure-comment (get-lines (second con))) "")))
+
+(defn add-value-response [segment val]
+  (assoc segment
+         :value-response
+         (from-json (or (unmake-clojure-comment (get-lines (second val))) ""))))
+
+
+(defn add-addon [segment addon]
+  (let [addon-type (first addon)
+        ;_ (println "processing code-addon type: " addon-type)
+        ]
+    (case addon-type
+      :CON (add-console-response segment addon)
+      :VAL (add-value-response segment addon)
+      (do (println "unknwn code-addon type: " addon-type)
+          segment))))
+
+
 (defn process-code [seg]
   (let [;_ (println "code is: " seg)
         inp (first seg)
-        ;_ (println "code inp: " inp)
-        ;_ (println "inp lines: " (second inp))
-        con (nth seg 1)
-        val (nth seg 2)]
-    {:type :code
-     :kernel :clj
-     :content    {:value (or (get-lines  (second inp)) "")
-                  :type  "text/x-clojure"}
-     :console-response (or (unmake-clojure-comment (get-lines (second con))) "")
-     :value-response (from-json (or (unmake-clojure-comment (get-lines (second val))) ""))}))
+        segment (create-code-segment inp)
+        ;_ (println "code segment base: " segment)
+        addons (rest seg)
+        ;_ (println "code segment addons: " addons)
+        ]
+    (reduce add-addon segment addons)))
 
 
 (defn process-segment [seg]
@@ -99,7 +124,7 @@
 
 
 (def vector-type
-   #?(:clj clojure.lang.PersistentVector
+  #?(:clj clojure.lang.PersistentVector
      :cljs cljs.core/PersistentVector))
 
 (defn decode [s]
