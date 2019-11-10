@@ -11,6 +11,13 @@
 
 #?(:cljs (def content (atom "")))
 
+(defn load-str [f]
+  #?(:clj    (let [s (slurp f)]
+               s)
+     :cljs   (let [s @content]
+                s)))
+
+
 (defn load-notebook [f]
   #?(:clj    (let [s (slurp f)]
                (decode s))

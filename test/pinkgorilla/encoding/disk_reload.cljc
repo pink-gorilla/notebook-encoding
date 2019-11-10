@@ -24,6 +24,14 @@
     (is (= notebook notebook-reloaded))))
 
 
+(def f2 "resources/diff.cljw")
+#_(deftest reload-existing-notebook
+  (let [notebook (load-notebook f2)
+        f-out "/tmp/notebook-unittest2.cljw"
+        _ (save-notebook f-out notebook)
+        notebook-reloaded (load-notebook f-out)]
+    (is (= notebook notebook-reloaded))))
+
 (comment
   (let [notebook (load-notebook f)]
     (count notebook)

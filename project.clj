@@ -29,7 +29,7 @@
   {:builds [{:id "test"
              :source-paths ["src" "test"]
              :compiler {:output-to "resources/public/js/testable.js"
-                        :main pinkgorilla.encoding.doo-runner
+                        :main pinkgorilla.doo-runner
                         :optimizations :none}}]})
 
 

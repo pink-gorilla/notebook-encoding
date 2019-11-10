@@ -1,6 +1,7 @@
-(ns pinkgorilla.encoding.bongo
+(ns pinkgorilla.dummy
   (:require
-  [cljs.test :refer-macros [async deftest is testing]]))
+   #?(:clj [clojure.test :refer :all]
+      :cljs  [cljs.test :refer-macros [async deftest is testing]])))
 
 
 ;; DUMMY TEST
