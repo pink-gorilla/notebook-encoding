@@ -28,12 +28,16 @@
     (str console-start (make-clojure-comment ct) console-end)
     ""))
 
-(def start-tag ";; @@\n")
+;(def start-tag ";; @@\n")
+(def start-tag ";; @@ [")
+(def start-end-tag "]\n")
 (def end-tag "\n;; @@\n")
 
 (defn encode-code [code-segment]
   (str
    start-tag
+   (name (:kernel code-segment))
+   start-end-tag
    (get-in code-segment [:content :value])
    end-tag))
 

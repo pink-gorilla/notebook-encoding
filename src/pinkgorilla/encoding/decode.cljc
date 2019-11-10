@@ -17,6 +17,9 @@
 
       One of multiple keywords:
       keyword = 'cond' | 'defn'
+
+      <IN>   = #'[a-zA-Z0-9]+[\r\n]'
+      <OUT>  = #'[a-zA-Z0-9]+[\r\n]'
    "
   (insta/parser
    "NOTEBOOK = HEADER SEGMENTS
@@ -38,8 +41,10 @@
 
      CODE = INP CON? VAL?
 
-     INP = <INP-B> LINES <INP-E>
-     INP-B =   ';; @@' N
+     KERNEL = ' [clj]' | ' [cljs]' | ' [mock]'
+
+     INP = <INP-B> KERNEL? <N> LINES <INP-E>
+     INP-B =   ';; @@' 
      INP-E =  N ';; @@' N 
 
      CON = <CON-B> LINES <CON-E>
@@ -50,8 +55,7 @@
      VAL-B =   ';; =>' N
      VAL-E =  N ';; <=' N 
 
-     <IN>   = #'[a-zA-Z0-9]+[\r\n]'
-     <OUT>  = #'[a-zA-Z0-9]+[\r\n]'  "))
+     "))
 
 
 (defn get-lines [lines]
@@ -73,11 +77,34 @@
     :type  "text/x-markdown"}})
 
 
+(defn is-type [kw data]
+  (let [t (first data)
+        ;_ (println "checking type: " t)
+        ]
+    (= t kw)
+    )
+  )
+
+(defn find-element [data kw]
+  (first (filter (partial is-type kw) (rest data))))
+
+(defn kernel-s-to-kw [skernel]
+  (case skernel
+    " [clj]" :clj
+    " [cljs]" :cljs
+    " [mock]" :mock
+    :unknown))
+
 (defn create-code-segment [inp]
+  ;(println "code input is: " inp)  
+  (let [lines (find-element inp :LINES)
+        kernel (find-element inp :KERNEL)
+        ;_ (println "k is:" kernel)
+        ]
   {:type :code
-   :kernel :clj
-   :content    {:value (or (get-lines  (second inp)) "")
-                :type  "text/x-clojure"}})
+   :kernel (if (nil? kernel) :clj (kernel-s-to-kw(second kernel)) )
+   :content    {:value (or (get-lines lines) "")
+                :type  "text/x-clojure"}}))
 
 (defn add-console-response [segment con]
   (assoc segment
