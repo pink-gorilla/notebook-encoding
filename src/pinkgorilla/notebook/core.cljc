@@ -21,9 +21,21 @@
     (vec (map #(get segments %) segment-ids-ordered))))
 
 
+(defn dissoc-in
+  [m [k & ks :as keys]]
+  (if ks
+    (if-let [nextmap (get m k)]
+      (let [newmap (dissoc-in nextmap ks)]
+        (assoc m k newmap))
+      m)
+    (dissoc m k)))
+
+
 (defn dehydrate-notebook [notebook]
   (let [segments (segments-ordered notebook)
-        segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))]
+        segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))
+        segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))
+        ]
     {:segments segments-no-id}))
 
 (defn to-key [segment]
