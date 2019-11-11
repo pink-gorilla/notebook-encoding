@@ -53,7 +53,7 @@
             l)
         (subs l 4 c)))))
 
-(defn unmake-clojure-comment-x
+(defn unmake-clojure-comment
   [code]
   (if (nil? code)
     ""
@@ -61,8 +61,8 @@
          (map unmake-line)
          (str/join "\n"))))
 
-(defn unmake-clojure-comment
-  [code]
-  (try
-    (unmake-clojure-comment-x code)
-    (catch Exception e code)))
+;(defn unmake-clojure-comment
+;  [code]
+;  (try
+;    (unmake-clojure-comment-x code)
+;    (catch Exception e code)))
