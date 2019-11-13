@@ -7,25 +7,32 @@
     "
   (:require
    [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]]))
+   [pinkgorilla.encoding.encode :refer [encode-notebook]])
+  #?(:cljs (:require-macros [pinkgorilla.macros :refer [inline-resource]])))
 
-#?(:cljs (def content (atom "")))
+#?(:cljs
+   (def content
+     (atom
+      {"resources/bad-format.cljw" (inline-resource "resources/bad-format.cljw")
+       "resources/diff.cljw" (inline-resource "resources/diff.cljw")
+       "resources/reagent-manipulate.cljw" (inline-resource "resources/reagent-manipulate.cljw")})))
 
 (defn load-str [f]
   #?(:clj    (let [s (slurp f)]
                s)
-     :cljs   (let [s @content]
-                s)))
+     :cljs   (let [s (get @content f)]
+               s)))
 
 
 (defn load-notebook [f]
   #?(:clj    (let [s (slurp f)]
                (decode s))
-     :cljs   (let [s @content]
+     :cljs   (let [s (get @content f)]
                (decode s))))
 
 (defn save-notebook [f notebook]
   #?(:clj (let [s (encode-notebook notebook)]
             (spit f s))
      :cljs (let [s (encode-notebook notebook)]
-             (reset! content s))))
+             (swap! content assoc f s))))
+

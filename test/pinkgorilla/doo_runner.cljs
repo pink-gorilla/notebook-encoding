@@ -8,7 +8,7 @@
    [pinkgorilla.encoding.helper-test]
    [pinkgorilla.encoding.decoding-bad-format]
    [pinkgorilla.encoding.simple]
-   #_[pinkgorilla.encoding.disk-reload]
+   [pinkgorilla.encoding.disk-reload]
    ;notebook
    [pinkgorilla.notebook.hydration]
    [pinkgorilla.notebook.new-notebook]
@@ -22,7 +22,7 @@
  'pinkgorilla.encoding.helper-test
  'pinkgorilla.encoding.decoding-bad-format
  'pinkgorilla.encoding.simple
- #_'pinkgorilla.encoding.disk-reload
+ 'pinkgorilla.encoding.disk-reload
  
  ;notebook
  'pinkgorilla.notebook.hydration
