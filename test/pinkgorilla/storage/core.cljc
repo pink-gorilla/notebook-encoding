@@ -3,11 +3,11 @@
 
   ; dependencies needed to be in cljs bundle: 
    
-    [pinkgorilla.storage.storage :as storage]   
-   ;[pinkgorilla.storage.file]
+   [pinkgorilla.storage.storage :as storage]   
+   [pinkgorilla.storage.file]
    [pinkgorilla.storage.gist]
-   ;[pinkgorilla.storage.repo]
-   ;[pinkgorilla.storage.bitbucket]
+   [pinkgorilla.storage.repo]
+   [pinkgorilla.storage.bitbucket]
    
    ;[pinkgorilla.storage.direct.file]
    ;[pinkgorilla.storage.direct.gist]
