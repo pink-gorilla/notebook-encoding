@@ -37,3 +37,35 @@
    (if (nil? token)
      (tentacles.gists/specific-gist gist-id)
      (tentacles.gists/specific-gist gist-id {:oauth-token token}))))
+
+
+
+
+(defn load-repo [user repo path & [token]]
+   (if (nil? token)
+     (tentacles.repos/contents user repo path)
+     (tentacles.repos/contents user repo path {:str? true :oauth-token token})))
+
+
+;; body :message
+
+(defn save-repo [user repo path content token]
+  (let [existing-file (load-repo user repo path token)
+        sha (:sha existing-file)
+        _ (println "sha is: " sha)]
+  (tentacles.repos/update-contents user repo path "pinkgorilla notebook save" content sha {:oauth-token token})
+  ))
+
+
+(comment
+  (def creds
+    (-> (slurp "/tmp/creds.edn")
+        (clojure.edn/read-string)))
+
+  (save-repo "pink-gorilla" "sample-notebooks" "unittest.txt" "test!" (:github creds))
+   
+ (load-repo "pink-gorilla" "sample-notebooks" "unittest.txt" (:github creds))
+  
+  )
+
+ 
