@@ -8,12 +8,16 @@
                              :sign-releases false}]]
   :dependencies
   [[org.clojure/clojure "1.10.1"]
-   [org.clojure/clojurescript "1.10.520"]
+   [org.clojure/clojurescript "1.10.520"] [org.clojure/tools.logging "0.5.0"]
    [instaparse "1.4.10"] ; used in decoding
    [com.cognitect/transit-clj "0.8.319"] ; used in encoding - clojure
    [com.cognitect/transit-cljs "0.8.256"] ; used in encoding - clojurescript
    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
-   ] 
+   [com.taoensso/timbre "4.10.0"] ; cljs logging
+   [org.clojure/tools.logging "0.5.0"] ; clj logging
+   [irresponsible/tentacles "0.6.6"] ; github api  
+    [cheshire "5.7.1"] ; tentacles dependency
+   ]
 
   :source-paths ["src"]
   :test-paths ["test"]

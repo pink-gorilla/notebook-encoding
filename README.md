@@ -9,8 +9,13 @@ The string gets read/written to the .cljw notebook files.
 clj:
 ´´´
 lein test
-
 lein test :only pinkgorilla.notebook.new-notebook
+´´´
+
+Tests going to github need credential file:
+/tmp/creds.edn
+´´´
+{:github "github-dev-token"}
 ´´´
 
 cljs:
