@@ -1,6 +1,7 @@
 (ns pinkgorilla.encoding.decode
   (:require
    [clojure.string :as str]
+   [clojure.edn :as edn]
    [instaparse.core :as insta]
    [pinkgorilla.encoding.helper :refer [unmake-clojure-comment from-json]]))
 
@@ -41,7 +42,7 @@
 
      CODE = INP CON? VAL?
 
-     KERNEL = ' [clj]' | ' [cljs]' | ' [mock]'
+     KERNEL = ' [clj]' | ' [cljs]' | ' [mock]' | ' [meta]'
 
      INP = <INP-B> KERNEL? <N> LINES <INP-E>
      INP-B =   ';; @@' 
@@ -93,6 +94,7 @@
     " [clj]" :clj
     " [cljs]" :cljs
     " [mock]" :mock
+    " [meta]" :meta
     :unknown))
 
 (defn create-code-segment [inp]
@@ -149,6 +151,20 @@
       :CODE (process-code data)
       nil)))
 
+; meta
+
+(defn meta? [segment]
+  (and (= (:type segment) :code)
+       (= (:kernel segment) :meta)
+       ))
+
+(defn get-meta [segments]
+  (let [meta-segment (first (filter meta? segments))]
+     (if (nil? meta-segment)
+       {}
+       (edn/read-string (get-in meta-segment [:content :value]))        
+  )))
+
 
 (def vector-type
   #?(:clj clojure.lang.PersistentVector
@@ -161,8 +177,11 @@
     ; awb99: a case would be good here, however it does not work
     ; cheshire has condp - but only for cloure, nut we also need cljs
     (if (= (type nb) vector-type)
-      (let [segments (rest (nth nb 2))]
-        {:segments (vec (map process-segment segments))})
+      (let [segments (rest (nth nb 2))
+            segments (vec (map process-segment segments))
+            segments-no-meta (vec (remove meta? segments)) ]
+        {:meta (get-meta segments)
+         :segments segments-no-meta})
       (do (when (not (nil? nb))
             ; ;instaparse.gll.Failure
             (println "notebook format is invalid. error:" nb))

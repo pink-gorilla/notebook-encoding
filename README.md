@@ -9,6 +9,8 @@ The string gets read/written to the .cljw notebook files.
 clj:
 ´´´
 lein test
+
+lein test :only pinkgorilla.notebook.new-notebook
 ´´´
 
 cljs:

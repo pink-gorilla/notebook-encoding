@@ -34,6 +34,7 @@
 (def end-tag "\n;; @@\n")
 
 (defn encode-code [code-segment]
+  ;(println "encode-code: " code-segment)
   (str
    start-tag
    (name (:kernel code-segment))
@@ -49,18 +50,34 @@
    (encode-output code-segment)))
 
 
+;; meta
+
+(defn meta-to-segment [meta]
+  {:type :code
+   :kernel :meta
+   :content  {
+              :value (prn-str meta) 
+              ;s:type "text/x-clojure"
+              }}
+  )
+
+
 (defn encode-notebook
   [notebook]
-  (let [segments (:segments notebook)]
+  (let [;segments (:segments notebook)
+        meta (meta-to-segment (or (:meta notebook) {}))
+        segments (into [meta] (:segments notebook))
+        ;_ (println "encoding " segments)
+        ]
     (str ";; gorilla-repl.fileformat = 2\n\n"
          (->> (map to-clojure segments)
               (str/join "\n")))))
 
 (defn encode-notebook-ui
   "todo: move to notebook"
-  [worksheet]
-  (let [segments-unsorted (:segments worksheet)
-        segment-ids (:segment-order worksheet)
+  [notebook]
+  (let [segments-unsorted (:segments notebook)
+        segment-ids (:segment-order notebook)
         segments (map #(get segments-unsorted %) segment-ids)]
     (encode-notebook {:segments segments})))
 

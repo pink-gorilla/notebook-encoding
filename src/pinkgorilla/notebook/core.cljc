@@ -13,7 +13,8 @@
    :segments             {}
    :segment-order        []
    :queued-code-segments #{}
-   :active-segment       nil})
+   :active-segment       nil
+   :meta {}})
 
 (defn segments-ordered [notebook]
   (let [segments (:segments notebook)
@@ -36,17 +37,20 @@
         segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))
         segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))
         ]
-    {:segments segments-no-id}))
+    {:meta (:meta notebook)
+     :segments segments-no-id}))
 
 (defn to-key [segment]
   {(:id segment) segment})
 
 (defn hydrate-notebook [notebook]
-  (let [segments (:segments notebook)
+  (let [meta (:meta notebook)
+        segments (:segments notebook)
         segments-with-id (vec (map #(assoc % :id (uuid) :exception nil :error-text nil) segments))
         ids (vec (map :id segments-with-id))
         m (reduce conj (map to-key segments-with-id))]
     (assoc (empty-notebook)
+           :meta meta
            :segment-order ids
            :segments m)))
 

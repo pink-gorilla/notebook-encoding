@@ -8,7 +8,10 @@
 
 
 (def notebook-simple
-  {:segments
+  {:meta {:a 17 
+          :msg "simple-notebook" 
+          :experimental :on}
+   :segments
    [{:type :free 
      :content {:value "#test" :type "text/x-markdown"} 
      :markup-visible false}
