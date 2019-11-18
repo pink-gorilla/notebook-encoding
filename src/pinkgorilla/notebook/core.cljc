@@ -3,24 +3,27 @@
    [clojure.string :as str]
    [pinkgorilla.notebook.uuid :refer [guuid]]
    [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]]))
+   [pinkgorilla.encoding.encode :refer [encode-notebook]]
+   [pinkgorilla.storage.storage]))
 
 
 (defn empty-notebook
-  "creates an empty notebook"
+  "creates an empty hydrated notebook"
   []
-  {:ns                   nil
+  {:meta {}
    :segments             {}
+
+   :ns                   nil
    :segment-order        []
    :queued-code-segments #{}
-   :active-segment       nil
-   :meta {}})
+   :active-segment       nil})
+
+ ;; hydration / dehydration
 
 (defn segments-ordered [notebook]
   (let [segments (:segments notebook)
         segment-ids-ordered (:segment-order notebook)]
     (vec (map #(get segments %) segment-ids-ordered))))
-
 
 (defn dissoc-in
   [m [k & ks :as keys]]
@@ -35,8 +38,7 @@
 (defn dehydrate-notebook [notebook]
   (let [segments (segments-ordered notebook)
         segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))
-        segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))
-        ]
+        segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))]
     {:meta (:meta notebook)
      :segments segments-no-id}))
 
@@ -60,7 +62,18 @@
 (defn save-notebook-hydrated [notebook]
   (encode-notebook (dehydrate-notebook notebook)))
 
+;; load / save hydrated notebook to/from storage
 
+(defn notebook-save [storage tokens notebook]
+  (let [content (save-notebook-hydrated notebook)]
+    (pinkgorilla.storage.storage/storage-save storage content tokens)))
+
+(defn notebook-load [storage tokens]
+  (let [content (pinkgorilla.storage.storage/storage-load storage tokens)]
+    (load-notebook-hydrated content)))
+
+
+;; manipulate hydrated notebook
 
 (defn create-free-segment
   "creates a markdown segment"

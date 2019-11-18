@@ -4,7 +4,7 @@
    #?(:clj [clojure.tools.logging :refer (info)]
       :cljs [taoensso.timbre :refer-macros (info)])
 
-   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save]]))
+   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
 
 (defrecord StorageFile [filename])
@@ -29,17 +29,15 @@
 
 
 #?(:clj
+   
    (extend-type StorageFile
      Save
-
      (storage-save [self notebook tokens]
        (if (nil? notebook)
          (info "NOT Saving EMPTY Notebook to file: " (:filename self))
          (do
            (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
-           (spit (:filename self) notebook)))))
-
-   (extend-type StorageFile
+           (spit (:filename self) notebook))))
      Load
      (storage-load [self tokens]
        (info "Loading Notebook from file: " (:filename self))

@@ -45,10 +45,7 @@
              {:success false :error-message "Notebook is empty"})
            (do
              (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
-             (save-repo (:user self) (:repo self) (:filename self) notebook token))))))
-
-
-   (extend-type StorageRepo
+             (save-repo (:user self) (:repo self) (:filename self) notebook token)))))
      Load
      (storage-load [self tokens]
        (let [token (:github-token tokens)]

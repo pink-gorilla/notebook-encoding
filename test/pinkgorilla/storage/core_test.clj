@@ -1,4 +1,4 @@
-(ns pinkgorilla.storage.core
+(ns pinkgorilla.storage.core-test
   (:require
 
  [clojure.test :refer :all]

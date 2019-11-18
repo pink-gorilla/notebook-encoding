@@ -46,6 +46,7 @@
 
 
 #?(:clj
+   
    (extend-type StorageGist
      Save
      (storage-save [self notebook tokens]
@@ -55,15 +56,14 @@
            {:success false :error-message "Notebook is empty"})
          (do
            (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
-           (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens))))))
-
-   (extend-type StorageGist
+           (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens)))))
      Load
      (storage-load [self tokens]
        (let [token (:github-token tokens)]
          (info "Loading Notebook from gist id: " (:id self))
          (if (nil? token)
-           (load-gist (:id self) token) (load-gist (:id self) token))))))
+           (load-gist (:id self) token) 
+           (load-gist (:id self) token))))))
 
 
 
