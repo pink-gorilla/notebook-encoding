@@ -1,7 +1,7 @@
 (ns pinkgorilla.notebook.core
   (:require
    [clojure.string :as str]
-   [pinkgorilla.notebook.uuid :refer [uuid]]
+   [pinkgorilla.notebook.uuid :refer [guuid]]
    [pinkgorilla.encoding.decode :refer [decode]]
    [pinkgorilla.encoding.encode :refer [encode-notebook]]))
 
@@ -46,7 +46,7 @@
 (defn hydrate-notebook [notebook]
   (let [meta (:meta notebook)
         segments (:segments notebook)
-        segments-with-id (vec (map #(assoc % :id (uuid) :exception nil :error-text nil) segments))
+        segments-with-id (vec (map #(assoc % :id (guuid) :exception nil :error-text nil) segments))
         ids (vec (map :id segments-with-id))
         m (reduce conj (map to-key segments-with-id))]
     (assoc (empty-notebook)
@@ -65,7 +65,7 @@
 (defn create-free-segment
   "creates a markdown segment"
   [content]
-  {:id             (uuid)
+  {:id             (guuid)
    :type           :free
    :markup-visible false
    :content        {:value (or content "")
@@ -73,7 +73,7 @@
 
 (defn create-code-segment
   ([content]
-   {:id               (uuid)
+   {:id               (guuid)
     :type             :code
     :kernel           :clj
     :content          {:value (or content "")

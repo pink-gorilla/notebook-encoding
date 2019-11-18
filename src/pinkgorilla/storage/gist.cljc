@@ -4,9 +4,9 @@
    #?(:clj [clojure.tools.logging :refer (info)]
       :cljs [taoensso.timbre :refer-macros (info)])
 
-   #?(:clj [pinkgorilla.storage.github :refer [save-gist]])
+   #?(:clj [pinkgorilla.storage.github :refer [save-gist load-gist]])
 
-   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save]]))
+   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
 
 (defrecord StorageGist [id filename user is-public description])
@@ -45,7 +45,6 @@
     (str "/edit?source=gist&filename=" (:filename self) "&id=" (:id self))))
 
 
-
 #?(:clj
    (extend-type StorageGist
      Save
@@ -56,6 +55,16 @@
            {:success false :error-message "Notebook is empty"})
          (do
            (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
-           (info "tokens: " tokens)
-           (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens)))))))
+           (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens))))))
+
+   (extend-type StorageGist
+     Load
+     (storage-load [self tokens]
+       (let [token (:github-token tokens)]
+         (info "Loading Notebook from gist id: " (:id self))
+         (if (nil? token)
+           (load-gist (:id self) token) (load-gist (:id self) token))))))
+
+
+
 

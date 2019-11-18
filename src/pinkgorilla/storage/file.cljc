@@ -37,4 +37,13 @@
          (info "NOT Saving EMPTY Notebook to file: " (:filename self))
          (do
            (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
-           (spit (:filename self) notebook))))))
+           (spit (:filename self) notebook)))))
+
+   (extend-type StorageFile
+     Load
+     (storage-load [self tokens]
+       (info "Loading Notebook from file: " (:filename self))
+       (slurp (:filename self)))))
+
+
+

@@ -14,7 +14,7 @@
 (defn create-storage [params]
   (let [stype (:type params)]
     (if (nil? stype)
-      (do (println "cannot cresate storage from nil params")
+      (do (println "cannot create storage from nil params")
           nil)
       (query-params-to-storage stype params))))
 
@@ -31,3 +31,6 @@
 
 (defprotocol Save
   (storage-save [self notebook tokens]))
+
+(defprotocol Load
+  (storage-load [self tokens]))
