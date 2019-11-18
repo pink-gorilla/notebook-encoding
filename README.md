@@ -2,7 +2,7 @@ PinkGorilla Notebook - Encoding
 
 
 Convert the notebook datastructure in memory to/from string.
-The string gets read/written to the .cljw notebook files.
+The string gets read/written to the .cljg notebook files.
 
 # Unit Tests
 
@@ -15,7 +15,10 @@ lein test :only pinkgorilla.notebook.new-notebook
 Tests going to github need credential file:
 /tmp/creds.edn
 ´´´
-{:github "github-dev-token"}
+
+{:github-token "github-dev-token"
+ :gist-id "gist-id-used-for-tests"}
+
 ´´´
 
 cljs:

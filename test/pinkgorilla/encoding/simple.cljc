@@ -34,7 +34,7 @@
     ]})
 
 (deftest encode-simple
-  (let [f "/tmp/notebook-simple.cljw"
+  (let [f "/tmp/notebook-simple.cljg"
         _ (save-notebook f notebook-simple)]
     (is (= notebook-simple (load-notebook f)))))
 

@@ -26,7 +26,7 @@
          (type (storage/create-storage {:type :repo :user "pink-gorilla"}))))
   
 (is (= pinkgorilla.storage.file.StorageFile
-       (type (storage/create-storage {:type :file :filename "test.cljw"}))))
+       (type (storage/create-storage {:type :file :filename "test.cljg"}))))
   
   )
 

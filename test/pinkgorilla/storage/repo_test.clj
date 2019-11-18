@@ -7,8 +7,10 @@
 
 
 (deftest repo-load
-  (is (= "test!\n"
-         (:content (load-repo "pink-gorilla" "sample-notebooks" "/test.txt" (:github creds))))))
+  (let [token (:github-token creds)
+        content (str "hello-repo XXXX\n" )]
+  (is (= content
+         (load-repo "pink-gorilla" "sample-notebooks" "unittest-load.txt" token)))))
 
 
 (defn tap [s]
@@ -16,12 +18,12 @@
   s)
 
 
-(deftest gist-storage
-  (let [token (:github creds)
-        content (str (rand-int 10000))]
+(deftest repo-storage
+  (let [token (:github-token creds)
+        content (str "hello-repo " (rand-int 10000))]
     (is (= content
            (do (save-repo "pink-gorilla" "sample-notebooks" "unittest.txt" content token)
                (-> (load-repo "pink-gorilla" "sample-notebooks" "unittest.txt" token)
                    ;(tap)
-                   (:content)))))))
+                   ))))))
 

@@ -14,9 +14,9 @@
   [file]
   (ends-with (.getName file) ".clj"))
 
-(defn cljw-file?
+(defn cljg-file?
   [file]
-  (ends-with (.getName file) ".cljw"))
+  (ends-with (.getName file) ".cljg"))
 
 (defn gorilla-file?
   [file]
@@ -35,10 +35,10 @@
     file))
 
 (defn include-file?
-  "Should a file be included in the 'load file' list? Currently all .cljw files, and .clj files with a Gorilla header
+  "Should a file be included in the 'load file' list? Currently all .cljg files, and .clj files with a Gorilla header
   are included."
   [file]
-  (or (cljw-file? file) (and (clj-file? file) (gorilla-file? file))))
+  (or (cljg-file? file) (and (clj-file? file) (gorilla-file? file))))
 
 (defn gorilla-filepaths-in-current-directory
   [excludes]

@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/encoding "0.0.9"
+(defproject org.pinkgorilla/encoding "0.0.10"
   :description "The encoding of PinkGorilla Notebook."
   :url "https://github.com/pink-gorilla/notebook-encoding"
   :license {:name "MIT"}
@@ -16,7 +16,7 @@
    [com.taoensso/timbre "4.10.0"] ; cljs logging
    [org.clojure/tools.logging "0.5.0"] ; clj logging
    [irresponsible/tentacles "0.6.6"] ; github api  
-    [cheshire "5.7.1"] ; tentacles dependency
+   [cheshire "5.7.1"] ; tentacles dependency
    ]
 
   :source-paths ["src"]

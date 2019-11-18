@@ -62,8 +62,8 @@
        (let [token (:github-token tokens)]
          (info "Loading Notebook from gist id: " (:id self))
          (if (nil? token)
-           (load-gist (:id self) token) 
-           (load-gist (:id self) token))))))
+           (load-gist (:id self) (:filename self)) 
+           (load-gist (:id self) (:filename self) token))))))
 
 
 

@@ -69,7 +69,9 @@
     (pinkgorilla.storage.storage/storage-save storage content tokens)))
 
 (defn notebook-load [storage tokens]
-  (let [content (pinkgorilla.storage.storage/storage-load storage tokens)]
+  (let [content (pinkgorilla.storage.storage/storage-load storage tokens)
+        ;_ (println "content is:" content)
+        ]
     (load-notebook-hydrated content)))
 
 

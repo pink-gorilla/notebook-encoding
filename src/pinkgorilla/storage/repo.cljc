@@ -9,13 +9,14 @@
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
 
-(defrecord StorageRepo [user repo path])
+(defrecord StorageRepo [user repo filename])
 
 (defmethod query-params-to-storage :repo [_ params]
   (StorageRepo.
    (:user params)
    (:repo params)
-   (:path params)))
+   (or (:path params) (:filename params))
+   ))
 
 
 (extend-type StorageRepo
