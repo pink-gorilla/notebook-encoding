@@ -173,6 +173,12 @@
 (defn decode [s]
   (let [nb (parse-notebook s)
         ;_ (println "parse result type is: " (type nb))
+        ;_ (println "notebook: " nb)
+        el-header (find-element nb :HEADER)
+        el-version (find-element el-header :VERSION)
+        version (get el-version 1)
+        version (case version "1" 1 "2" 2 nil)
+        ;_ (println "version: " version)
         ]
     ; awb99: a case would be good here, however it does not work
     ; cheshire has condp - but only for cloure, nut we also need cljs
@@ -180,7 +186,8 @@
       (let [segments (rest (nth nb 2))
             segments (vec (map process-segment segments))
             segments-no-meta (vec (remove meta? segments)) ]
-        {:meta (get-meta segments)
+        {:version version
+         :meta (get-meta segments)
          :segments segments-no-meta})
       (do (when (not (nil? nb))
             ; ;instaparse.gll.Failure
@@ -188,6 +195,5 @@
           nil))))
 
 
-; (process-segment (first segments))
-; (process-segment (nth segments 3))
+
 

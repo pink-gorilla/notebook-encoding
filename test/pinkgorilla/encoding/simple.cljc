@@ -8,7 +8,8 @@
 
 
 (def notebook-simple
-  {:meta {:a 17 
+  {:version 2
+   :meta {:a 17 
           :msg "simple-notebook" 
           :experimental :on}
    :segments

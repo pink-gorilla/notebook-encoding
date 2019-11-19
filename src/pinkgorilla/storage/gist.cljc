@@ -41,12 +41,12 @@
     (str "https://gist.github.com/" (:user self) "/" (:id self)))
 
   (gorilla-path [self]
-    (info "local-storage.gorilla-path")
+    (info "gist-storage.gorilla-path")
     (str "/edit?source=gist&filename=" (:filename self) "&id=" (:id self))))
 
 
 #?(:clj
-   
+
    (extend-type StorageGist
      Save
      (storage-save [self notebook tokens]
@@ -62,7 +62,7 @@
        (let [token (:github-token tokens)]
          (info "Loading Notebook from gist id: " (:id self))
          (if (nil? token)
-           (load-gist (:id self) (:filename self)) 
+           (load-gist (:id self) (:filename self))
            (load-gist (:id self) (:filename self) token))))))
 
 

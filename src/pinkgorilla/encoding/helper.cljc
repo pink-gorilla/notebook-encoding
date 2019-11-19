@@ -23,11 +23,16 @@
 
 (defn from-json [s]
   #?(:clj
-     (do
-       (def in (ByteArrayInputStream. (.getBytes s "UTF-8")))
-       (def reader (t/reader in :json))
-       (t/read reader))
-     :cljs (t/read (t/reader :json) s)))
+     (try
+       (do
+         (def in (ByteArrayInputStream. (.getBytes s "UTF-8")))
+         (def reader (t/reader in :json))
+         (t/read reader))
+       (catch Exception ex
+         (println "decode exception." )
+         nil
+         ))
+       :cljs (t/read (t/reader :json) s)))
 
 
 

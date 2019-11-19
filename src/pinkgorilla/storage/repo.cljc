@@ -15,8 +15,7 @@
   (StorageRepo.
    (:user params)
    (:repo params)
-   (or (:path params) (:filename params))
-   ))
+   (or (:path params) (:filename params))))
 
 
 (extend-type StorageRepo
@@ -30,7 +29,7 @@
 
   (gorilla-path [self]
     (info "repo-storage.gorilla-path")
-    (str "/edit?worksheet-filename=" (:id self))))
+    (str "/edit?source=repo&filename=" (:filename self) "&user=" (:user self) "&repo=" (:repo self))))
 
 
 

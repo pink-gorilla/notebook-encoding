@@ -13,6 +13,13 @@
          (load-repo "pink-gorilla" "sample-notebooks" "unittest-load.txt" token)))))
 
 
+#_(deftest repo-load-bad
+  (let [token (:github-token creds)
+        content (str "hello-repo XXXX\n")]
+    (is (= content
+           (load-repo "pink-gorilla" "sample-notebooks" "samples/uiplugin/gorillaplot/central-limit.cljg" token)))))
+
+
 (defn tap [s]
   (println "repo: " s)
   s)

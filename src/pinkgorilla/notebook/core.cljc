@@ -10,7 +10,8 @@
 (defn empty-notebook
   "creates an empty hydrated notebook"
   []
-  {:meta {}
+  {:version 2
+   :meta {}
    :segments             {}
 
    :ns                   nil
@@ -39,19 +40,22 @@
   (let [segments (segments-ordered notebook)
         segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))
         segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))]
-    {:meta (:meta notebook)
+    {:version (:version notebook)
+     :meta (:meta notebook)
      :segments segments-no-id}))
 
 (defn to-key [segment]
   {(:id segment) segment})
 
 (defn hydrate-notebook [notebook]
-  (let [meta (:meta notebook)
+  (let [version (:version notebook)
+        meta (:meta notebook)
         segments (:segments notebook)
         segments-with-id (vec (map #(assoc % :id (guuid) :exception nil :error-text nil) segments))
         ids (vec (map :id segments-with-id))
         m (reduce conj (map to-key segments-with-id))]
     (assoc (empty-notebook)
+           :version version
            :meta meta
            :segment-order ids
            :segments m)))
