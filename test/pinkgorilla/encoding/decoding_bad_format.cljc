@@ -9,7 +9,7 @@
 
 ; awb99: TODO: in cljs this currently gets an empty string and not the file
 
-(def f2 "resources/bad-format.cljg")
+(def f2 "test/notebooks/bad-format.cljg")
 (deftest decode-raw-notebook
   (let [s (load-str f2)
         parse-result (parse-notebook s)

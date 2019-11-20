@@ -32,7 +32,7 @@
   :cljsbuild
   {:builds [{:id "test"
              :source-paths ["src" "test"]
-             :compiler {:output-to "resources/public/js/testable.js"
+             :compiler {:output-to "test/notebooks/public/js/testable.js"
                         :main pinkgorilla.doo-runner
                         :optimizations :none}}]})
 

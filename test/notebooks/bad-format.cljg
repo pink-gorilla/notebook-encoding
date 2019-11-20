@@ -1,0 +1,26 @@
+;; gorilla-repl.fileformat = 2
+
+;; **
+PinkGorilla 
+ 
+ Shift enter evaluates code Hit altg twice in quick succession or click the menu icon upperright corner for more commands
+ 
+ Its a good habit to run each worksheet in its own namespace We created a random namespace for you you can keep using it
+;; ****
+
+;; @@
+html
+  [:div 
+    [:h4 "Hiccup Markup"] 
+    [:div {:style "color:green;font-weight:bold;background-color:pink"} "World!"] 
+    [:ol 
+       [:li "The Pinkie"] 
+       [:li "The Pinkie and the Brain"]  
+       [:li "What will we be doing today?"]]  
+    [:img {:height 100 :width 100 :src "https://images-na.ssl-images-amazon.com/images/I/61LeuO%2Bj0xL._SL1500_.jpg"}]]) 
+;; @@
+
+;; @@
+ (vega! "https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json")
+;; @@
+

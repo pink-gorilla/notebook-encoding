@@ -13,9 +13,9 @@
 #?(:cljs
    (def content
      (atom
-      {"resources/bad-format.cljg" (inline-resource "resources/bad-format.cljg")
-       "resources/diff.cljg" (inline-resource "resources/diff.cljg")
-       "resources/reagent-manipulate.cljg" (inline-resource "resources/reagent-manipulate.cljg")})))
+      {"test/notebooks/bad-format.cljg" (inline-resource "test/notebooks/bad-format.cljg")
+       "test/notebooks/diff.cljg" (inline-resource "test/notebooks/diff.cljg")
+       "test/notebooks/reagent-manipulate.cljg" (inline-resource "test/notebooks/reagent-manipulate.cljg")})))
 
 (defn load-str [f]
   #?(:clj    (let [s (slurp f)]

@@ -11,9 +11,9 @@
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]))
 
 
-  ; (def nb (slurp "resources/notebook1.cljg"))
-;(def nb (slurp "resources/demo.cljg"))
-(def f "resources/reagent-manipulate.cljg")
+  ; (def nb (slurp "test/notebooks/notebook1.cljg"))
+;(def nb (slurp "test/notebooks/demo.cljg"))
+(def f "test/notebooks/reagent-manipulate.cljg")
 
 
 (deftest reload-existing-notebook
@@ -24,7 +24,7 @@
     (is (= notebook notebook-reloaded))))
 
 
-(def f2 "resources/diff.cljg")
+(def f2 "test/notebooks/diff.cljg")
 #_(deftest reload-existing-notebook
   (let [notebook (load-notebook f2)
         f-out "/tmp/notebook-unittest2.cljg"
