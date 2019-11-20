@@ -12,14 +12,8 @@ lein test
 lein test :only pinkgorilla.notebook.new-notebook
 ´´´
 
-Tests going to github need credential file:
-/tmp/creds.edn
-´´´
-
-{:github-token "github-dev-token"
- :gist-id "gist-id-used-for-tests"}
-
-´´´
+Tests going to github need credential file: `test/creds.edn`. There is is
+a `sample-creds.edn` to copy for convenience.
 
 cljs:
 ´´´
