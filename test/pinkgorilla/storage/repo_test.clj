@@ -26,7 +26,7 @@
 
 
 (deftest repo-storage
-  (let [token (:github-token creds)
+  (let [token (:github-token (creds))
         content (str "hello-repo " (rand-int 10000))]
     (is (= content
            (do (save-repo "pink-gorilla" "sample-notebooks" "unittest.txt" content token)

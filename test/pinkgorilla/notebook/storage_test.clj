@@ -21,8 +21,8 @@
 
 
 (deftest gist-storage-with-meta
-  (let [tokens creds
-        id (:gist-id creds)
+  (let [tokens (creds)
+        id (:gist-id tokens)
         store (storage/create-storage {:type :gist 
                                        :filename "meta1.cljg" 
                                        :id id 
@@ -36,7 +36,7 @@
                    (:meta)))))))
 
 (deftest repo-storage-with-meta
-  (let [tokens creds
+  (let [tokens (creds)
         store (storage/create-storage {:type :repo 
                                        :user "pink-gorilla" 
                                        :repo "sample-notebooks" 
