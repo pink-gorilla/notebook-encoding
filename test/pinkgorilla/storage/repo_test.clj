@@ -7,7 +7,7 @@
 
 
 (deftest repo-load
-  (let [token (:github-token creds)
+  (let [token (:github-token (creds))
         content (str "hello-repo XXXX\n" )]
   (is (= content
          (load-repo "pink-gorilla" "sample-notebooks" "unittest-load.txt" token)))))
