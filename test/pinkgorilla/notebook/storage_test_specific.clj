@@ -13,7 +13,7 @@
 ;; TODO: deas tell difference in file format
 
 (deftest repo-storage-version-1
-  (let [tokens creds
+  (let [tokens (creds)
         store (storage/create-storage {:type :repo 
                                        :user "pink-gorilla" 
                                        :repo "sample-notebooks" 
