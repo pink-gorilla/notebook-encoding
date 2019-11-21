@@ -22,14 +22,15 @@
         options {:description description
                  :oauth-token token}]
     (if (nil? id)
-      (do (println "creating gist: " options)
+      (do (info "creating gist: " options)
           (->>
            (tentacles.gists/create-gist files (assoc options :public is-public))
            (extract-gist-result)))
-      (do (println "updating gist: " id  " : " options)
+      (do (info "updating gist: " id  " : " options)
           (->>
            (tentacles.gists/edit-gist id (assoc options :files {filename {:content content}}))
-           (extract-gist-result))))))
+           (extract-gist-result))))
+    {:id id :filename filename}))
 
 
 (defn load-gist-all [gist-id & [token]]
@@ -64,8 +65,9 @@
   (let [commit-message "pinkgorilla notebook save"
         existing-file (load-repo-raw user repo path token)
         sha (:sha existing-file)
-        _ (println "existing git repo sha is: " sha)]
-    (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token})))
+        _ (info "existing git repo sha is: " sha)]
+    (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token})
+    {:sha sha}))
 
 
 (comment

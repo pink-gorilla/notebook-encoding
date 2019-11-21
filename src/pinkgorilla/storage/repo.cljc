@@ -40,9 +40,7 @@
      (storage-save [self notebook tokens]
        (let [token (:github-token tokens)]
          (if (nil? notebook)
-           (do
-             (info "NOT Saving EMPTY Notebook to file: " (:filename self))
-             {:success false :error-message "Notebook is empty"})
+           (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
            (do
              (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
              (save-repo (:user self) (:repo self) (:filename self) notebook token)))))
