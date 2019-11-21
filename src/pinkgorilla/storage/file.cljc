@@ -24,7 +24,7 @@
 
   (gorilla-path [self]
     (info "file-storage.gorilla-path")
-    (str "/edit?source=file?filename=" (:filename self))))
+    (str "/edit?source=file&filename=" (:filename self))))
 
 
 
