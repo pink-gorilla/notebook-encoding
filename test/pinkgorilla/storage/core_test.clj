@@ -9,14 +9,7 @@
    [pinkgorilla.storage.file]
    [pinkgorilla.storage.gist]
    [pinkgorilla.storage.repo]
-   [pinkgorilla.storage.bitbucket]
-   
-   ;[pinkgorilla.storage.direct.file]
-   ;[pinkgorilla.storage.direct.gist]
-   ;[pinkgorilla.storage.direct.repo]
-   ;[pinkgorilla.storage.direct.bitbucket]
-   
-   ))
+   [pinkgorilla.storage.bitbucket]))
 
 (deftest gist-storage
   (is (= pinkgorilla.storage.gist.StorageGist 
