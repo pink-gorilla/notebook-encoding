@@ -1,4 +1,6 @@
 language: clojure
 
+install:
+  - npm install
 #jdk:
 #  - openjdk8
