@@ -59,7 +59,7 @@
      (storage-load [self tokens]
        (let [token (:github-token tokens)]
          (info "Loading Notebook from gist id: " (:id self))
-         (if (nil? token)
+         (if (or (nil? token) (clojure.string/blank? token))
            (load-gist (:id self) (:filename self))
            (load-gist (:id self) (:filename self) token))))))
 
