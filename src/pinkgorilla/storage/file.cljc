@@ -24,7 +24,7 @@
 
   (gorilla-path [self]
     (info "file-storage.gorilla-path")
-    (str "/edit?source=file?filename=" (:filename self))))
+    (str "/edit?source=file&filename=" (:filename self))))
 
 
 
@@ -34,10 +34,11 @@
      Save
      (storage-save [self notebook tokens]
        (if (nil? notebook)
-         (info "NOT Saving EMPTY Notebook to file: " (:filename self))
-         (do
-           (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
-           (spit (:filename self) notebook))))
+        (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+        (do
+          (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
+          (spit (:filename self) notebook)
+          {:filename (:filename self)})))
      Load
      (storage-load [self tokens]
        (info "Loading Notebook from file: " (:filename self))

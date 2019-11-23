@@ -30,5 +30,6 @@
   (gorilla-path
     [self]
     (info "bitbucket.gorilla-path")
+    ;; TODO This appears to be broken!
     (str "/edit?worksheet-filename=" (:user self))))
 

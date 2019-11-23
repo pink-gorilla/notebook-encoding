@@ -20,6 +20,7 @@
    
    ))
 
+
 (deftest storage-types-included
   (is (= pinkgorilla.storage.gist.StorageGist
          (type (storage/create-storage {:type :gist :id "8204fd0b2aba27f06c04dffcb4fd0a24"}))))

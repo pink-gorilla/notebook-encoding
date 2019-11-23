@@ -51,9 +51,7 @@
      Save
      (storage-save [self notebook tokens]
        (if (nil? notebook)
-         (do
-           (info "NOT Saving EMPTY Notebook to file: " (:filename self))
-           {:success false :error-message "Notebook is empty"})
+         (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
          (do
            (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
            (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens)))))
