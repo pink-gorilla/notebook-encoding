@@ -4,7 +4,17 @@
    [pinkgorilla.creds :refer [creds]]
    [pinkgorilla.storage.github :refer [load-repo save-repo]]))
 
+(deftest repo-load-nil-token
+  (let [token nil
+        content (str "hello-repo XXXX\n")]
+    (is (= content
+           (load-repo "pink-gorilla" "sample-notebooks" "unittest-load.txt" token)))))
 
+(deftest repo-load-empty-token
+  (let [token ""
+        content (str "hello-repo XXXX\n")]
+    (is (= content
+           (load-repo "pink-gorilla" "sample-notebooks" "unittest-load.txt" token)))))
 
 (deftest repo-load
   (let [token (:github-token (creds))

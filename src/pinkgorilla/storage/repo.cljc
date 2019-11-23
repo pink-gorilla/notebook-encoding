@@ -6,6 +6,7 @@
 
    #?(:clj [pinkgorilla.storage.github :refer [save-repo load-repo]])
 
+   [clojure.string]
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
 
@@ -49,8 +50,8 @@
      Load
      (storage-load [self tokens]
        (let [token (:github-token tokens)]
-         (info "Loading Notebook from repo: " (:repo self))
-         (if (nil? token)
+         (info "Loading Notebook from repo: " (:repo self) "user: " (:user self) " filename: " (:filename self))
+         (if (or (nil? token) (clojure.string/blank? token) )
            (load-repo (:user self) (:repo self) (:filename self))
            (load-repo (:user self) (:repo self) (:filename self) token))))))
 

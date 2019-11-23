@@ -1,6 +1,7 @@
 (ns pinkgorilla.storage.github
   (:require
    [clojure.tools.logging :refer (info)]
+   [clojure.string]
    [tentacles.gists]
    [tentacles.repos]))
 
@@ -53,7 +54,7 @@
 
 (defn load-repo [user repo path & [token]]
   (:content
-   (if (nil? token)
+   (if (or (nil? token) (clojure.string/blank? token))
      (tentacles.repos/contents user repo path {:str? true})
      (tentacles.repos/contents user repo path {:str? true :oauth-token token}))))
 
