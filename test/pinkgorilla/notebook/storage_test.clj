@@ -35,6 +35,25 @@
                (-> (notebook/notebook-load store tokens)
                    (:meta)))))))
 
+
+(deftest gist-storage-with-meta-no-creds
+  (let [tokens {}
+        id (:gist-id (creds))
+        store (storage/create-storage {:type :gist
+                                       :filename "meta1.cljg"
+                                       :id id
+                                       :description "unittest-meta1"})
+        meta {:test 789}
+        nb (notebook/empty-notebook)
+        nb (assoc nb :meta meta)]
+    (is (= meta
+           (do (notebook/notebook-save store tokens nb)
+               (-> (notebook/notebook-load store tokens)
+                   (:meta)))))))
+
+
+
+
 (deftest repo-storage-with-meta
   (let [tokens (creds)
         store (storage/create-storage {:type :repo 
