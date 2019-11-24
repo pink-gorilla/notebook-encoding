@@ -29,10 +29,13 @@
          (def reader (t/reader in :json))
          (t/read reader))
        (catch Exception ex
-         (println "decode exception." )
-         nil
-         ))
-       :cljs (t/read (t/reader :json) s)))
+         (println "decode json exception: " s)
+         nil))
+     :cljs (try
+             (t/read (t/reader :json) s)
+             (catch js/Object ex
+               (println "decode json exception: " s)
+               nil))))
 
 
 
