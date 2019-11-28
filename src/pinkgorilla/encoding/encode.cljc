@@ -63,6 +63,7 @@
 
 
 (defn encode-notebook
+  "encodes a dehydrated notebook"
   [notebook]
   (let [;segments (:segments notebook)
         meta (meta-to-segment (or (:meta notebook) {}))
@@ -73,8 +74,10 @@
          (->> (map to-clojure segments)
               (str/join "\n")))))
 
-(defn encode-notebook-ui
-  "todo: move to notebook"
+
+(defn encode-notebook-hydrated
+  "encodes a hydrated notebook
+   awb99: it appesrs this function is no longer required?"
   [notebook]
   (let [segments-unsorted (:segments notebook)
         segment-ids (:segment-order notebook)

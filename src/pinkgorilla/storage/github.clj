@@ -67,7 +67,8 @@
         existing-file (load-repo-raw user repo path token)
         sha (:sha existing-file)
         _ (info "existing git repo sha is: " sha)]
-    (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token})
+    (info "save response: "
+          (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token}))
     {:sha sha}))
 
 

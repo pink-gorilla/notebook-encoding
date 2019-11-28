@@ -40,11 +40,13 @@
      Save
      (storage-save [self notebook tokens]
        (let [token (:github-token tokens)]
-         (if (nil? notebook)
-           (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
-           (do
-             (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
-             (save-repo (:user self) (:repo self) (:filename self) notebook token)))))
+          (if (or (nil? token) (clojure.string/blank? token) )
+            (throw (Exception. (str "NOT Saving Notebook without token: " (:filename self))))
+            (if (nil? notebook)
+              (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+              (do
+                (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
+                (save-repo (:user self) (:repo self) (:filename self) notebook token))))))
      Load
      (storage-load [self tokens]
        (let [token (:github-token tokens)]
