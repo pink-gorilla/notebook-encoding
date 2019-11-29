@@ -15,7 +15,7 @@
    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
    [com.taoensso/timbre "4.10.0"] ; cljs logging
    [org.clojure/tools.logging "0.5.0"] ; clj logging
-   [irresponsible/tentacles "0.6.6"] ; github api  
+   [irresponsible/tentacles "0.6.6"] ; github api  https://github.com/clj-commons/tentacles
    [cheshire "5.7.1"] ; tentacles dependency
    ]
 
