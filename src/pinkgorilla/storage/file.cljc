@@ -20,7 +20,7 @@
 
   (external-url [self]
     (info "file-storage.external-url")
-    nil)
+    (str "file://" (:filename self)))
 
   (gorilla-path [self]
     (info "file-storage.gorilla-path")
@@ -29,16 +29,16 @@
 
 
 #?(:clj
-   
+
    (extend-type StorageFile
      Save
      (storage-save [self notebook tokens]
        (if (nil? notebook)
-        (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
-        (do
-          (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
-          (spit (:filename self) notebook)
-          {:filename (:filename self)})))
+         (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+         (do
+           (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
+           (spit (:filename self) notebook)
+           {:filename (:filename self)})))
      Load
      (storage-load [self tokens]
        (info "Loading Notebook from file: " (:filename self))

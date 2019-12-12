@@ -25,8 +25,9 @@
   (storagetype [self] :repo)
 
   (external-url [self]
-    (info "repo-storage.external-url")
-    nil)
+    (info "local-storage.external-url")
+    ;https://github.com/pink-junkjard/tailwind-workstation-screencast/blob/master/src/workation/core.cljs
+    (str "https://github.com/" (:user self) "/" (:repo self) "/blob/master/" (:filename self)))
 
   (gorilla-path [self]
     (info "repo-storage.gorilla-path")
@@ -40,18 +41,18 @@
      Save
      (storage-save [self notebook tokens]
        (let [token (:github-token tokens)]
-          (if (or (nil? token) (clojure.string/blank? token) )
-            (throw (Exception. (str "NOT Saving Notebook without token: " (:filename self))))
-            (if (nil? notebook)
-              (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
-              (do
-                (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
-                (save-repo (:user self) (:repo self) (:filename self) notebook token))))))
+         (if (or (nil? token) (clojure.string/blank? token))
+           (throw (Exception. (str "NOT Saving Notebook without token: " (:filename self))))
+           (if (nil? notebook)
+             (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+             (do
+               (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
+               (save-repo (:user self) (:repo self) (:filename self) notebook token))))))
      Load
      (storage-load [self tokens]
        (let [token (:github-token tokens)]
          (info "Loading Notebook from repo: " (:repo self) "user: " (:user self) " filename: " (:filename self))
-         (if (or (nil? token) (clojure.string/blank? token) )
+         (if (or (nil? token) (clojure.string/blank? token))
            (load-repo (:user self) (:repo self) (:filename self))
            (load-repo (:user self) (:repo self) (:filename self) token))))))
 

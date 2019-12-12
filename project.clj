@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/encoding "0.0.18"
+(defproject org.pinkgorilla/encoding "0.0.19"
   :description "The encoding of PinkGorilla Notebook."
   :url "https://github.com/pink-gorilla/notebook-encoding"
   :license {:name "MIT"}
