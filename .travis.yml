@@ -1,9 +1,0 @@
-language: clojure
-
-addons:
-  chrome: stable
-  
-install:
-  - npm install
-#jdk:
-#  - openjdk8

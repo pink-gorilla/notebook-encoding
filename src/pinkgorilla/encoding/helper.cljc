@@ -14,21 +14,15 @@
              {:writer writer :out out})
      :cljs (t/writer :json)))
 
-
 (defn to-json [writer o]
   #?(:clj  (do (t/write (:writer writer) o)
                (String. (.toByteArray (:out writer))))
      :cljs (do ;(println "encoding: " o)
-               (try
-                 (t/write writer o)
-                          (catch js/Object ex
-                            (println "encode exception object: " o " ex: "  ex)
-                            "{}")
-                          )
-                 ))
-
-  )
-
+             (try
+               (t/write writer o)
+               (catch js/Object ex
+                 (println "encode exception object: " o " ex: "  ex)
+                 "{}")))))
 
 (defn from-json [s]
   #?(:clj
@@ -50,6 +44,7 @@
 
 ;; COMMENT ENCODING / DECODING
 
+
 (defn make-clojure-comment
   [code]
   #_(println "make-clojure-comment for: " code)
@@ -58,7 +53,6 @@
     (->> (str/split-lines code)
          (map #(str ";;; " %))
          (str/join "\n"))))
-
 
 (defn unmake-line [l]
   (if (nil? l)

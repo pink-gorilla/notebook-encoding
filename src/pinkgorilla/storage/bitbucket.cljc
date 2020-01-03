@@ -6,9 +6,7 @@
 
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage]]))
 
-
 (defrecord StorageBitbucket [user repo revision path])
-
 
 (defmethod query-params-to-storage :bitbucket [_ params]
   (StorageBitbucket.
@@ -16,7 +14,6 @@
    (:repo params)
    (or (:revision params) "HEAD")
    (:path params)))
-
 
 (extend-type StorageBitbucket
   Storage

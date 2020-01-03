@@ -13,3 +13,4 @@ pom.xml.asc
 /node_modules
 /resources
 /test/creds.edn
+.shadow-cljs/

@@ -52,15 +52,13 @@
 
 ;; meta
 
+
 (defn meta-to-segment [meta]
   {:type :code
    :kernel :meta
-   :content  {
-              :value (prn-str meta) 
+   :content  {:value (prn-str meta)
               ;s:type "text/x-clojure"
-              }}
-  )
-
+              }})
 
 (defn encode-notebook
   "encodes a dehydrated notebook"
@@ -73,7 +71,6 @@
     (str ";; gorilla-repl.fileformat = 2\n\n"
          (->> (map to-clojure segments)
               (str/join "\n")))))
-
 
 (defn encode-notebook-hydrated
   "encodes a hydrated notebook

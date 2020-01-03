@@ -8,7 +8,6 @@
 
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
-
 (defrecord StorageGist [id filename user is-public description])
 
 (defn hack-null
@@ -29,7 +28,6 @@
    (or (:is-public params) true)
    (or (:description params) "")))
 
-
 (extend-type StorageGist
   Storage
 
@@ -43,7 +41,6 @@
   (gorilla-path [self]
     (info "gist-storage.gorilla-path")
     (str "/edit?source=gist&filename=" (:filename self) "&id=" (:id self))))
-
 
 #?(:clj
 

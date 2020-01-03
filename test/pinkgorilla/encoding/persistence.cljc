@@ -23,7 +23,6 @@
      :cljs   (let [s (get @content f)]
                s)))
 
-
 (defn load-notebook [f]
   #?(:clj    (let [s (slurp f)]
                (decode s))

@@ -6,12 +6,10 @@
 
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
-
 (defrecord StorageFile [filename])
 
 (defmethod query-params-to-storage :file [_ params]
   (StorageFile. (:filename params)))
-
 
 (extend-type StorageFile
   Storage
@@ -25,8 +23,6 @@
   (gorilla-path [self]
     (info "file-storage.gorilla-path")
     (str "/edit?source=file&filename=" (:filename self))))
-
-
 
 #?(:clj
 
