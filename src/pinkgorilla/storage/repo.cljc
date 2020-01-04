@@ -9,7 +9,6 @@
    [clojure.string]
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
-
 (defrecord StorageRepo [user repo filename])
 
 (defmethod query-params-to-storage :repo [_ params]
@@ -17,7 +16,6 @@
    (:user params)
    (:repo params)
    (or (:path params) (:filename params))))
-
 
 (extend-type StorageRepo
   Storage
@@ -32,8 +30,6 @@
   (gorilla-path [self]
     (info "repo-storage.gorilla-path")
     (str "/edit?source=repo&filename=" (:filename self) "&user=" (:user self) "&repo=" (:repo self))))
-
-
 
 #?(:clj
 

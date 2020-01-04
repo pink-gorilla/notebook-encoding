@@ -58,7 +58,6 @@
 
      "))
 
-
 (defn get-lines [lines]
   (let [;_ (println "lines:    " lines)
        ; lines-with-wrapper (second lines)
@@ -68,8 +67,6 @@
         ]
     (str/join "\n" slines)))
 
-
-
 (defn process-md [seg]
   {:type :free
    :markup-visible false
@@ -77,14 +74,11 @@
    {:value (or (unmake-clojure-comment (get-lines seg)) "")
     :type  "text/x-markdown"}})
 
-
 (defn is-type [kw data]
   (let [t (first data)
         ;_ (println "checking type: " t)
         ]
-    (= t kw)
-    )
-  )
+    (= t kw)))
 
 (defn find-element [data kw]
   (first (filter (partial is-type kw) (rest data))))
@@ -103,10 +97,10 @@
         kernel (find-element inp :KERNEL)
         ;_ (println "k is:" kernel)
         ]
-  {:type :code
-   :kernel (if (nil? kernel) :clj (kernel-s-to-kw(second kernel)) )
-   :content    {:value (or (get-lines lines) "")
-                :type  "text/x-clojure"}}))
+    {:type :code
+     :kernel (if (nil? kernel) :clj (kernel-s-to-kw (second kernel)))
+     :content    {:value (or (get-lines lines) "")
+                  :type  "text/x-clojure"}}))
 
 (defn add-console-response [segment con]
   (assoc segment
@@ -118,7 +112,6 @@
          :value-response
          (from-json (or (unmake-clojure-comment (get-lines (second val))) ""))))
 
-
 (defn add-addon [segment addon]
   (let [addon-type (first addon)
         ;_ (println "processing code-addon type: " addon-type)
@@ -129,7 +122,6 @@
       (do (println "unknwn code-addon type: " addon-type)
           segment))))
 
-
 (defn process-code [seg]
   (let [;_ (println "code is: " seg)
         inp (first seg)
@@ -139,7 +131,6 @@
         ;_ (println "code segment addons: " addons)
         ]
     (reduce add-addon segment addons)))
-
 
 (defn process-segment [seg]
   (let [seg-with-wrapper (second seg)
@@ -155,16 +146,13 @@
 
 (defn meta? [segment]
   (and (= (:type segment) :code)
-       (= (:kernel segment) :meta)
-       ))
+       (= (:kernel segment) :meta)))
 
 (defn get-meta [segments]
   (let [meta-segment (first (filter meta? segments))]
-     (if (nil? meta-segment)
-       {}
-       (edn/read-string (get-in meta-segment [:content :value]))        
-  )))
-
+    (if (nil? meta-segment)
+      {}
+      (edn/read-string (get-in meta-segment [:content :value])))))
 
 (def vector-type
   #?(:clj clojure.lang.PersistentVector
@@ -185,7 +173,7 @@
     (if (= (type nb) vector-type)
       (let [segments (rest (nth nb 2))
             segments (vec (map process-segment segments))
-            segments-no-meta (vec (remove meta? segments)) ]
+            segments-no-meta (vec (remove meta? segments))]
         {:version version
          :meta (get-meta segments)
          :segments segments-no-meta})

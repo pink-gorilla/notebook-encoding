@@ -1,13 +1,10 @@
-(ns pinkgorilla.notebook.new-notebook
+(ns pinkgorilla.notebook.new-notebook-test
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]
    [pinkgorilla.notebook.core  :refer [dehydrate-notebook]]
-   [pinkgorilla.notebook.newnb  :refer [create-new-worksheet]]
-   )
-)
-
+   [pinkgorilla.notebook.newnb  :refer [create-new-worksheet]]))
 
 (deftest encode-new-notebook
   (let [nb-hydrated (create-new-worksheet)
@@ -19,8 +16,6 @@
         ]
     (is (= nb nb-reloaded))))
 
-
 (comment
-  (create-new-worksheet)
-  )
+  (create-new-worksheet))
 

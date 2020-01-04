@@ -1,4 +1,4 @@
-PinkGorilla Notebook - Encoding
+# PinkGorilla Notebook Encoding [![GitHub Actions status |pink-gorilla/notebook-encoding](https://github.com/pink-gorilla/notebook-encoding/workflows/CI/badge.svg)](https://github.com/pink-gorilla/notebook-encoding/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/notebook-encoding.svg)](https://clojars.org/org.pinkgorilla/notebook-encoding)
 
 
 Convert the notebook datastructure in memory to/from string.

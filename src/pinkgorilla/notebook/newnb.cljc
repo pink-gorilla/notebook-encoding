@@ -45,7 +45,6 @@
         noun-index (-> (* (count hip-nouns) (rand)) floor)]
     (str (get hip-adjective adj-index) "-" (get hip-nouns noun-index))))
 
-
 (defn create-new-worksheet
   "A pure function that creates a new worksheet in the browser.
   All db functions used are pure functions!"
@@ -72,7 +71,6 @@
           "     [pinkgorilla.ui.hiccup :refer [html!]] \n"
           "     [pinkgorilla.ui.vega :refer [vega!]] \n"
           "     [pinkgorilla.ui.gorilla-plot.core :refer [list-plot bar-chart compose histogram plot]])) \n"))
-
 
         code-html
         (notebook/create-code-segment

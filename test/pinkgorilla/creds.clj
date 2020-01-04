@@ -1,7 +1,7 @@
 (ns pinkgorilla.creds
   (:require
-    [clojure.java.io :as io]
-    [clojure.edn :as edn]))
+   [clojure.java.io :as io]
+   [clojure.edn :as edn]))
 
 (defn creds
   "Get creds from environment or file. See sample-creds.edn for an example"
@@ -11,6 +11,5 @@
      :gist-id      (System/getenv "GIST_ID")}
     (-> (io/resource "creds.edn")
         (slurp)
-        (edn/read-string))
-    ))
+        (edn/read-string))))
 ;; (comment (creds))

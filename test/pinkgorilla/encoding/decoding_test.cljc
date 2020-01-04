@@ -1,4 +1,4 @@
-(ns pinkgorilla.encoding.decoding-bad-format
+(ns pinkgorilla.encoding.decoding-test
   "
   "
   (:require

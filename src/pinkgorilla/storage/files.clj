@@ -30,9 +30,9 @@
 (defn excluded-file-seq
   [file excludes]
   (tree-seq
-    (fn [f] (and (.isDirectory f) (not (contains? excludes (.getName f)))))
-    (fn [f] (.listFiles f))
-    file))
+   (fn [f] (and (.isDirectory f) (not (contains? excludes (.getName f)))))
+   (fn [f] (.listFiles f))
+   file))
 
 (defn include-file?
   "Should a file be included in the 'load file' list? Currently all .cljg files, and .clj files with a Gorilla header
@@ -44,5 +44,5 @@
   [excludes]
   (map #(str/replace-first (. % getPath) "./" "")
        (filter include-file? (excluded-file-seq
-                               (clojure.java.io/file ".")
-                               excludes))))
+                              (clojure.java.io/file ".")
+                              excludes))))

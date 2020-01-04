@@ -1,8 +1,8 @@
 (ns pinkgorilla.storage.gist-test
   (:require
-    [clojure.test :refer :all]
-    [pinkgorilla.creds :refer [creds]]
-    [pinkgorilla.storage.github :refer [load-gist save-gist]]))
+   [clojure.test :refer :all]
+   [pinkgorilla.creds :refer [creds]]
+   [pinkgorilla.storage.github :refer [load-gist save-gist]]))
 
 (defn tap [s]
   (println "gist id: " s)

@@ -1,10 +1,10 @@
-(ns pinkgorilla.dummy
+(ns pinkgorilla.bongo-test
   (:require
-   #?(:clj [clojure.test :refer :all]
-      :cljs  [cljs.test :refer-macros [async deftest is testing]])))
+   [cljs.test :refer-macros [async deftest is testing]]))
 
 
 ;; DUMMY TEST
+
 
 (defn add [x y] (+ x y))
 

@@ -6,7 +6,6 @@
    [pinkgorilla.encoding.encode :refer [encode-notebook]]
    [pinkgorilla.storage.storage]))
 
-
 (defn empty-notebook
   "creates an empty hydrated notebook"
   []
@@ -34,7 +33,6 @@
         (assoc m k newmap))
       m)
     (dissoc m k)))
-
 
 (defn dehydrate-notebook [notebook]
   (let [segments (segments-ordered notebook)
@@ -81,6 +79,7 @@
 
 ;; manipulate hydrated notebook
 
+
 (defn create-free-segment
   "creates a markdown segment"
   [content]
@@ -114,7 +113,6 @@
    :error-text       nil
    :exception        nil})
 
-
 (defn to-free-segment
   [code-segment]
   {:id             (:id code-segment)
@@ -122,7 +120,6 @@
    :markup-visible false
    :content        {:value (get-in code-segment [:content :value])
                     :type  "text/x-markdown"}})
-
 
 (defn insert-segment-at
   [worksheet new-index new-segment]
@@ -133,7 +130,6 @@
     (merge worksheet {:active-segment new-id
                       :segments       (assoc segments new-id new-segment)
                       :segment-order  (into [] (concat head (conj tail new-id)))})))
-
 
 (defn remove-segment
   [worksheet seg-id]

@@ -18,7 +18,6 @@
           nil)
       (query-params-to-storage stype params))))
 
-
 (defprotocol Storage
 
   (storagetype [self]) ; :file :repo :gist :bitbucket
@@ -27,7 +26,6 @@
 
   (gorilla-path [self]) ; to open a notebook from the sidebar
   )
-
 
 (defprotocol Save
   (storage-save [self notebook tokens]))

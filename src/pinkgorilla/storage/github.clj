@@ -33,25 +33,21 @@
            (extract-gist-result))))
     {:id id :filename filename}))
 
-
 (defn load-gist-all [gist-id & [token]]
   (tentacles.gists/file-contents
    (if (nil? token)
      (tentacles.gists/specific-gist gist-id)
      (tentacles.gists/specific-gist gist-id {:oauth-token token}))))
 
-
 (defn load-gist [gist-id filename & [token]]
   (let [f (keyword filename)]
     (->> (load-gist-all gist-id token)
          (f))))
 
-
 (defn load-repo-raw [user repo path & [token]]
   (if (nil? token)
     (tentacles.repos/contents user repo path {:str? true})
     (tentacles.repos/contents user repo path {:str? true :oauth-token token})))
-
 
 (defn load-repo [user repo path & [token]]
   (:content
@@ -62,6 +58,7 @@
 
 ;; body :message
 
+
 (defn save-repo [user repo path content token]
   (let [commit-message "pinkgorilla notebook save"
         existing-file (load-repo-raw user repo path token)
@@ -70,7 +67,6 @@
     (info "save response: "
           (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token}))
     {:sha sha}))
-
 
 (comment
   (def creds

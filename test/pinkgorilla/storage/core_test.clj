@@ -4,7 +4,7 @@
    [clojure.test :refer :all]
 
   ; dependencies needed to be in cljs bundle: 
-   
+
    [pinkgorilla.storage.storage :as storage]
    [pinkgorilla.storage.file]
    [pinkgorilla.storage.gist]
@@ -15,11 +15,8 @@
    ;[pinkgorilla.storage.direct.gist]
    ;[pinkgorilla.storage.direct.repo]
    ;[pinkgorilla.storage.direct.bitbucket]
-   
-   [pinkgorilla.creds :refer [creds]]
-   
-   ))
 
+   [pinkgorilla.creds :refer [creds]]))
 
 (deftest storage-types-included
   (is (= pinkgorilla.storage.gist.StorageGist
@@ -30,7 +27,6 @@
 
   (is (= pinkgorilla.storage.file.StorageFile
          (type (storage/create-storage {:type :file :filename "test.cljg"})))))
-
 
 (deftest storage-repo-load
   (let [content "hello-repo XXXX\n"

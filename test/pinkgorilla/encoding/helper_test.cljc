@@ -7,10 +7,8 @@
    [pinkgorilla.encoding.decode :refer [decode]]
    [pinkgorilla.encoding.encode :refer [encode-notebook]]))
 
-
 (deftest encode-comment
   (is (= ";;; #test" (make-clojure-comment "#test"))))
-
 
 (deftest decode-comment
   (is (= "#test" (unmake-clojure-comment ";;; #test"))) ; simple comment with crazy character #
