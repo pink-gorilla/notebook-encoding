@@ -1,5 +1,5 @@
-(defproject org.pinkgorilla/encoding "0.0.21-SNAPSHOT"
-  :description "Encoding of PinkGorilla Notebook."
+(defproject org.pinkgorilla/notebook-encoding "0.0.21-SNAPSHOT"
+  :description "Encoding of Pink Gorilla Notebook."
   :url "https://github.com/pink-gorilla/notebook-encoding"
   :license {:name "MIT"}
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
