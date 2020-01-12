@@ -60,7 +60,7 @@
         (notebook/create-code-segment
          (str  "; Automatically Download Dependencies (if they are not installed already) \n "
                "(use '[pinkgorilla.helper]) \n "
-               "(pinkgorilla.helper/add-dependencies '[pinkgorilla.ui.gorilla-plot \"0.8.6\"])"))
+               ";; (pinkgorilla.helper/add-dependencies '[pinkgorilla.ui.gorilla-plot \"0.8.6\"])"))
 
         code-namespace
         (notebook/create-code-segment
@@ -69,8 +69,7 @@
           "(ns " (make-hip-nsname) "  \n"
           "  (:require \n"
           "     [pinkgorilla.ui.hiccup :refer [html!]] \n"
-          "     [pinkgorilla.ui.vega :refer [vega!]] \n"
-          "     [pinkgorilla.ui.gorilla-plot.core :refer [list-plot bar-chart compose histogram plot]])) \n"))
+          "     [pinkgorilla.ui.vega :refer [vega!]]))\n"))
 
         code-html
         (notebook/create-code-segment
@@ -86,10 +85,6 @@
           "    [:img {:height 100 :width 100 :src \"https://images-na.ssl-images-amazon.com/images/I/61LeuO%2Bj0xL._SL1500_.jpg\"}]]])
             "))
 
-        code-plot
-        (notebook/create-code-segment
-         " (list-plot [5 6 7 3 9 20] ) \n")
-
         code-vega
         (notebook/create-code-segment
          (str
@@ -99,5 +94,4 @@
         (notebook/insert-segment-at 1 code-dependencies)
         (notebook/insert-segment-at 2 code-namespace)
         (notebook/insert-segment-at 3 code-html)
-        (notebook/insert-segment-at 4 code-plot)
         (notebook/insert-segment-at 5 code-vega))))
