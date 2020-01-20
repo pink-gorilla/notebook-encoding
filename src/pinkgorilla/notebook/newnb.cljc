@@ -52,7 +52,7 @@
   (let [worksheet (notebook/empty-notebook)
         markdown-howto
         (notebook/create-free-segment
-         (str "# PinkGorilla \n\n"
+         (str "# Pink Gorilla \n\n"
               "Shift + enter evaluates code. "
               "Hit CTRL+g twice in quick succession or click the menu icon (upper-right corner) for more commands.\n\n"
               "It's a good habit to run each worksheet in its own namespace. We created a random namespace for you; you can keep using it."))
@@ -60,7 +60,7 @@
         (notebook/create-code-segment
          (str  "; Automatically Download Dependencies (if they are not installed already) \n "
                "(use '[pinkgorilla.helper]) \n "
-               ";; (pinkgorilla.helper/add-dependencies '[pinkgorilla.ui.gorilla-plot \"0.8.6\"])"))
+               ";; (pinkgorilla.helper/add-dependencies '[org.pinkgorilla/gorilla-plot \"0.8.8\"])"))
 
         code-namespace
         (notebook/create-code-segment
