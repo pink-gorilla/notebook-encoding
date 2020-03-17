@@ -22,6 +22,8 @@
   :source-paths ["src"]
   :test-paths ["test"]
 
+  :plugins [[lein-shell "0.5.0"]]
+  
   :profiles {:dev {:dependencies [[thheller/shadow-cljs "2.8.80"]
                                   ;; [thheller/shadow-cljsjs "0.0.21"]
                                   [clj-kondo "2019.11.23"]]
@@ -40,9 +42,11 @@
                                             try-if-let          [[:block 1]]}}}}
   ;; TODO: prep tasks breaks alias???
   ;; :prep-tasks ["build-shadow-ci"]
-
+  
   :aliases {"build-shadow-ci" ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
-            "bump-version" ["change" "version" "leiningen.release/bump-version"]}
+            "bump-version" ["change" "version" "leiningen.release/bump-version"]
+            "test-js" ^{:doc "Test compiled JavaScript."} 
+            ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]

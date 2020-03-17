@@ -69,12 +69,13 @@
           "(ns " (make-hip-nsname) "  \n"
           "  (:require \n"
           "     [pinkgorilla.ui.hiccup :refer [html!]] \n"
-          "     [pinkgorilla.ui.vega :refer [vega!]]))\n"))
+          "     [pinkgorilla.ui.vega :refer [vega!]]))\n"
+          ))
 
         code-html
         (notebook/create-code-segment
          (str
-          "(html! \n"
+          "^:R \n"
           "  [:div \n"
           "    [:h4 \"Hiccup Markup\"] \n"
           "    [:div {:style \"color:green;font-weight:bold;background-color:pink\"} \"World!\" \n"
@@ -82,13 +83,13 @@
           "       [:li \"The Pinkie\"] \n"
           "       [:li \"The Pinkie and the Brain\"]  \n"
           "       [:li \"What will we be doing today?\"]]  \n"
-          "    [:img {:height 100 :width 100 :src \"https://images-na.ssl-images-amazon.com/images/I/61LeuO%2Bj0xL._SL1500_.jpg\"}]]])
+          "    [:img {:height 100 :width 100 :src \"https://images-na.ssl-images-amazon.com/images/I/61LeuO%2Bj0xL._SL1500_.jpg\"}]]]
             "))
 
         code-vega
         (notebook/create-code-segment
          (str
-          " (vega! \"https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json\" ) \n"))]
+          " ^:R [\"https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json\" ] \n"))]
     (-> worksheet
         (notebook/insert-segment-at 0 markdown-howto)
         (notebook/insert-segment-at 1 code-dependencies)
