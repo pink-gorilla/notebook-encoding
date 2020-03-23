@@ -17,7 +17,7 @@
         store (storage/create-storage {:type :repo
                                        :user "pink-gorilla"
                                        :repo "sample-notebooks"
-                                       :filename "samples/uiplugin/gorillaplot/central-limit.cljg"})
+                                       :filename "samples/v1-no-meta.cljg"})
         meta {}]
     (is (= meta
            (do (->> (notebook/notebook-load store tokens)
