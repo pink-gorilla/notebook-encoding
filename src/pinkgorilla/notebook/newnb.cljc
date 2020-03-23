@@ -69,8 +69,7 @@
           "(ns " (make-hip-nsname) "  \n"
           "  (:require \n"
           "     [pinkgorilla.ui.hiccup :refer [html!]] \n"
-          "     [pinkgorilla.ui.vega :refer [vega!]]))\n"
-          ))
+          "     [pinkgorilla.ui.vega :refer [vega!]]))\n"))
 
         code-html
         (notebook/create-code-segment
