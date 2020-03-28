@@ -24,8 +24,8 @@
         source-multiline (apply str source)]
      ;:cell_type "markdown", :metadata {}, :source ["#
     (case cell-type
-      "markdown" {:markdown (convert-md source-multiline)}
-      "code" {:code (convert-code source-multiline)}
+      "markdown" (convert-md source-multiline)
+      "code" (convert-code source-multiline)
       nil)))
 
 (defn- parse-cells [notebook]
@@ -53,6 +53,8 @@
   ; :nbformat_minor 2}
 
   (decode :jupyter (slurp "test/notebooks/basic-concepts.ipynb"))
+  (decode :gorilla (slurp "test/notebooks/reagent-manipulate.cljg"))
+
 
 ; comment end
   )
