@@ -33,6 +33,8 @@
 
   (storagetype [self] :gist)
 
+  (storageformat [self] :gorilla)
+
   (external-url [self]
     (info "local-storage.external-url")
     ;https://gist.github.com/awb99/55b101d84d9b3814c46a4f9fbadcf2f8

@@ -158,7 +158,11 @@
   #?(:clj clojure.lang.PersistentVector
      :cljs cljs.core/PersistentVector))
 
-(defn decode [s]
+#?(:clj (defmulti decode (fn [t p] t))
+   :cljs (defmulti decode identity))
+
+;(defn decode [s]
+(defmethod decode :gorilla [_ s]
   (let [nb (parse-notebook s)
         ;_ (println "parse result type is: " (type nb))
         ;_ (println "notebook: " nb)

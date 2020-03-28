@@ -16,7 +16,7 @@
                   [com.taoensso/timbre "4.10.0"] ; cljs logging
                   [org.clojure/tools.logging "0.5.0"] ; clj logging
                   [irresponsible/tentacles "0.6.6"] ; github api  https://github.com/clj-commons/tentacles
-                  [cheshire "5.7.1"] ; tentacles dependency
+                  [cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
                   ]
 
   :source-paths ["src"]

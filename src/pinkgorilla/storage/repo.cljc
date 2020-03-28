@@ -22,6 +22,8 @@
 
   (storagetype [self] :repo)
 
+  (storageformat [self] :gorilla)
+
   (external-url [self]
     (info "local-storage.external-url")
     ;https://github.com/pink-junkjard/tailwind-workstation-screencast/blob/master/src/workation/core.cljs

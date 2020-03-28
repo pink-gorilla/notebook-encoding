@@ -25,9 +25,9 @@
 
 (defn load-notebook [f]
   #?(:clj    (let [s (slurp f)]
-               (decode s))
+               (decode :gorilla s))
      :cljs   (let [s (get @content f)]
-               (decode s))))
+               (decode :gorilla s))))
 
 (defn save-notebook [f notebook]
   #?(:clj (let [s (encode-notebook notebook)]

@@ -1,10 +1,19 @@
 (ns pinkgorilla.storage.file
   (:require
-
    #?(:clj [clojure.tools.logging :refer (info)]
       :cljs [taoensso.timbre :refer-macros (info)])
-
+   [clojure.string]
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
+
+(defn filename-format [filename]
+  (->> filename
+       (clojure.string/lower-case)
+       (re-find #"\.([a-z]*)$")
+       (last)
+       (#(case %
+           "cljg" :gorilla
+           "ipynb" :jupyter
+           :gorilla))))
 
 (defrecord StorageFile [filename])
 
@@ -15,6 +24,9 @@
   Storage
 
   (storagetype [self] :file)
+
+  (storageformat [self]
+    (filename-format (:filename self)))
 
   (external-url [self]
     (info "file-storage.external-url")
@@ -40,5 +52,12 @@
        (info "Loading Notebook from file: " (:filename self))
        (slurp (:filename self)))))
 
+(comment
 
+  (re-find #"\.([a-z]*)$" "../../hhh/bongo.ipynb")
 
+  (filename-format "demo.cljg")
+  (filename-format "../../quant/trateg/notebooks/basic-concepts.ipynb")
+
+  ; comment end
+  )

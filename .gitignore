@@ -14,3 +14,6 @@ pom.xml.asc
 /resources
 /test/creds.edn
 .shadow-cljs/
+.classpath
+.project
+.settings/
