@@ -49,7 +49,7 @@
            {:filename (:filename self)})))
      Load
      (storage-load [self tokens]
-       (info "Loading Notebook from file: " (:filename self))
+       ;(info "Loading Notebook from file: " (:filename self))
        (slurp (:filename self)))))
 
 (comment
