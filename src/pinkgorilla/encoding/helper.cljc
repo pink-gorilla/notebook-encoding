@@ -4,7 +4,7 @@
    [cognitect.transit :as t]))
 
 ;; Cognitec TRANSIT WRITER
-;; make json encoding indepenent of clj/cljs
+;; make json encoding independent of clj/cljs
 
 #?(:clj (import '[java.io ByteArrayInputStream ByteArrayOutputStream]))
 

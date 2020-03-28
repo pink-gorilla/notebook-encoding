@@ -13,7 +13,7 @@
 (deftest decode-raw-notebook
   (let [s (load-str f2)
         parse-result (parse-notebook s)
-        notebook (decode s)]
+        notebook (decode :gorilla s)]
     (is (= (type parse-result) instaparse.gll.Failure))
     (is (= notebook nil))))
 

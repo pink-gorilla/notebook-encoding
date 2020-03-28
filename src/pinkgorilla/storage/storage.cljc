@@ -22,6 +22,8 @@
 
   (storagetype [self]) ; :file :repo :gist :bitbucket
 
+  (storageformat [self]) ; gorilla :jupyter
+
   (external-url [self]) ; to view raw persisted data in browser.
 
   (gorilla-path [self]) ; to open a notebook from the sidebar

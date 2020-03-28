@@ -2,7 +2,7 @@
   "test encoding by loading a notebook from disk, then saving it to
    a temporary file and then loading the temporary file. 
 
-   currently oly working for clj
+   currently only working for clj
    TODO: cljs inject test notebooks via macros to the bundle.
   "
   (:require

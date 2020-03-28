@@ -4,7 +4,7 @@
    [pinkgorilla.notebook.uuid :refer [guuid]]
    [pinkgorilla.encoding.decode :refer [decode]]
    [pinkgorilla.encoding.encode :refer [encode-notebook]]
-   [pinkgorilla.storage.storage]))
+   [pinkgorilla.storage.storage :refer [storage-load storage-save]]))
 
 (defn empty-notebook
   "creates an empty hydrated notebook"
@@ -58,8 +58,11 @@
            :segment-order ids
            :segments m)))
 
-(defn load-notebook-hydrated [str]
-  (hydrate-notebook (decode str)))
+(defn load-notebook-hydrated
+  ([str]
+   (load-notebook-hydrated :gorilla str))
+  ([format str]
+   (hydrate-notebook (decode format str))))
 
 (defn save-notebook-hydrated [notebook]
   (encode-notebook (dehydrate-notebook notebook)))
@@ -68,10 +71,10 @@
 
 (defn notebook-save [storage tokens notebook]
   (let [content (save-notebook-hydrated notebook)]
-    (pinkgorilla.storage.storage/storage-save storage content tokens)))
+    (storage-save storage content tokens)))
 
 (defn notebook-load [storage tokens]
-  (let [content (pinkgorilla.storage.storage/storage-load storage tokens)
+  (let [content (storage-load storage tokens)
         ;_ (println "content is:" content)
         ]
     (load-notebook-hydrated content)))

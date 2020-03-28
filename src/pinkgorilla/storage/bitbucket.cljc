@@ -20,6 +20,8 @@
 
   (storagetype [self] :bitbucket)
 
+  (storageformat [self] :gorilla)
+
   (external-url [self]
     (info "local-storage.external-url")
     nil)
