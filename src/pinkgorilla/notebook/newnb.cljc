@@ -19,8 +19,8 @@
         code-dependencies
         (notebook/create-code-segment
          (str  "; Automatically Download Dependencies (if they are not installed already) \n "
-               "(use '[pinkgorilla.helper]) \n "
-               "(pinkgorilla.helper/add-dependencies '[org.pinkgorilla/gorilla-plot \"0.9.2\"])"))
+               "(use '[pinkgorilla.notebook.repl]) \n "
+               "(pinkgorilla.notebook.repl/add-dependencies '[org.pinkgorilla/gorilla-plot \"0.9.3\"])"))
 
         code-namespace
         (notebook/create-code-segment
@@ -50,7 +50,7 @@
         code-vega
         (notebook/create-code-segment
          (str
-          " ^:R [:vega \"https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json\" ]"))
+          " ^:R [:p/vega \"https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json\" ]"))
         code-plot
         (notebook/create-code-segment
          (str
