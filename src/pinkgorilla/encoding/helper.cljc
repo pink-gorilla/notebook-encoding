@@ -12,7 +12,7 @@
   #?(:clj  (let [out (ByteArrayOutputStream. (* 4096 1024))
                  writer (t/writer out :json {:transform t/write-meta})]
              {:writer writer :out out})
-     :cljs (t/writer :json)))
+     :cljs (t/writer :json {:transform t/write-meta})))
 
 (defn to-json [writer o]
   #?(:clj  (do (t/write (:writer writer) o)
