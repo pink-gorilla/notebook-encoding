@@ -35,4 +35,27 @@
         _ (save-notebook f notebook-simple)]
     (is (= notebook-simple (load-notebook f)))))
 
+(def notebook-meta-value
+  {:version 2
+   :meta {:a 17
+          :msg "simple-notebook"
+          :experimental :on}
+   :segments
+   [{:type :code
+     :kernel :clj
+     :content {:value "(+ 7 7)"
+               :type "text/x-clojure"}
+     :console-response "adding numbers.."
+     :value-response {:type "html" :content ^{:p/render-as true} [:span "14"]}}]})
+
+(deftest encode-meta-value
+  (let [f "/tmp/notebook-meta-value.cljg"
+        _ (save-notebook f notebook-meta-value)
+        loadback (load-notebook f)]
+    (is (= notebook-meta-value loadback))
+    (is (= {:p/render-as true} (-> loadback :segments first :value-response :content meta)))))
+
+
+
+
 
