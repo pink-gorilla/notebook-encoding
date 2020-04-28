@@ -17,12 +17,11 @@ a `sample-creds.edn` to copy for convenience.
 
 cljs:
 ´´´
-lein doo
+lein test-js
 ´´´
 
 
 ## Todo:
-- unit test clojurescript - inject notebook strings via macro to code
 - add spec from notebook here
 - extract clojure / clojurescript routine move here from notebook
 - add kernel type 

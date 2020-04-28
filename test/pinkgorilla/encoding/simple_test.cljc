@@ -37,9 +37,7 @@
 
 (def notebook-meta-value
   {:version 2
-   :meta {:a 17
-          :msg "simple-notebook"
-          :experimental :on}
+   :meta {}
    :segments
    [{:type :code
      :kernel :clj
