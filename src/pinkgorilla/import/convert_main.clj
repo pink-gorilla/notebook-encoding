@@ -3,6 +3,8 @@
    [pinkgorilla.import.clj-import :refer [clj->convert]])
   (:gen-class))
 
-(defn -main [file-name]
-  (println "converting clj file: " file-name)
-  (clj->convert file-name))
+(defn -main [& args]
+  (println "nbconvert args: " args)
+  (let [file-name (last args)]
+    (println "converting clj file: " file-name)
+    (clj->convert file-name)))
