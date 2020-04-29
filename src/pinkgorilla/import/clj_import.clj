@@ -1,5 +1,7 @@
 (ns pinkgorilla.import.clj-import
   (:require
+   [clojure.tools.reader :as tr]
+   [clojure.tools.reader.reader-types :as rts]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
   ; dependencies needed to be in cljs bundle:  
@@ -27,7 +29,7 @@
 (defn code->segment [code]
   {:type :code
    :kernel :clj
-   :content  {:value (pr-str code)
+   :content  {:value code ; (pr-str code)
               :type "text/x-clojure"}})
 
 (defn add-segments [notebook segments]
@@ -35,15 +37,29 @@
                        (concat (:segments notebook) segments))]
     (assoc notebook :segments segments)))
 
-;; adapted from: http://stackoverflow.com/a/24922859/6264 
+(defn read-forms-clj
+  [file-name]
+  (let [rdr (-> file-name io/file io/reader PushbackReader.)]
+    (loop [forms []]
+      (let [form (try (read rdr) (catch Exception e nil))]
+        (if form
+          (recur (conj forms form))
+          forms)))))
+
+(defn file->topforms-with-metadata [path]
+  (->> path
+       slurp
+       rts/source-logging-push-back-reader
+       repeat
+       ;(map #(tr/read {:read-cond :preserve} %))
+       (map #(tr/read  % false :EOF))
+       (take-while (partial not= :EOF))))
 
 (defn read-forms [file-name]
-  (let [rdr (-> file-name io/file io/reader PushbackReader.) sentinel (Object.)]
-    (loop [forms []]
-      (let [form (edn/read {:eof sentinel} rdr)]
-        (if (= sentinel form) forms (recur (conj forms form)))))))
+  (map #(-> % meta :source)
+       (file->topforms-with-metadata file-name)))
 
-(defn clj->notebook [file-name]
+(defn clj->notebook-reader [file-name]
   (let [forms (read-forms file-name)
         segment-forms (map code->segment forms)
         notebook empty-notebook-imported]

@@ -5,7 +5,7 @@
    [pinkgorilla.storage.storage :as storage]
    [pinkgorilla.storage.file]
    ; pinkgorilla
-   [pinkgorilla.import.clj-import :refer [read-forms clj->notebook clj->convert]]
+   [pinkgorilla.import.clj-import :refer [read-forms clj->notebook clj->convert file->topforms-with-metadata]]
    [pinkgorilla.notebook.core :refer [notebook-load]]))
 
 (def example-code
@@ -40,5 +40,16 @@
     (is (= (count (:segments notebook)) 5))))
 
 (comment
-  (clj->notebook  "/tmp/import-test.clj"))
+  (read-forms "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/test.clj")
+  (read-forms "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/techml-datatable-dplyr.clj")
+
+  (map meta
+       (file->topforms-with-metadata "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/techml-datatable-dplyr.clj"))
+
+  (map meta
+       (file->topforms-with-metadata "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/test.clj"))
+
+  (clj->notebook  "/tmp/import-test.clj")
+
+  (clj->convert "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/techml-datatable-dplyr.clj"))
 
