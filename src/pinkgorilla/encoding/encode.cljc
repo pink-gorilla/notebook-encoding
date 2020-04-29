@@ -74,7 +74,7 @@
 
 (defn encode-notebook-hydrated
   "encodes a hydrated notebook
-   awb99: it appesrs this function is no longer required?"
+   awb99: it appears this function is no longer required?"
   [notebook]
   (let [segments-unsorted (:segments notebook)
         segment-ids (:segment-order notebook)

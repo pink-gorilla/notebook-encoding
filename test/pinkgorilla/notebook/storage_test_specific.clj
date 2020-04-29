@@ -6,10 +6,7 @@
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))
 
-
-
 ;;version 1 does not have meta information
-;; TODO: deas tell difference in file format
 
 
 (deftest repo-storage-version-1

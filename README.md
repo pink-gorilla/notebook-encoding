@@ -7,24 +7,29 @@ The string gets read/written to the .cljg notebook files.
 # Unit Tests
 
 clj:
-´´´
+
+```
 lein test
 lein test :only pinkgorilla.notebook.new-notebook
-´´´
+```
 
 Tests going to github need credential file: `test/creds.edn`. There is is
 a `sample-creds.edn` to copy for convenience.
 
 cljs:
-´´´
+```
 lein test-js
-´´´
+```
+
+# .clj -> Notebook Converter
+```
+lein convert /tmp/import-test.clj
+```
+clj code in /tmp/import-test.clj will be saved as a pink-gorilla notebook to /tmp/import-test.cljg
 
 
 ## Todo:
 - add spec from notebook here
 - extract clojure / clojurescript routine move here from notebook
-- add kernel type 
-- add meta
 - cli utility to test all notebooks ?
 

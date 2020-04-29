@@ -1,10 +1,8 @@
 (ns pinkgorilla.storage.core-test
   (:require
-
    [clojure.test :refer :all]
 
   ; dependencies needed to be in cljs bundle: 
-
    [pinkgorilla.storage.storage :as storage]
    [pinkgorilla.storage.file]
    [pinkgorilla.storage.gist]

@@ -24,9 +24,10 @@
   :test-paths ["test"]
 
   :plugins [[lein-shell "0.5.0"]]
-  
-  :profiles {:dev {:dependencies [[thheller/shadow-cljs "2.8.80"]
-                                  ;; [thheller/shadow-cljsjs "0.0.21"]
+
+  :profiles {:convert {; converts clj file to notebook
+                       :main ^:skip-aot pinkgorilla.import.convert-main}
+             :dev {:dependencies [[thheller/shadow-cljs "2.8.80"]
                                   [clj-kondo "2019.11.23"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]]
@@ -43,11 +44,15 @@
                                             try-if-let          [[:block 1]]}}}}
   ;; TODO: prep tasks breaks alias???
   ;; :prep-tasks ["build-shadow-ci"]
-  
-  :aliases {"build-shadow-ci" ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
-            "bump-version" ["change" "version" "leiningen.release/bump-version"]
-            "test-js" ^{:doc "Test compiled JavaScript."} 
-            ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]}
+
+  :aliases {"build-shadow-ci"
+            ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
+            "bump-version"
+            ["change" "version" "leiningen.release/bump-version"]
+            "test-js" ^{:doc "Test compiled JavaScript."}
+            ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
+            "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
+            ["with-profile" "convert" "run"]}
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
