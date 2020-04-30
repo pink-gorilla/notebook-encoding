@@ -11,6 +11,13 @@
    [pinkgorilla.encoding.persistence :refer [save-notebook]])
   (:import [java.io PushbackReader]))
 
+
+;; options for clojure reader:
+;; https://github.com/cgrand/sjacket
+;; There are also other clojure parsers,
+;;  I'm using https://github.com/xsc/rewrite-clj
+;;  and I've heard good things about https://github.com/carocad/parcera (b
+
 (def empty-notebook
   "empty persisted notebook"
   {:version 2
