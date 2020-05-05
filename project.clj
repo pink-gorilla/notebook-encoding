@@ -6,6 +6,23 @@
                                      :username :env/release_username
                                      :password :env/release_password
                                      :sign-releases false}]]
+  :release-tasks [["vcs" "assert-committed"]
+                  ["bump-version" "release"]
+                  ["vcs" "commit" "Release %s"]
+                  ["vcs" "tag" "v" "--no-sign"]
+                  ["deploy"]
+                  ["bump-version"]
+                  ["vcs" "commit" "Begin %s"]
+                  ["vcs" "push"]]
+  
+  ;; TODO: prep tasks breaks alias???
+  ;; :prep-tasks ["build-shadow-ci"]
+  
+  :source-paths ["src"]
+  :test-paths ["test"]
+
+  :plugins [[lein-shell "0.5.0"]]
+
   :dependencies  [[org.clojure/clojure "1.10.1"]
                   ;; [org.clojure/clojurescript "1.10.520"] ; adding this fucks up shadow-build
                   [org.clojure/tools.logging "0.5.0"]
@@ -19,11 +36,6 @@
                   [irresponsible/tentacles "0.6.6"] ; github api  https://github.com/clj-commons/tentacles
                   [cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
                   ]
-
-  :source-paths ["src"]
-  :test-paths ["test"]
-
-  :plugins [[lein-shell "0.5.0"]]
 
   :profiles {:convert {; converts clj file to notebook
                        :main ^:skip-aot pinkgorilla.import.convert-main}
@@ -42,8 +54,7 @@
                                             with-debug-bindings [[:inner 0]]
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}}
-  ;; TODO: prep tasks breaks alias???
-  ;; :prep-tasks ["build-shadow-ci"]
+
 
   :aliases {"build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
@@ -52,15 +63,6 @@
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
             "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
-            ["with-profile" "convert" "run"]}
-
-  :release-tasks [["vcs" "assert-committed"]
-                  ["bump-version" "release"]
-                  ["vcs" "commit" "Release %s"]
-                  ["vcs" "tag" "v" "--no-sign"]
-                  ["deploy"]
-                  ["bump-version"]
-                  ["vcs" "commit" "Begin %s"]
-                  ["vcs" "push"]])
+            ["with-profile" "convert" "run"]})
 
 

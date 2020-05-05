@@ -1,8 +1,12 @@
 # PinkGorilla Notebook Encoding [![GitHub Actions status |pink-gorilla/notebook-encoding](https://github.com/pink-gorilla/notebook-encoding/workflows/CI/badge.svg)](https://github.com/pink-gorilla/notebook-encoding/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/notebook-encoding.svg)](https://clojars.org/org.pinkgorilla/notebook-encoding)
 
-
 Convert the notebook datastructure in memory to/from string.
 The string gets read/written to the .cljg notebook files.
+
+# Features
+- Storage Backends: file, github repo, github gist
+- Formats: pinkgorilla (v1/v2), jupyter, clj (import)
+- parsing works on clj and cljs
 
 # Unit Tests
 

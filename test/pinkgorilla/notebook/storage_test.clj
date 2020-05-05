@@ -51,7 +51,7 @@
   (let [tokens (creds)
         store (storage/create-storage {:type :repo
                                        :user "pink-gorilla"
-                                       :repo "sample-notebooks"
+                                       :repo "unittest-notebooks"
                                        :filename "unittest-meta1.cljg"})
         meta {:test 456}
         nb (notebook/empty-notebook)

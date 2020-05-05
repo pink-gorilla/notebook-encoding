@@ -30,7 +30,7 @@
   (let [content "hello-repo XXXX\n"
         s (storage/create-storage {:type :repo
                                    :user "pink-gorilla"
-                                   :repo "sample-notebooks"
+                                   :repo "unittest-notebooks"
                                    :filename "unittest-load.txt"})]
 
     (is (= content (storage/storage-load s nil))) ; nil creds

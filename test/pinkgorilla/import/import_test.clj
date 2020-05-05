@@ -20,8 +20,9 @@
 (deftest forms-import-test
   (let [file-name  "/tmp/import-test.clj"
         _ (spit file-name example-code)
+        example-forms-str (map str example-forms)
         forms (read-forms file-name)]
-    (is (= forms example-forms))))
+    (is (= example-forms-str forms))))
 
 (deftest import-clj-notebook
   (let [file-name  "/tmp/import-test.clj"

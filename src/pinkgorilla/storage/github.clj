@@ -73,7 +73,7 @@
     (-> (slurp "/tmp/creds.edn")
         (clojure.edn/read-string)))
 
-  (save-repo "pink-gorilla" "sample-notebooks" "unittest.txt" "test!" (:github-token creds))
+  (save-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" "test!" (:github-token creds))
 
-  (load-repo "pink-gorilla" "sample-notebooks" "unittest.txt" (:github-token creds)))
+  (load-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" (:github-token creds)))
 

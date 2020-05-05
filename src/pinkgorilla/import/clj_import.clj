@@ -11,7 +11,6 @@
    [pinkgorilla.encoding.persistence :refer [save-notebook]])
   (:import [java.io PushbackReader]))
 
-
 ;; options for clojure reader:
 ;; https://github.com/cgrand/sjacket
 ;; There are also other clojure parsers,
@@ -36,7 +35,7 @@
 (defn code->segment [code]
   {:type :code
    :kernel :clj
-   :content  {:value code ; (pr-str code)
+   :content  {:value code
               :type "text/x-clojure"}})
 
 (defn add-segments [notebook segments]
@@ -66,7 +65,7 @@
   (map #(-> % meta :source)
        (file->topforms-with-metadata file-name)))
 
-(defn clj->notebook-reader [file-name]
+(defn clj->notebook [file-name]
   (let [forms (read-forms file-name)
         segment-forms (map code->segment forms)
         notebook empty-notebook-imported]

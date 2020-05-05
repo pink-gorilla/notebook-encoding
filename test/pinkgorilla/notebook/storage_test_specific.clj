@@ -13,7 +13,7 @@
   (let [tokens (creds)
         store (storage/create-storage {:type :repo
                                        :user "pink-gorilla"
-                                       :repo "sample-notebooks"
+                                       :repo "unittest-notebooks"
                                        :filename "samples/v1-no-meta.cljg"})
         meta {}]
     (is (= meta
