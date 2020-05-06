@@ -4,11 +4,11 @@
    [clojure.tools.reader.reader-types :as rts]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
+   [clojure.string]
   ; dependencies needed to be in cljs bundle:  
    [pinkgorilla.storage.storage :refer [create-storage] :as storage]
    [pinkgorilla.storage.file]
-   ; pinkgorilla
-   [pinkgorilla.encoding.persistence :refer [save-notebook]])
+   [pinkgorilla.encoding.encode :refer [encode-notebook]])
   (:import [java.io PushbackReader]))
 
 ;; options for clojure reader:
@@ -70,6 +70,10 @@
         segment-forms (map code->segment forms)
         notebook empty-notebook-imported]
     (add-segments notebook segment-forms)))
+
+(defn save-notebook [f notebook]
+  (let [s (encode-notebook notebook)]
+    (spit f s)))
 
 (defn clj->convert [file-name]
   (let [notebook (clj->notebook file-name)
