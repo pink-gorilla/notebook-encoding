@@ -6,7 +6,8 @@
    [pinkgorilla.storage.file]
    ; pinkgorilla
    [pinkgorilla.import.clj-import :refer [read-forms clj->notebook clj->convert file->topforms-with-metadata]]
-   [pinkgorilla.notebook.core :refer [notebook-load]]))
+   [pinkgorilla.notebook.core :refer [notebook-load]]
+   [pinkgorilla.import.convert-main :refer [to-gorilla]]))
 
 (def example-code
   "(def a 2) (def b 3) (defn add-two [x y] (+ x y)) (println (add-two a b))")
@@ -52,5 +53,10 @@
 
   (clj->notebook  "/tmp/import-test.clj")
 
-  (clj->convert "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/techml-datatable-dplyr.clj"))
+  (clj->convert "/home/andreas/Documents/gorilla/python-gorilla/resources/notebooks/techml-datatable-dplyr.clj")
+
+  (to-gorilla "test/notebooks/basic-concepts.ipynb")
+
+ ; 
+  )
 
