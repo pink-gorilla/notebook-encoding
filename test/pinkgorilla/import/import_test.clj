@@ -54,8 +54,8 @@
 
   (clj->notebook  "/tmp/import-test.clj")
 
-  (clj->convert "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/techml-datatable-dplyr.clj")
-  (clj->notebook-marginalia "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/techml-datatable-dplyr.clj")
+  (clj->convert             "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/datatable_dplyr.clj")
+  (clj->notebook-marginalia "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/datatable_dplyr.clj")
   (to-gorilla "test/notebooks/basic-concepts.ipynb")
 
  ; 
