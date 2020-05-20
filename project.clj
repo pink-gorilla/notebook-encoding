@@ -36,6 +36,7 @@
                   [irresponsible/tentacles "0.6.6"] ; github api  https://github.com/clj-commons/tentacles
                   [cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
                   [me.raynes/fs "1.4.6"]
+                  [marginalia "0.9.1"] ; clj parser
                   ]
 
   :profiles {:convert {; converts clj file to notebook
