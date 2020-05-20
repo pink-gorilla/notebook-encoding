@@ -24,7 +24,6 @@
   :plugins [[lein-shell "0.5.0"]]
 
   :dependencies  [[org.clojure/clojure "1.10.1"]
-                  ;; [org.clojure/clojurescript "1.10.520"] ; adding this fucks up shadow-build
                   [org.clojure/tools.logging "0.5.0"]
                   [instaparse "1.4.10"] ; used in decoding
                   [com.cognitect/transit-clj "0.8.319"] ; used in encoding - clojure
@@ -35,7 +34,9 @@
                   [org.clojure/tools.logging "0.5.0"] ; clj logging
                   [irresponsible/tentacles "0.6.6"] ; github api  https://github.com/clj-commons/tentacles
                   [cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
-                  [me.raynes/fs "1.4.6"]
+                  [me.raynes/fs "1.4.6"]                  
+                  [org.clojure/clojurescript "1.10.741"] ; for marginalia
+                  [org.clojure/tools.cli "1.0.194"] ; for marginalia
                   [marginalia "0.9.1" 
                    :exclusions [org.clojure/clojurescript
                                 org.clojure/tools.cli]] ; clj parser
