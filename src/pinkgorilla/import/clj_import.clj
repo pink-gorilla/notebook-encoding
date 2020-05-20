@@ -87,7 +87,7 @@
 
 (defn marginalia->segment
   [{:keys [docstring raw form type] :as all}]
-  (println "marginalia->segment " all)
+  ;(println "marginalia->segment " all)
   (case type
     :code (code->segment (str raw))
     :comment (if (str/starts-with? raw "=>")
