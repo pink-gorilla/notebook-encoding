@@ -1,4 +1,4 @@
-(ns pinkgorilla.storage.rules
+(ns pinkgorilla.notebook.rules
   (:require
    #?(:clj [clojure.tools.logging :refer [info]]
       :cljs [taoensso.timbre :refer-macros [info]])

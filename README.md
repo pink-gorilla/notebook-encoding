@@ -26,6 +26,7 @@ lein test-js
 ```
 
 # .clj -> Notebook Converter
+
 ```
 lein convert /tmp/import-test.clj
 ```
@@ -42,3 +43,4 @@ alias nbconvert="cd /home/andreas/Documents/gorilla/notebook-encoding && lein co
 - extract clojure / clojurescript routine move here from notebook
 - cli utility to test all notebooks ?
 
+- github api tentacles does not support cljs!
