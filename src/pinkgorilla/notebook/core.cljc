@@ -2,8 +2,7 @@
   (:require
    [clojure.string :as str]
    [pinkgorilla.notebook.uuid :refer [guuid]]
-   [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]]
+   [pinkgorilla.encoding.protocols :refer [decode encode]]
    [pinkgorilla.storage.storage :refer [storage-load storage-save]]))
 
 (defn empty-notebook
@@ -65,7 +64,7 @@
    (hydrate-notebook (decode format str))))
 
 (defn save-notebook-hydrated [notebook]
-  (encode-notebook (dehydrate-notebook notebook)))
+  (encode :gorilla (dehydrate-notebook notebook)))
 
 ;; load / save hydrated notebook to/from storage
 

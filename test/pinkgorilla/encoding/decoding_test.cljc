@@ -1,11 +1,11 @@
 (ns pinkgorilla.encoding.decoding-test
-  "
-  "
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
+   [pinkgorilla.notebook.default-config] ; side effects
+   [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.encoding.persistence :refer [load-notebook load-str save-notebook]]
-   [pinkgorilla.encoding.decode :refer [parse-notebook decode]]))
+   [pinkgorilla.encoding.decode :refer [parse-notebook]]))
 
 ; awb99: TODO: in cljs this currently gets an empty string and not the file
 

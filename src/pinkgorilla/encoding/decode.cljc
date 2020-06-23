@@ -3,6 +3,7 @@
    [clojure.string :as str]
    [clojure.edn :as edn]
    [instaparse.core :as insta]
+   [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.encoding.helper :refer [unmake-clojure-comment from-json]]))
 
 (def parse-notebook
@@ -158,10 +159,11 @@
   #?(:clj clojure.lang.PersistentVector
      :cljs cljs.core/PersistentVector))
 
-#?(:clj (defmulti decode (fn [t p] t))
-   :cljs (defmulti decode identity))
+
 
 ;(defn decode [s]
+
+
 (defmethod decode :gorilla [_ s]
   (let [nb (parse-notebook s)
         ;_ (println "parse result type is: " (type nb))

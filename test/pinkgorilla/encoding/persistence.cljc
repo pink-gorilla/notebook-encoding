@@ -1,13 +1,12 @@
 (ns pinkgorilla.encoding.persistence
-  " clojure persistence loads/saves from disk.
-    clojurescript persistence loads/saves to an atom.
-    TODO: inject file content to this atom via macros, so that at test
-    time the same test notebooks as for clojure are available in
-    clojurescript
-    "
+  "clojure persistence loads/saves from disk.
+   clojurescript persistence loads/saves to an atom.
+   TODO: inject file content to this atom via macros, so that at test
+   time the same test notebooks as for clojure are available in
+   clojurescript"
   (:require
-   [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]])
+   [pinkgorilla.notebook.default-config] ; side effects
+   [pinkgorilla.encoding.protocols :refer [decode encode]])
   #?(:cljs (:require-macros [pinkgorilla.macros :refer [inline-resource]])))
 
 #?(:cljs
@@ -30,8 +29,8 @@
                (decode :gorilla s))))
 
 (defn save-notebook [f notebook]
-  #?(:clj (let [s (encode-notebook notebook)]
+  #?(:clj (let [s (encode :gorilla notebook)]
             (spit f s))
-     :cljs (let [s (encode-notebook notebook)]
+     :cljs (let [s (encode :gorilla notebook)]
              (swap! content assoc f s))))
 

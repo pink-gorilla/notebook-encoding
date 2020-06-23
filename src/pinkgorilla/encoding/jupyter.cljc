@@ -3,20 +3,8 @@
    TODO: parse output, console"
   (:require
    [pinkgorilla.encoding.helper :refer [from-json]]
-   [pinkgorilla.encoding.decode :refer [decode]]))
-
-(defn- convert-md [source]
-  {:type :free
-   :markup-visible false
-   :content
-   {:value source
-    :type  "text/x-markdown"}})
-
-(defn- convert-code [source]
-  {:type    :code
-   :kernel  :clj
-   :content {:value source
-             :type  "text/x-clojure"}})
+   [pinkgorilla.notebook.helper :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
+   [pinkgorilla.encoding.protocols :refer [decode]]))
 
 (defn- parse-cell [cell]
   (let [cell-type (get cell "cell_type")
@@ -24,8 +12,8 @@
         source-multiline (apply str source)]
      ;:cell_type "markdown", :metadata {}, :source ["#
     (case cell-type
-      "markdown" (convert-md source-multiline)
-      "code" (convert-code source-multiline)
+      "markdown" (md->segment source-multiline)
+      "code" (code->segment :clj source-multiline)
       nil)))
 
 (defn- parse-cells [notebook]

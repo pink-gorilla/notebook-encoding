@@ -1,7 +1,8 @@
 (ns pinkgorilla.storage.github
   (:require
-   [clojure.tools.logging :refer (info)]
-   [clojure.string]
+      [clojure.string]
+   #?(:clj [clojure.tools.logging :refer [info]]
+      :cljs [taoensso.timbre :refer-macros [info]])
    [tentacles.gists]
    [tentacles.repos]))
 
@@ -69,9 +70,8 @@
     {:sha sha}))
 
 (comment
-  (def creds
-    (-> (slurp "/tmp/creds.edn")
-        (clojure.edn/read-string)))
+  
+  (def creds {:github-token ""}))
 
   (save-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" "test!" (:github-token creds))
 

@@ -2,9 +2,9 @@
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
+   [pinkgorilla.notebook.default-config] ; side effects
    [pinkgorilla.storage.file :refer [filename-format]]
-   [pinkgorilla.encoding.jupyter] ; bring multimethods to bundle
-   [pinkgorilla.encoding.decode :refer [decode]]
+   [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]))
 
 (deftest format-detection

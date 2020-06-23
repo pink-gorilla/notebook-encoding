@@ -1,11 +1,8 @@
 (ns pinkgorilla.storage.gist
   (:require
-
-   #?(:clj [clojure.tools.logging :refer (info)]
-      :cljs [taoensso.timbre :refer-macros (info)])
-
+   #?(:clj [clojure.tools.logging :refer [info]]
+      :cljs [taoensso.timbre :refer-macros [info]])
    #?(:clj [pinkgorilla.storage.github :refer [save-gist load-gist]])
-
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
 (defrecord StorageGist [id filename user is-public description])

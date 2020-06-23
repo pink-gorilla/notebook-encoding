@@ -2,10 +2,9 @@
   (:require
    #?(:clj  [clojure.test :refer :all]
       :cljs [cljs.test :refer-macros [async deftest is testing]])
-
+   [pinkgorilla.notebook.default-config] ; side effects
    [pinkgorilla.encoding.helper :refer [make-clojure-comment unmake-clojure-comment]]
-   [pinkgorilla.encoding.decode :refer [decode]]
-   [pinkgorilla.encoding.encode :refer [encode-notebook]]))
+   [pinkgorilla.encoding.protocols :refer [decode encode]]))
 
 (deftest encode-comment
   (is (= ";;; #test" (make-clojure-comment "#test"))))

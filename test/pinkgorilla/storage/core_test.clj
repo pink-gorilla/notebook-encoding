@@ -1,19 +1,8 @@
 (ns pinkgorilla.storage.core-test
   (:require
    [clojure.test :refer :all]
-
-  ; dependencies needed to be in cljs bundle: 
+   [pinkgorilla.notebook.default-config] ; side effects
    [pinkgorilla.storage.storage :as storage]
-   [pinkgorilla.storage.file]
-   [pinkgorilla.storage.gist]
-   [pinkgorilla.storage.repo]
-   [pinkgorilla.storage.bitbucket]
-
-   ;[pinkgorilla.storage.direct.file]
-   ;[pinkgorilla.storage.direct.gist]
-   ;[pinkgorilla.storage.direct.repo]
-   ;[pinkgorilla.storage.direct.bitbucket]
-
    [pinkgorilla.creds :refer [creds]]))
 
 (deftest storage-types-included

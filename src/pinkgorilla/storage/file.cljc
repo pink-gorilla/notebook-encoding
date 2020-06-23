@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.file
   (:require
-   #?(:clj [clojure.tools.logging :refer (info)]
-      :cljs [taoensso.timbre :refer-macros (info)])
+   #?(:clj [clojure.tools.logging :refer [info]]
+      :cljs [taoensso.timbre :refer-macros [info]])
    [clojure.string]
    [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
 
