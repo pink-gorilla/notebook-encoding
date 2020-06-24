@@ -1,14 +1,10 @@
 (ns pinkgorilla.storage.filename-encoding
   (:require
-   #?(:clj [clojure.tools.logging :refer [info]]
-      :cljs [taoensso.timbre :refer-macros [info]])
+   #?(:clj [clojure.tools.logging :refer [trace debug info]]
+      :cljs [taoensso.timbre :refer-macros [trace debug info]])
    [clojure.string :as str]
    [pinkgorilla.encoding.protocols :refer [decode]]
-   [pinkgorilla.storage.protocols :refer [determine-encoding]]
- ;  #?(:clj [pinkgorilla.storage.file :refer [StorageFile]])
- ;  [pinkgorilla.storage.gist :refer [StorageGist]]
-   ;[pinkgorilla.storage.repo :refer [StorageRepo]]
-   ))
+   [pinkgorilla.storage.protocols :refer [determine-encoding]]))
 
 (defn extension->encoding [extension]
   (case (str/lower-case extension)
@@ -38,13 +34,13 @@
   (:name (split-filename (k this))))
 
 (defn decode-storage-using-filename [storage content]
-  (info "Decoding: " (count content) " bytes")
+  (debug "Decoding: " (count content) " bytes")
   (when (and storage content)
     (when-let [encoding-type (determine-encoding storage)]
-      (info "determined encoding: " encoding-type)
+      (debug "determined encoding: " encoding-type)
       (when-let [notebook (decode encoding-type content)]
-        (info "successfully parsed notebook! ") ;  notebook)
-        (info notebook)
+        (debug "successfully parsed notebook! ") ;  notebook)
+        (trace notebook)
         notebook))))
 
 (comment

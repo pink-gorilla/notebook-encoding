@@ -21,12 +21,13 @@
   (storageformat [self] :gorilla)
 
   (external-url [self]
-    (info "local-storage.external-url")
     nil)
 
   (gorilla-path
     [self]
-    (info "bitbucket.gorilla-path")
-    ;; TODO This appears to be broken!
-    (str "/edit?worksheet-filename=" (:user self))))
+    (str "?source=bitbucket"
+         "&user=" (:user self)
+         "&repo=" (:repo self)
+         "&path=" (:path self)
+         "&revision=" (:revision self))))
 

@@ -19,15 +19,19 @@
   Storage
   (storagetype [self] :repo)
   (external-url [self]
-    (info "local-storage.external-url")
     ;https://github.com/pink-junkjard/tailwind-workstation-screencast/blob/master/src/workation/core.cljs
-    (str "https://github.com/" (:user self) "/" (:repo self) "/blob/master/" (:filename self)))
+    (str "https://github.com/"
+         (:user self) "/"
+         (:repo self) "/blob/master/"
+         (:filename self)))
 
   ; depreciated
   (storageformat [self] :gorilla)
   (gorilla-path [self]
-    (info "repo-storage.gorilla-path")
-    (str "/edit?source=repo&filename=" (:filename self) "&user=" (:user self) "&repo=" (:repo self))))
+    (str "?source=repo"
+         "&filename=" (:filename self)
+         "&user=" (:user self)
+         "&repo=" (:repo self))))
 
 #?(:clj
 

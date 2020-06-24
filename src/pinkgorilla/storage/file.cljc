@@ -25,15 +25,14 @@
   Storage
   (storagetype [self] :file)
   (external-url [self]
-    (info "file-storage.external-url")
     (str "file://" (:filename self)))
 
   ; depreciated
   (storageformat [self]
     (filename-format (:filename self)))
   (gorilla-path [self]
-    (info "file-storage.gorilla-path")
-    (str "/edit?source=file&filename=" (:filename self))))
+    (str "?source=file"
+         "&filename=" (:filename self))))
 
 #?(:clj
 

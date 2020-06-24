@@ -30,15 +30,15 @@
   Storage
   (storagetype [self] :gist)
   (external-url [self]
-    (info "local-storage.external-url")
     ;https://gist.github.com/awb99/55b101d84d9b3814c46a4f9fbadcf2f8
     (str "https://gist.github.com/" (:user self) "/" (:id self)))
 
   ; depreciated
   (storageformat [self] :gorilla)
   (gorilla-path [self]
-    (info "gist-storage.gorilla-path")
-    (str "/edit?source=gist&filename=" (:filename self) "&id=" (:id self))))
+    (str "?source=gist "
+         "&filename=" (:filename self)
+         "&id=" (:id self))))
 
 #?(:clj
 
