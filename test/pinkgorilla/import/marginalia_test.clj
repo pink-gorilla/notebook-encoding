@@ -4,7 +4,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.core :refer [notebook-load]]
+   [pinkgorilla.notebook.hydration :refer [notebook-load]]
    [pinkgorilla.import.marginalia :refer [marginalia-convert]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]))
 

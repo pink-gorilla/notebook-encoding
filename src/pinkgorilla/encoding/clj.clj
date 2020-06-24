@@ -6,7 +6,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
   ; dependencies needed to be in cljs bundle:  
-   [pinkgorilla.notebook.helper :refer [add-segments empty-notebook assoc-meta code->segment]]
+   [pinkgorilla.notebook.core :refer [add-segments empty-notebook assoc-meta code->segment]]
    [pinkgorilla.encoding.protocols :refer [decode]])
   (:import [java.io PushbackReader]))
 

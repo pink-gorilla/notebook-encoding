@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [marginalia.parser :refer [parse comments-enabled? *comments-enabled*]]
-   [pinkgorilla.notebook.helper :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
+   [pinkgorilla.notebook.core :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
    [pinkgorilla.encoding.protocols :refer [decode]])
   (:import [java.io PushbackReader]))
 

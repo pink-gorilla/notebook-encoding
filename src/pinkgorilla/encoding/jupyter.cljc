@@ -3,7 +3,7 @@
    TODO: parse output, console"
   (:require
    [pinkgorilla.encoding.helper :refer [from-json]]
-   [pinkgorilla.notebook.helper :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
+   [pinkgorilla.notebook.core :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
    [pinkgorilla.encoding.protocols :refer [decode]]))
 
 (defn- parse-cell [cell]
