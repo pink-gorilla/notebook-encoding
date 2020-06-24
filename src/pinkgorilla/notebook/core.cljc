@@ -3,7 +3,7 @@
    [clojure.string :as str]
    [pinkgorilla.notebook.uuid :refer [guuid]]
    [pinkgorilla.encoding.protocols :refer [decode encode]]
-   [pinkgorilla.storage.storage :refer [storage-load storage-save]]))
+   [pinkgorilla.storage.protocols :refer [storage-load storage-save]]))
 
 (defn empty-notebook
   "creates an empty hydrated notebook"

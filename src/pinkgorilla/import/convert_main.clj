@@ -2,7 +2,7 @@
   (:require
    [me.raynes.fs :as fs]
    [clojure.java.io :as io]
-   [pinkgorilla.notebook.default-config] ; side effects
+   [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.import.marginalia :refer [marginalia-convert]]
    [pinkgorilla.import.jupyter :refer [jupyter-convert]])
   (:gen-class))

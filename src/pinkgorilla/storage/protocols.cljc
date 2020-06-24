@@ -1,4 +1,4 @@
-(ns pinkgorilla.storage.storage)
+(ns pinkgorilla.storage.protocols)
 
 #?(:clj (defmulti query-params-to-storage (fn [t p] t))
    :cljs (defmulti query-params-to-storage identity))
@@ -19,13 +19,11 @@
       (query-params-to-storage stype params))))
 
 (defprotocol Storage
-
   (storagetype [self]) ; :file :repo :gist :bitbucket
-
-  (storageformat [self]) ; gorilla :jupyter
-
   (external-url [self]) ; to view raw persisted data in browser.
 
+  ; depreciated:
+  (storageformat [self]) ; gorilla :jupyter
   (gorilla-path [self]) ; to open a notebook from the sidebar
   )
 
@@ -34,3 +32,7 @@
 
 (defprotocol Load
   (storage-load [self tokens]))
+
+(defprotocol FromFilename
+  (determine-encoding [self])
+  (determine-name [self]))

@@ -2,7 +2,7 @@
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
-   [pinkgorilla.notebook.default-config] ; side effects
+   [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]
    [pinkgorilla.notebook.core  :refer [dehydrate-notebook]]
    [pinkgorilla.notebook.newnb  :refer [create-new-worksheet]]))

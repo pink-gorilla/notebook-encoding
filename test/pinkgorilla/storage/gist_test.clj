@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.gist-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.notebook.default-config] ; side effects
+   [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.creds :refer [creds]]
    [pinkgorilla.storage.github :refer [load-gist save-gist]]))
 

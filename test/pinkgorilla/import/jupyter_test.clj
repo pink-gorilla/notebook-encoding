@@ -2,8 +2,8 @@
 (ns pinkgorilla.import.jupyter-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.notebook.default-config] ; side effects
-   [pinkgorilla.storage.storage :refer [create-storage]]
+   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.core :refer [notebook-load]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]))
 

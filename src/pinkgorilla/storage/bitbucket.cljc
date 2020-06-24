@@ -2,7 +2,7 @@
   (:require
    #?(:clj [clojure.tools.logging :refer [info]]
       :cljs [taoensso.timbre :refer-macros [info]])
-   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage]]))
+   [pinkgorilla.storage.protocols :refer [Storage query-params-to-storage]]))
 
 (defrecord StorageBitbucket [user repo revision path])
 

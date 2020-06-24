@@ -3,7 +3,8 @@
    #?(:clj [clojure.tools.logging :refer [info]]
       :cljs [taoensso.timbre :refer-macros [info]])
    [clojure.string]
-   [pinkgorilla.storage.storage :refer [Storage query-params-to-storage Save Load]]))
+   [pinkgorilla.storage.filename-encoding :refer [filename->encoding filename->name]]
+   [pinkgorilla.storage.protocols :refer [FromFilename Storage query-params-to-storage Save Load]]))
 
 (defn filename-format [filename]
   (->> filename
@@ -22,16 +23,14 @@
 
 (extend-type StorageFile
   Storage
-
   (storagetype [self] :file)
-
-  (storageformat [self]
-    (filename-format (:filename self)))
-
   (external-url [self]
     (info "file-storage.external-url")
     (str "file://" (:filename self)))
 
+  ; depreciated
+  (storageformat [self]
+    (filename-format (:filename self)))
   (gorilla-path [self]
     (info "file-storage.gorilla-path")
     (str "/edit?source=file&filename=" (:filename self))))
@@ -51,6 +50,13 @@
      (storage-load [self tokens]
        ;(info "Loading Notebook from file: " (:filename self))
        (slurp (:filename self)))))
+
+(extend-type StorageFile
+  FromFilename
+  (determine-encoding [this]
+    (filename->encoding this :filename))
+  (determine-name [this]
+    (filename->name this :filename)))
 
 (comment
 

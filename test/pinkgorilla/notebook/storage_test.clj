@@ -1,8 +1,8 @@
 (ns pinkgorilla.notebook.storage-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.notebook.default-config] ; side effects
-   [pinkgorilla.storage.storage :as storage]
+   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.storage.protocols :as storage]
    [pinkgorilla.notebook.core :as notebook]
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))

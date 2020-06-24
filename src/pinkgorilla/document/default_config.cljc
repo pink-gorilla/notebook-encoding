@@ -1,4 +1,4 @@
-(ns pinkgorilla.notebook.default-config
+(ns pinkgorilla.document.default-config
   (:require
 
     ; encoding  string <-> notebook
