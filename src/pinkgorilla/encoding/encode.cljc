@@ -1,6 +1,7 @@
 (ns pinkgorilla.encoding.encode
   (:require
    [clojure.string :as str]
+   [pinkgorilla.encoding.protocols :refer [encode]]
    [pinkgorilla.encoding.helper :refer [make-clojure-comment create-writer to-json]]))
 
 (defmulti to-clojure :type)
@@ -60,7 +61,7 @@
               ;s:type "text/x-clojure"
               }})
 
-(defn encode-notebook
+(defn- encode-notebook
   "encodes a dehydrated notebook"
   [notebook]
   (let [;segments (:segments notebook)
@@ -71,6 +72,9 @@
     (str ";; gorilla-repl.fileformat = 2\n\n"
          (->> (map to-clojure segments)
               (str/join "\n")))))
+
+(defmethod encode :gorilla [_ notebook]
+  (encode-notebook notebook))
 
 (defn encode-notebook-hydrated
   "encodes a hydrated notebook

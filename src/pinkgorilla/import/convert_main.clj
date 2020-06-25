@@ -2,8 +2,9 @@
   (:require
    [me.raynes.fs :as fs]
    [clojure.java.io :as io]
-   [pinkgorilla.import.clj-import :refer [clj->convert]]
-   [pinkgorilla.import.jupyter-import :refer [jupyter->convert]])
+   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.import.marginalia :refer [marginalia-convert]]
+   [pinkgorilla.import.jupyter :refer [jupyter-convert]])
   (:gen-class))
 
 (def jupyter-extensions #{"ipynb"})
@@ -27,10 +28,10 @@
   (let [file (io/file file-name)]
     (cond
       (jupyter-file? file)
-      (jupyter->convert file-name)
+      (jupyter-convert file-name)
 
       (clj-file? file)
-      (clj->convert file-name)
+      (marginalia-convert file-name)
 
       :else
       (println "file is neither clj nor jupyter format: " file-name))))
@@ -39,4 +40,4 @@
   (println "nbconvert args: " args)
   (let [file-name (last args)]
     (println "converting clj file: " file-name)
-    (clj->convert file-name)))
+    (to-gorilla file-name)))

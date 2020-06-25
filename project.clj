@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/notebook-encoding "0.0.38-SNAPSHOT"
+(defproject org.pinkgorilla/notebook-encoding "0.1.1-SNAPSHOT"
   :description "Encoding of Pink Gorilla Notebook."
   :url "https://github.com/pink-gorilla/notebook-encoding"
   :license {:name "MIT"}
@@ -6,6 +6,11 @@
                                      :username :env/release_username
                                      :password :env/release_password
                                      :sign-releases false}]]
+
+
+    ;; TODO: prep tasks breaks alias???
+  ;; :prep-tasks ["build-shadow-ci"]
+  
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -15,12 +20,10 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-  ;; TODO: prep tasks breaks alias???
-  ;; :prep-tasks ["build-shadow-ci"]
-
   :source-paths ["src"]
   :test-paths ["test"]
-
+  :target-path  "target/jar"
+    
   :plugins [[lein-shell "0.5.0"]]
 
   :managed-dependencies [; to avoid a :exclusion mess, we define certain versions numbers centrally
@@ -65,7 +68,6 @@
 
 
   :dependencies  [[org.clojure/clojure "1.10.1"]
-                  [org.clojure/tools.logging "0.5.0"]
                   [instaparse "1.4.10"] ; used in decoding
                   [com.cognitect/transit-clj "1.0.324"] ; used in encoding - clojure
                   [com.cognitect/transit-js "0.8.861"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
@@ -81,7 +83,8 @@
                   [marginalia "0.9.1"
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
-                                org.clojure/tools.cli]] ; clj parser
+                                org.clojure/tools.cli
+                                ]] ; clj parser
                   ]
 
   :profiles {:convert {; converts clj file to notebook

@@ -3,11 +3,11 @@
    a temporary file and then loading the temporary file. 
 
    currently only working for clj
-   TODO: cljs inject test notebooks via macros to the bundle.
-  "
+   TODO: cljs inject test notebooks via macros to the bundle."
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
+   [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]))
 
 
