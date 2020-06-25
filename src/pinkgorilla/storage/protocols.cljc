@@ -23,7 +23,6 @@
   (external-url [self]) ; to view raw persisted data in browser.
 
   ; depreciated:
-  (storageformat [self]) ; gorilla :jupyter
   (gorilla-path [self]) ; to open a notebook from the sidebar
   )
 

@@ -25,7 +25,8 @@
 (defmethod decode :jupyter [_ s]
   (let [notebook (-> s (from-json))]
     {:version "J"
-     :meta {:tagline "Jupyter Notebook"}
+     :meta {:tags "jupyter"
+            :tagline "Jupyter Notebook"}
      :segments (parse-cells notebook)}))
 
 (comment

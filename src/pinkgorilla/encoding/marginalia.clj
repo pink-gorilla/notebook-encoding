@@ -18,7 +18,9 @@
 
 (defmethod decode :marginalia [_ source-str]
   ;(println "decoding marginalia format.. " source-str)
-  (let [notebook (assoc-meta empty-notebook :msg "imported from clj")
+  (let [notebook (-> empty-notebook
+                     (assoc-meta :tagline "imported from clj")
+                     (assoc-meta :tags "marginalia"))
         forms (binding [*comments-enabled* (atom true)]
                 (parse source-str))
         segments (map marginalia->segment forms)

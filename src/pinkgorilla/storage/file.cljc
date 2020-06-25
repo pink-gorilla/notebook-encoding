@@ -28,8 +28,6 @@
     (str "file://" (:filename self)))
 
   ; depreciated
-  (storageformat [self]
-    (filename-format (:filename self)))
   (gorilla-path [self]
     (str "?source=file"
          "&filename=" (:filename self))))

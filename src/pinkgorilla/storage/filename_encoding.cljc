@@ -6,6 +6,13 @@
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [determine-encoding]]))
 
+(defn encoding->extension [encoding]
+  (case encoding
+    :gorilla "cljg"
+    :jupyter "ipynb"
+    :clj "clj"
+    "xxx"))
+
 (defn extension->encoding [extension]
   (case (str/lower-case extension)
     "cljg" :gorilla
@@ -27,7 +34,7 @@
          :encoding (extension->encoding ext)}))))
 
 (defn filename->encoding [this k]
-  (info "this: " this)
+  (debug "filename->encoding: " this)
   (:encoding (split-filename (k this))))
 
 (defn filename->name [this k]

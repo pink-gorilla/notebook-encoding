@@ -26,7 +26,6 @@
          (:filename self)))
 
   ; depreciated
-  (storageformat [self] :gorilla)
   (gorilla-path [self]
     (str "?source=repo"
          "&filename=" (:filename self)

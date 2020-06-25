@@ -15,14 +15,8 @@
 
 (extend-type StorageBitbucket
   Storage
-
   (storagetype [self] :bitbucket)
-
-  (storageformat [self] :gorilla)
-
-  (external-url [self]
-    nil)
-
+  (external-url [self] nil)
   (gorilla-path
     [self]
     (str "?source=bitbucket"

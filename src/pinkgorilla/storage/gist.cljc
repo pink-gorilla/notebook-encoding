@@ -35,7 +35,6 @@
     (str "https://gist.github.com/" (:user self) "/" (:id self)))
 
   ; depreciated
-  (storageformat [self] :gorilla)
   (gorilla-path [self]
     (str "?source=gist "
          "&filename=" (:filename self)
