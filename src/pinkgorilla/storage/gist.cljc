@@ -1,7 +1,8 @@
 (ns pinkgorilla.storage.gist
   (:require
-   #?(:clj [clojure.tools.logging :refer [info]]
-      :cljs [taoensso.timbre :refer-macros [info]])
+   [clojure.string]
+   #?(:clj [clojure.tools.logging :refer [debug info]]
+      :cljs [taoensso.timbre :refer-macros [debug info]])
    [pinkgorilla.storage.filename-encoding :refer [filename->encoding filename->name]]
    #?(:clj [pinkgorilla.storage.github :refer [save-gist load-gist]])
    [pinkgorilla.storage.protocols :refer [FromFilename Storage query-params-to-storage Save Load]]))
@@ -18,7 +19,7 @@
       id)))
 
 (defmethod query-params-to-storage :gist [_ params]
-  (info "gist params: " params)
+  (debug "gist params: " params)
   (StorageGist.
    (or (hack-null (:id params)) nil)
    (:filename params)

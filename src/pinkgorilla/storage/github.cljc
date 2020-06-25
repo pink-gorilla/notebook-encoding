@@ -1,8 +1,8 @@
 (ns pinkgorilla.storage.github
   (:require
    [clojure.string]
-   #?(:clj [clojure.tools.logging :refer [info]]
-      :cljs [taoensso.timbre :refer-macros [info]])
+   #?(:clj [clojure.tools.logging :refer [debug info]]
+      :cljs [taoensso.timbre :refer-macros [debug info]])
    [tentacles.gists]
    [tentacles.repos]))
 
@@ -64,9 +64,9 @@
   (let [commit-message "pinkgorilla notebook save"
         existing-file (load-repo-raw user repo path token)
         sha (:sha existing-file)
-        _ (info "existing git repo sha is: " sha)]
-    (info "save response: "
-          (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token}))
+        _ (info "existing git repo sha is: " sha)
+        result (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token})]
+    (debug "save response: " result)
     {:sha sha}))
 
 (comment
