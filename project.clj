@@ -40,7 +40,6 @@
                          ; shadow-cljs
                          [thheller/shadow-cljs "2.8.94"] ; 106
                          [org.jboss.logging/jboss-logging "3.4.1.Final"]
-                         [nrepl "0.6.0"]
 
                          ; serialization libraries are dependencies of many libraries,
                          [org.clojure/core.memoize "0.8.2"]
@@ -108,10 +107,13 @@
 
   :aliases {"build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
+            
             "bump-version"
             ["change" "version" "leiningen.release/bump-version"]
+            
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
+            
             "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
             ["with-profile" "convert" "run"]})
 

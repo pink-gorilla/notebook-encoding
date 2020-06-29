@@ -17,6 +17,7 @@
   Storage
   (storagetype [self] :bitbucket)
   (external-url [self] nil)
+
   (gorilla-path
     [self]
     (str "?source=bitbucket"

@@ -21,10 +21,8 @@
 (defprotocol Storage
   (storagetype [self]) ; :file :repo :gist :bitbucket
   (external-url [self]) ; to view raw persisted data in browser.
+  (gorilla-path [self])) ; to open a notebook from the sidebar
 
-  ; depreciated:
-  (gorilla-path [self]) ; to open a notebook from the sidebar
-  )
 
 (defprotocol Save
   (storage-save [self notebook tokens]))

@@ -23,11 +23,12 @@
 
 (extend-type StorageFile
   Storage
+
   (storagetype [self] :file)
+
   (external-url [self]
     (str "file://" (:filename self)))
 
-  ; depreciated
   (gorilla-path [self]
     (str "?source=file"
          "&filename=" (:filename self))))

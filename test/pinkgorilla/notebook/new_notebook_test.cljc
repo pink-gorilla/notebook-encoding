@@ -5,7 +5,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]
    [pinkgorilla.notebook.hydration  :refer [dehydrate-notebook]]
-   [pinkgorilla.notebook.newnb  :refer [create-new-worksheet]]))
+   [pinkgorilla.notebook.template  :refer [create-new-worksheet]]))
 
 (deftest encode-new-notebook
   (let [nb-hydrated (create-new-worksheet)

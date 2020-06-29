@@ -25,7 +25,6 @@
          (:repo self) "/blob/master/"
          (:filename self)))
 
-  ; depreciated
   (gorilla-path [self]
     (str "?source=repo"
          "&filename=" (:filename self)
