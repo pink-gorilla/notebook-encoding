@@ -76,14 +76,7 @@
 (defmethod encode :gorilla [_ notebook]
   (encode-notebook notebook))
 
-(defn encode-notebook-hydrated
-  "encodes a hydrated notebook
-   awb99: it appears this function is no longer required?"
-  [notebook]
-  (let [segments-unsorted (:segments notebook)
-        segment-ids (:segment-order notebook)
-        segments (map #(get segments-unsorted %) segment-ids)]
-    (encode-notebook {:segments segments})))
+
 
 
 

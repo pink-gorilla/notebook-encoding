@@ -5,11 +5,11 @@
    [pinkgorilla.notebook.core :refer [empty-notebook add-md add-code]]
    [pinkgorilla.notebook.hipster :refer [make-hip-nsname]]))
 
-(defn create-new-worksheet
+(defn new-notebook
   "A pure function that creates a new worksheet in the browser.
   All db functions used are pure functions!"
   ([]
-   (create-new-worksheet (make-hip-nsname)))
+   (new-notebook (make-hip-nsname)))
   ([hip-nsname]
    (-> empty-notebook
        (add-md "# Pink Gorilla \n\n"
@@ -54,6 +54,6 @@
         "(list-plot (concat (range 10) (reverse (range 10))))"))))
 
 (comment
-  (create-new-worksheet)
+  (new-notebook)
 ;  
   )

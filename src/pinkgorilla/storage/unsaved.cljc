@@ -1,6 +1,6 @@
 (ns pinkgorilla.storage.unsaved
   (:require
-   #?(:clj [clojure.tools.logging :refer [info]]
+   #?(:clj [taoensso.timbre :refer [info]]
       :cljs [taoensso.timbre :refer-macros [info]])
    [clojure.string]
    [pinkgorilla.storage.protocols :refer [Storage query-params-to-storage FromFilename]]))

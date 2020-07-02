@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.repo
   (:require
    [clojure.string]
-   #?(:clj [clojure.tools.logging :refer [info]]
+   #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info]])
    [pinkgorilla.storage.filename-encoding :refer [filename->encoding filename->name]]
    #?(:clj [pinkgorilla.storage.github :refer [save-repo load-repo]])

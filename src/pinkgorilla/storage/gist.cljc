@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.gist
   (:require
    [clojure.string]
-   #?(:clj [clojure.tools.logging :refer [debug info]]
+   #?(:clj [taoensso.timbre :refer [debug info error]]
       :cljs [taoensso.timbre :refer-macros [debug info]])
    [pinkgorilla.storage.filename-encoding :refer [filename->encoding filename->name]]
    #?(:clj [pinkgorilla.storage.github :refer [save-gist load-gist]])

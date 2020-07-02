@@ -1,32 +1,24 @@
 (ns pinkgorilla.notebook.hydration
   (:require
-   [clojure.string :as str]
-   [pinkgorilla.notebook.uuid :refer [guuid]]
+   #?(:clj [taoensso.timbre :refer [info error]]
+      :cljs [taoensso.timbre :refer-macros [info error]])
+   [pinkgorilla.notebook.uuid :refer [id]]
    [pinkgorilla.encoding.protocols :refer [decode encode]]
-   [pinkgorilla.storage.protocols :refer [storage-load storage-save]]))
+   [pinkgorilla.storage.protocols :refer [determine-encoding storage-load storage-save]]))
 
-;; DEPRECIATED !!
+;; helper functions
 
-(defn empty-notebook
-  "creates an empty hydrated notebook"
-  []
-  {:version 2
-   :meta {}
-   :segments             {}
+(defn- assoc-when [r key val]
+  (if val
+    (assoc r key val)
+    r))
 
-   :ns                   nil
-   :segment-order        []
-   :queued-code-segments #{}
-   :active-segment       nil})
+(defn- process-type [segment type fun]
+  (if (= type (:type segment))
+    (fun segment)
+    segment))
 
- ;; hydration / dehydration
-
-(defn segments-ordered [notebook]
-  (let [segments (:segments notebook)
-        segment-ids-ordered (:segment-order notebook)]
-    (vec (map #(get segments %) segment-ids-ordered))))
-
-(defn dissoc-in
+(defn- dissoc-in
   [m [k & ks :as keys]]
   (if ks
     (if-let [nextmap (get m k)]
@@ -35,50 +27,117 @@
       m)
     (dissoc m k)))
 
-(defn dehydrate-notebook [notebook]
-  (let [segments (segments-ordered notebook)
-        segments-no-id (vec (map #(dissoc % :id :exception :error-text) segments))
-        segments-no-id (vec (map #(dissoc-in % [:value-response :reagent]) segments-no-id))]
-    {:version (:version notebook)
-     :meta (:meta notebook)
-     :segments segments-no-id}))
+ ;; hydration (load persisted notebook)
 
-(defn to-key [segment]
+(defn hydrate-md [s]
+  (let [md (get-in s [:content :value])]
+    {:type :md
+     :md md}))
+
+(defn hydrate-code [s]
+  (let [code (get-in s [:content :value])
+        picasso-spec (get-in s [:value-response])
+        out (get-in s [:console-response])]
+    (-> s
+        (dissoc :content)
+        (assoc-when :code code)
+
+        (dissoc :value-response)
+        (assoc-when :picasso picasso-spec)
+
+        (dissoc :console-response)
+        (assoc-when :out out))))
+
+(defn- hydrate-segment [segment]
+  (-> segment
+      (process-type :code hydrate-code)
+      (process-type :free hydrate-md)
+      (assoc :id (id))))
+
+(defn- to-key [segment]
   {(:id segment) segment})
 
-(defn hydrate-notebook [notebook]
-  (let [version (:version notebook)
-        meta (:meta notebook)
-        segments (:segments notebook)
-        segments-with-id (vec (map #(assoc % :id (guuid) :exception nil :error-text nil) segments))
-        ids (vec (map :id segments-with-id))
-        m (reduce conj (map to-key segments-with-id))]
-    (assoc (empty-notebook)
-           :version version
-           :meta meta
-           :segment-order ids
-           :segments m)))
+(defn hydrate [notebook]
+  (let [segments (:segments notebook)
+        segments-hydrated (vec (map hydrate-segment segments))]
+    (assoc {:active    nil ; active segment
+            :ns        nil  ; current namespace
+            :queued   #{}} ; code segments that are qued for evaluation
+           :meta (:meta notebook)
+           :segments (reduce conj (map to-key segments-hydrated))
+           :order (vec (map :id segments-hydrated)))))
 
-(defn load-notebook-hydrated
-  ([str]
-   (load-notebook-hydrated :gorilla str))
-  ([format str]
-   (hydrate-notebook (decode format str))))
+(defn load-notebook [storage tokens]
+  (if-let [encoding-type (determine-encoding storage)]
+    (->> (storage-load storage tokens)
+         (decode encoding-type)
+         hydrate)
+    (do
+      (error "cannot load notebook - format cannot be determined! " storage)
+      nil)))
 
-(defn save-notebook-hydrated [notebook]
-  (encode :gorilla (dehydrate-notebook notebook)))
+; dehydrate / save
 
-;; load / save hydrated notebook to/from storage
+(defn- segments-ordered [notebook]
+  (let [segments (:segments notebook)
+        segment-ids-ordered (:order notebook)]
+    (vec (map #(get segments %) segment-ids-ordered))))
 
-(defn notebook-save [storage tokens notebook]
-  (let [content (save-notebook-hydrated notebook)]
-    (storage-save storage content tokens)))
+(defn dehydrate-md [s]
+  ;(info "dehydrating md segment: " s)
+  (let [md (get-in s [:md])]
+    {:type :free
+     :markup-visible false
+     :content {:type "text/x-markdown"
+               :value md}}))
 
-(defn notebook-load [storage tokens]
-  (let [content (storage-load storage tokens)
-        ;_ (println "content is:" content)
-        ]
-    (load-notebook-hydrated content)))
+(defn dehydrate-code [segment]
+  ;(info "dehydrating code segment: " s)
+  (let [{:keys [kernel code picasso out]} segment]
+    ; #(dissoc-in % [:value-response :reagent])
+    ; #(dissoc % :id :exception :error-text)
+    (-> {:type :code
+         :kernel kernel
+         :content {:type "text/x-clojure"
+                   :value code}}
+        (assoc-when :value-response picasso)
+        (assoc-when :console-response out))))
+
+(defn dehydrate-segment [segment]
+  (-> segment
+      (process-type :code dehydrate-code)
+      (process-type :md dehydrate-md)
+      (dissoc :id)))
+
+(defn dehydrate [notebook]
+  (let [segments (segments-ordered notebook)
+        ;_ (info "segments ordered: " segments)
+        segments-dehydrated (vec (map dehydrate-segment segments))
+        notebook-dehydrated {;:version (:version notebook)
+                             :meta (:meta notebook)
+                             :segments segments-dehydrated}]
+    ;(info "dehydrated: " notebook-dehydrated)
+    notebook-dehydrated))
+
+(defn tap [note x]
+  (info note x)
+  x)
+
+(defn save-nb [storage tokens nb]
+  (storage-save storage nb tokens))
+
+(defn save-notebook [storage tokens notebook]
+  (if-let [format (determine-encoding storage)]
+    (do (info "saving notebook with format: " format)
+        (->> notebook
+             (dehydrate)
+             ;(tap "dehydrated nb:")
+             (encode format)
+             ;(tap "encoded nb: ")
+             (save-nb storage tokens))
+        {:success "notebook saved!"})
+    (do (error "could not save notebook, because encoding cannot be determined: " storage)
+        {:error "could not determine storage-format!"})))
 
 
 ;; manipulate hydrated notebook
@@ -87,7 +146,7 @@
 (defn create-free-segment
   "creates a markdown segment"
   [content]
-  {:id             (guuid)
+  {:id             (id)
    :type           :free
    :markup-visible false
    :content        {:value (or content "")
@@ -95,7 +154,7 @@
 
 (defn create-code-segment
   ([content]
-   {:id               (guuid)
+   {:id               (id)
     :type             :code
     :kernel           :clj
     :content          {:value (or content "")
@@ -146,3 +205,18 @@
     (merge worksheet {:active-segment next-active-idx
                       :segments       (dissoc segments seg-id)
                       :segment-order  (into [] (remove #(= seg-id %) segment-order))})))
+
+(comment
+
+  (save-notebook
+   (pinkgorilla.storage.protocols/create-storage
+    {:type :file :filename "/tmp/demo.cljg"})
+   {}
+   (hydrate (pinkgorilla.notebook.template/new-notebook)))
+
+
+
+ ; 
+  )
+
+

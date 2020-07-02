@@ -1,5 +1,6 @@
 (ns pinkgorilla.notebook.hipster
-  "create unique, hip names")
+  "create unique, hip names
+   used to generate unique namspaces and filenames for unsaved documents")
 
 (def hip-adjective ["affectionate" "amiable" "arrogant" "balmy" "barren" "benevolent"
                     "billowing" "blessed" "breezy" "calm" "celestial" "charming" "combative"

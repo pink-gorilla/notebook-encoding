@@ -1,8 +1,7 @@
 (ns pinkgorilla.notebook.core)
 
 (def empty-notebook
-  {:version 2
-   :meta {}
+  {:meta {}
    :segments []})
 
 (defn assoc-meta

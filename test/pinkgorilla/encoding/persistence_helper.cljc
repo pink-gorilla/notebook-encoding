@@ -1,4 +1,4 @@
-(ns pinkgorilla.encoding.persistence
+(ns pinkgorilla.encoding.persistence-helper
   "clojure persistence loads/saves from disk.
    clojurescript persistence loads/saves to an atom.
    TODO: inject file content to this atom via macros, so that at test

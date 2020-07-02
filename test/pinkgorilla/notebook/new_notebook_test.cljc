@@ -2,21 +2,32 @@
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
-   [pinkgorilla.document.default-config] ; side effects
-   [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]
-   [pinkgorilla.notebook.hydration  :refer [dehydrate-notebook]]
-   [pinkgorilla.notebook.template  :refer [create-new-worksheet]]))
+   #?(:clj [taoensso.timbre :refer [info error]]
+      :cljs [taoensso.timbre :refer-macros [info error]])
+   [pinkgorilla.document.default-config] ; side-effects
+   [pinkgorilla.notebook.template  :refer [new-notebook]]
+   [pinkgorilla.storage.protocols :refer [create-storage]]
+   [pinkgorilla.notebook.hydration  :refer [load-notebook save-notebook hydrate dehydrate]]
+   [pinkgorilla.encoding.persistence-helper :as helper]))
 
 (deftest encode-new-notebook
-  (let [nb-hydrated (create-new-worksheet)
-        nb (dehydrate-notebook nb-hydrated)
+  (let [nb (new-notebook)
         f "/tmp/notebook-new.cljg"
-        _ (save-notebook f nb)
-        nb-reloaded (load-notebook f)
-        ;_ (println "reloaded notebook: " nb-reloaded)
-        ]
+        _ (helper/save-notebook f nb)
+        nb-reloaded (helper/load-notebook f)]
     (is (= nb nb-reloaded))))
 
-(comment
-  (create-new-worksheet))
+(deftest reload-new-notebook
+  (let [notebook-dry (new-notebook)
+        notebook (hydrate notebook-dry)
+        ;_ (info "hydrated notebook: " notebook)
+        file-name "/tmp/notebook-new2.cljg"
+        storage (create-storage {:type :file :filename file-name})
+        ;_ (info "storage: " storage)
+        creds {}
+        _ (save-notebook storage creds notebook)
+        notebook-reloaded (load-notebook storage creds)
+        notebook-reloaded-dry (dehydrate notebook-reloaded)]
+    (is (= notebook-dry notebook-reloaded-dry))))
+
 

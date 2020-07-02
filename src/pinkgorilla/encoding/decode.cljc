@@ -159,11 +159,6 @@
   #?(:clj clojure.lang.PersistentVector
      :cljs cljs.core/PersistentVector))
 
-
-
-;(defn decode [s]
-
-
 (defmethod decode :gorilla [_ s]
   (let [nb (parse-notebook s)
         ;_ (println "parse result type is: " (type nb))
@@ -180,7 +175,7 @@
       (let [segments (rest (nth nb 2))
             segments (vec (map process-segment segments))
             segments-no-meta (vec (remove meta? segments))]
-        {:version version
+        {;:version version
          :meta (get-meta segments)
          :segments segments-no-meta})
       (do (when (not (nil? nb))

@@ -4,8 +4,8 @@
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
-   [pinkgorilla.encoding.persistence :refer [load-notebook load-str save-notebook]]
-   [pinkgorilla.encoding.decode :refer [parse-notebook]]))
+   [pinkgorilla.encoding.decode :refer [parse-notebook]]
+   [pinkgorilla.encoding.persistence-helper :refer [load-notebook load-str save-notebook]]))
 
 ; awb99: TODO: in cljs this currently gets an empty string and not the file
 

@@ -1,6 +1,6 @@
 (ns pinkgorilla.storage.bitbucket
   (:require
-   #?(:clj [clojure.tools.logging :refer [info]]
+   #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info]])
    [pinkgorilla.storage.protocols :refer [Storage query-params-to-storage]]))
 

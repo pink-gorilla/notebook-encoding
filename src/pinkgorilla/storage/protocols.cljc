@@ -1,20 +1,19 @@
-(ns pinkgorilla.storage.protocols)
+(ns pinkgorilla.storage.protocols
+  (:require
+   #?(:clj [taoensso.timbre :refer [info error]]
+      :cljs [taoensso.timbre :refer-macros [info error]])))
 
 #?(:clj (defmulti query-params-to-storage (fn [t p] t))
    :cljs (defmulti query-params-to-storage identity))
 
-; class not found exception - but this should work ??? 
-; #?(:clj [clojure.tools.logging :refer (info)]
-;   :cljs [taoensso.timbre :refer-macros (info)])
-
 (defmethod query-params-to-storage :default [t params]
-  (println "ERROR: unknown storage type: " t " with params: " params)
+  (error "ERROR: unknown storage type: " t " with params: " params)
   nil)
 
 (defn create-storage [params]
   (let [stype (:type params)]
     (if (nil? stype)
-      (do (println "cannot create storage from nil params")
+      (do (error "cannot create storage from nil params")
           nil)
       (query-params-to-storage stype params))))
 
