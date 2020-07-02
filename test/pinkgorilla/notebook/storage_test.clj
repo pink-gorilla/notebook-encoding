@@ -4,7 +4,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.core :refer [empty-notebook]]
-   [pinkgorilla.notebook.hydration :refer [notebook-load notebook-save]]
+   [pinkgorilla.notebook.hydration :refer [load-notebook save-notebook]]
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))
 
@@ -16,8 +16,8 @@
         nb empty-notebook
         nb (assoc nb :meta meta)]
     (is (= meta
-           (do (notebook-save store tokens nb)
-               (-> (notebook-load store tokens)
+           (do (save-notebook store tokens nb)
+               (-> (load-notebook store tokens)
                    (:meta)))))))
 
 (deftest gist-storage-with-meta
@@ -31,8 +31,8 @@
         nb empty-notebook
         nb (assoc nb :meta meta)]
     (is (= meta
-           (do (notebook-save store tokens nb)
-               (-> (notebook-load store tokens)
+           (do (save-notebook store tokens nb)
+               (-> (load-notebook store tokens)
                    (:meta)))))))
 
 (deftest gist-storage-with-meta-no-creds
@@ -46,8 +46,8 @@
         nb empty-notebook
         nb (assoc nb :meta meta)]
     (is (= meta
-           (do (notebook-save store tokens nb)
-               (-> (notebook-load store tokens)
+           (do (save-notebook store tokens nb)
+               (-> (load-notebook store tokens)
                    (:meta)))))))
 
 (deftest repo-storage-with-meta
@@ -60,7 +60,7 @@
         nb empty-notebook
         nb (assoc nb :meta meta)]
     (is (= meta
-           (do (notebook-save store tokens nb)
-               (->> (notebook-load store tokens)
+           (do (save-notebook store tokens nb)
+               (->> (load-notebook store tokens)
                     (:meta)))))))
 

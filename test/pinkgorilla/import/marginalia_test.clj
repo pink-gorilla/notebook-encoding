@@ -4,7 +4,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.hydration :refer [notebook-load]]
+   [pinkgorilla.notebook.hydration :refer [load-notebook]]
    [pinkgorilla.import.marginalia :refer [marginalia-convert]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]))
 
@@ -29,7 +29,7 @@
         storage (create-storage {:type :file
                                  :filename "/tmp/import-test.cljg"})
         tokens {}
-        notebook (notebook-load storage tokens)]
+        notebook (load-notebook storage tokens)]
     (is (= (count (:segments notebook)) 5))))
 
 (comment

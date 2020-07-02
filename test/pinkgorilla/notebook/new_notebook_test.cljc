@@ -17,17 +17,22 @@
         nb-reloaded (helper/load-notebook f)]
     (is (= nb nb-reloaded))))
 
-(deftest reload-new-notebook
-  (let [notebook-dry (new-notebook)
-        notebook (hydrate notebook-dry)
+#?(:clj
+
+   (deftest reload-new-notebook
+     (let [notebook-dry (new-notebook)
+           notebook (hydrate notebook-dry)
         ;_ (info "hydrated notebook: " notebook)
-        file-name "/tmp/notebook-new2.cljg"
-        storage (create-storage {:type :file :filename file-name})
+           file-name "/tmp/notebook-new2.cljg"
+           storage (create-storage {:type :file
+                                    :filename file-name})
         ;_ (info "storage: " storage)
-        creds {}
-        _ (save-notebook storage creds notebook)
-        notebook-reloaded (load-notebook storage creds)
-        notebook-reloaded-dry (dehydrate notebook-reloaded)]
-    (is (= notebook-dry notebook-reloaded-dry))))
+           creds {}
+           _ (save-notebook storage creds notebook)
+           notebook-reloaded (load-notebook storage creds)
+           notebook-reloaded-dry (dehydrate notebook-reloaded)]
+       (is (= notebook-dry notebook-reloaded-dry))))
+;   
+   )
 
 

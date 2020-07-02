@@ -3,7 +3,7 @@
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.document.default-config] ; side effects
-   [pinkgorilla.notebook.hydration :refer [hydrate-notebook]]))
+   [pinkgorilla.notebook.hydration :refer [hydrate]]))
 
 (def notebook-dehydrated
   {:meta {:format 3
@@ -19,4 +19,4 @@
               {:type :code :kernel :mock :input "(+ 1 2)" :output "Everything is wunderbar"}]})
 
 (deftest hydration
-  (is (= 4 (count (:segments (hydrate-notebook notebook-dehydrated))))))
+  (is (= 4 (count (:segments (hydrate notebook-dehydrated))))))

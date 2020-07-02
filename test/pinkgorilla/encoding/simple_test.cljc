@@ -2,11 +2,11 @@
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.document.default-config] ; side-effects
    [pinkgorilla.encoding.persistence-helper :refer [load-notebook save-notebook]]))
 
 (def notebook-simple
-  {:version 2
+  {;:version 2
    :meta {:a 17
           :msg "simple-notebook"
           :experimental :on}
@@ -37,7 +37,7 @@
     (is (= notebook-simple (load-notebook f)))))
 
 (def notebook-meta-value
-  {:version 2
+  {;:version 2
    :meta {}
    :segments
    [{:type :code

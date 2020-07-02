@@ -8,7 +8,7 @@
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.document.default-config] ; side effects
-   [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]))
+   [pinkgorilla.encoding.persistence-helper :refer [load-notebook save-notebook]]))
 
 
   ; (def nb (slurp "test/notebooks/notebook1.cljg"))

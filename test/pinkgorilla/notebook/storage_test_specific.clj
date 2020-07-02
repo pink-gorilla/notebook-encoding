@@ -1,9 +1,9 @@
 (ns pinkgorilla.notebook.storage-test-specific
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.document.default-config] ; side-effects
    [pinkgorilla.storage.protocols :as storage]
-   [pinkgorilla.notebook.hydration :refer [notebook-load]]
+   [pinkgorilla.notebook.hydration :refer [load-notebook]]
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))
 
@@ -18,5 +18,5 @@
                                        :filename "samples/v1-no-meta.cljg"})
         meta {}]
     (is (= meta
-           (do (->> (notebook-load store tokens)
+           (do (->> (load-notebook store tokens)
                     (:meta)))))))

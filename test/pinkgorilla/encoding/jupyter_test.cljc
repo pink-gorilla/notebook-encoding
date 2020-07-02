@@ -3,14 +3,17 @@
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    [pinkgorilla.document.default-config] ; side effects
-   [pinkgorilla.storage.file :refer [filename-format]]
+   [pinkgorilla.storage.filename-encoding :refer [split-filename]]
    [pinkgorilla.encoding.protocols :refer [decode]]
-   [pinkgorilla.encoding.persistence :refer [load-notebook save-notebook]]))
+   [pinkgorilla.encoding.persistence-helper :refer [load-notebook save-notebook]]))
+
+(defn filename->encoding [filename]
+  (:encoding (split-filename filename)))
 
 (deftest format-detection
-  (is (= :gorilla (filename-format "demo.cljg")))
-  (is (= :jupyter (filename-format "../../quant/trateg/notebooks/basic-concepts.ipynb")))
-  (is (= :gorilla (filename-format "../../quant/trateg/notebooks/basic-concepts.cljg"))))
+  (is (= :gorilla (filename->encoding "demo.cljg")))
+  (is (= :jupyter (filename->encoding "../../quant/trateg/notebooks/basic-concepts.ipynb")))
+  (is (= :gorilla (filename->encoding "../../quant/trateg/notebooks/basic-concepts.cljg"))))
 
 #_(deftest encode-simple
     (let [f "/tmp/notebook-simple.cljg"
