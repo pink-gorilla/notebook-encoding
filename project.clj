@@ -10,7 +10,7 @@
 
     ;; TODO: prep tasks breaks alias???
   ;; :prep-tasks ["build-shadow-ci"]
-  
+
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -23,7 +23,7 @@
   :source-paths ["src"]
   :test-paths ["test"]
   :target-path  "target/jar"
-    
+
   :plugins [[lein-shell "0.5.0"]]
 
   :managed-dependencies [; to avoid a :exclusion mess, we define certain versions numbers centrally
@@ -62,7 +62,7 @@
                          [commons-codec "1.12"] ; selmer and clj-http (via gorilla-explore)
                          [ring/ring-codec "1.1.1"] ; ring and compojure
                          [org.flatland/useful "0.11.6"] ; clojail and ring-middleware-format
-                         
+
                          [tigris "0.1.2"]]
 
 
@@ -82,8 +82,8 @@
                   [marginalia "0.9.1"
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
-                                org.clojure/tools.cli
-                                ]] ; clj parser
+                                org.clojure/tools.cli]] ; clj parser
+                  [clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                   ]
 
   :profiles {:convert {; converts clj file to notebook
@@ -107,13 +107,13 @@
 
   :aliases {"build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
-            
+
             "bump-version"
             ["change" "version" "leiningen.release/bump-version"]
-            
+
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
-            
+
             "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
             ["with-profile" "convert" "run"]})
 
