@@ -78,7 +78,7 @@
 
 ; dehydrate / save
 
-(defn- segments-ordered [notebook]
+(defn segments-ordered [notebook]
   (let [segments (:segments notebook)
         segment-ids-ordered (:order notebook)]
     (vec (map #(get segments %) segment-ids-ordered))))
@@ -205,6 +205,38 @@
     (merge worksheet {:active-segment next-active-idx
                       :segments       (dissoc segments seg-id)
                       :segment-order  (into [] (remove #(= seg-id %) segment-order))})))
+
+(defn- update-segment
+  [fun notebook seg-id]
+  (let [segment (get-in notebook [:segments seg-id])
+        segment-new (fun segment)]
+    (assoc-in notebook [:segments seg-id] segment-new)))
+
+(defn- update-segment-active
+  [notebook fun]
+  (let [seg-id (:active notebook)]
+    (update-segment fun notebook seg-id)))
+
+(defn- update-segment-all
+  [notebook fun]
+  (reduce (partial update-segment fun) notebook (:order notebook)))
+
+(defn- clear-output [segment]
+  (dissoc segment
+          :out
+          :picasso
+          :value
+          :err
+          :ex
+          :root-ex))
+
+(defn clear-active
+  [notebook]
+  (update-segment-active notebook clear-output))
+
+(defn clear-all
+  [notebook]
+  (update-segment-all notebook clear-output))
 
 (comment
 
