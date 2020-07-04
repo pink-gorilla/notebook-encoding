@@ -83,7 +83,6 @@
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
                                 org.clojure/tools.cli]] ; clj parser
-                  [clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                   ]
 
   :profiles {:convert {; converts clj file to notebook
