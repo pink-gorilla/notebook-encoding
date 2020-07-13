@@ -1,13 +1,14 @@
 (ns pinkgorilla.encoding.marginalia
   (:require
    [clojure.string :as str]
-   [marginalia.parser :refer [parse comments-enabled? *comments-enabled*]]
+   [marginalia.parser :refer [parse #_comments-enabled? *comments-enabled*]]
    [pinkgorilla.notebook.core :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
    [pinkgorilla.encoding.protocols :refer [decode]])
-  (:import [java.io PushbackReader]))
+  ;(:import [java.io #_PushbackReader])
+  )
 
 (defn marginalia->segment
-  [{:keys [docstring raw form type] :as all}]
+  [{:keys [raw type]}] ; docstring form
   ;(println "marginalia->segment " all)
   (case type
     :code (code->segment :clj (str raw))

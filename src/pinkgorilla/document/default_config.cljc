@@ -5,7 +5,9 @@
    [pinkgorilla.encoding.decode]  ; gorilla format decoding
    [pinkgorilla.encoding.encode] ; gorilla format encoding
    [pinkgorilla.encoding.jupyter] ; ipynb jupyter notebook    
-   #?(:clj [pinkgorilla.encoding.marginalia]) ; clj with comments and output annotations
+
+   ; temporary deactivated marginalia, as it causes issues in lein plugin
+   ;#?(:clj [pinkgorilla.encoding.marginalia]) ; clj with comments and output annotations
    #?(:clj [pinkgorilla.encoding.clj]) ; clj without comments
 
    ; storage string <-> storage
