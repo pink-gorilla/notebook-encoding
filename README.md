@@ -55,3 +55,9 @@ alias nbconvert="cd /home/andreas/Documents/gorilla/notebook-encoding && lein co
 - extract clojure / clojurescript routine move here from notebook
 - cli utility to test all notebooks ?
 - github api tentacles does not support cljs!
+
+
+# marginalia
+marginalia import makes problems with lein pinkgorilla.
+enabled only clj import for now.
+aot issue ??
