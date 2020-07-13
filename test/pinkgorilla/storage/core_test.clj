@@ -3,7 +3,8 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.storage.protocols :as storage]
-   [pinkgorilla.creds :refer [creds]]))
+   [pinkgorilla.creds :refer [creds]]
+   [pinkgorilla.storage.settings :refer [storage-data]]))
 
 (deftest storage-types-included
   (is (= pinkgorilla.storage.gist.StorageGist
@@ -17,11 +18,7 @@
 
 (deftest storage-repo-load
   (let [content "hello-repo XXXX\n"
-        s (storage/create-storage {:type :repo
-                                   :user "pink-gorilla"
-                                   :repo "unittest-notebooks"
-                                   :filename "unittest-load.txt"})]
-
+        s (storage/create-storage (:core storage-data))]
     (is (= content (storage/storage-load s nil))) ; nil creds
     (is (= content (storage/storage-load s {}))) ; empty creds
     (is (= content (storage/storage-load s (creds)))) ; full creds
@@ -30,10 +27,7 @@
 
 (deftest storage-gist-load
   (let [content ";; gorilla-repl.fileformat = 2\n\n;; @@ [meta]\n{:test 789}\n\n;; @@\n"
-        s (storage/create-storage {:type :gist
-                                   :user "awb99"
-                                   :id "5e5fb05046d3510745bd3285adb42715"
-                                   :filename "meta1.cljg"})]
+        s (storage/create-storage (:gist-load storage-data))]
 
     (is (= content (storage/storage-load s nil))) ; nil creds
     (is (= content (storage/storage-load s {}))) ; empty creds

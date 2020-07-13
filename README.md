@@ -29,6 +29,9 @@ lein test
 lein test :only pinkgorilla.notebook.new-notebook
 ```
 
+If you want to run tests, but don't want to run tests that need creds, then
+you can run `lein test :no-creds`
+
 cljs:
 ```
 lein test-js

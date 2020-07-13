@@ -9,7 +9,7 @@
   (println "gist id: " s)
   s)
 
-(deftest gist-storage
+(deftest gist-storage-creds
   (let [tokens (creds)
         github-token (:github-token tokens)
         gist-id (:gist-id tokens)

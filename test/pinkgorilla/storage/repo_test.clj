@@ -3,19 +3,16 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.creds :refer [creds]]
-   [pinkgorilla.storage.github :refer [load-repo save-repo]]))
-
-(def data
-  {:load ["pink-gorilla" "unittest-notebooks" "unittest-load.txt"]
-   :write ["pink-gorilla" "unittest-notebooks" "unittest-dynamic.txt"]})
+   [pinkgorilla.storage.github :refer [load-repo save-repo]]
+   [pinkgorilla.storage.settings :refer [storage-data]]))
 
 (defn load-repo2 [id token]
-  (let [args (conj (id data) token)]
+  (let [args (conj (id storage-data) token)]
     (println "load-repo " id)
     (apply load-repo args)))
 
 (defn save-repo2 [id content token]
-  (let [args (conj (id data) content token)]
+  (let [args (conj (id storage-data) content token)]
     (println "save-repo " args)
     (apply save-repo args)))
 
@@ -25,13 +22,13 @@
     (is (= content
            (load-repo2 :load token)))))
 
-(deftest repo-load-empty-token
+(deftest repo-load-empty-token-creds
   (let [token ""
         content (str "hello-repo XXXX\n")]
     (is (= content
            (load-repo2 :load token)))))
 
-(deftest repo-load
+(deftest repo-load-creds
   (let [token (:github-token (creds))
         content (str "hello-repo XXXX\n")]
     (is (= content
@@ -47,7 +44,7 @@
   (println "repo: " s)
   s)
 
-(deftest repo-storage
+(deftest repo-storage-creds
   (let [token (:github-token (creds))
         content (str "hello-repo " (rand-int 10000))]
     (is (= content

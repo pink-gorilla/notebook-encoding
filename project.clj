@@ -106,6 +106,11 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}}
 
+   ; no-creds runs only subset of lein test
+   :test-selectors {:no-creds (fn [m]
+                                   (not (clojure.string/includes? (str (:name m))
+                                                             "-creds")))}
+  
 
   :aliases {"build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]

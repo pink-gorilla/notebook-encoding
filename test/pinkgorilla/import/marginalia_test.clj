@@ -4,9 +4,10 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.hydration :refer [load-notebook]]
-   [pinkgorilla.import.marginalia :refer [marginalia-convert]]
-   [pinkgorilla.import.convert-main :refer [to-gorilla]]))
+   [pinkgorilla.notebook.hydration :refer [load-notebook dehydrate]]
+   [pinkgorilla.import.convert-main :refer [to-gorilla]]
+   [pinkgorilla.encoding.marginalia] ; side-effects
+   ))
 
 (def example-code
   ";; k  k  hkj kj \r\n
@@ -18,22 +19,30 @@
     (defn add-two [x y] (+ x y))
     (println (add-two a b))))
 
+(defn code-segment-count [notebook]
+  (->> (:segments notebook)
+       (filter (fn [s]
+                 ;(println s)
+                 (= :code (:type s))))
+       count))
+
 (deftest decode-marginalia
   (let [notebook (decode :marginalia example-code)]
-    (is (= (count (:segments notebook)) 5))))
+    (is (= (code-segment-count notebook) 4))))
 
 (deftest import-marginalia-reload
-  (let [file-name  "/tmp/import-test.clj"
+  (let [file-name  "/tmp/import-marginalia.clj"
         _ (spit file-name example-code)
-        _ (marginalia-convert file-name) ; this creates cljg file
+        _ (to-gorilla file-name) ; this creates cljg file
         storage (create-storage {:type :file
-                                 :filename "/tmp/import-test.cljg"})
+                                 :filename "/tmp/import-marginalia.cljg"})
         tokens {}
-        notebook (load-notebook storage tokens)]
-    (is (= (count (:segments notebook)) 5))))
+        notebook (load-notebook storage tokens)
+        notebook-dry (dehydrate notebook)]
+    (is (= (code-segment-count notebook-dry) 4))))
 
 (comment
-  (marginalia-convert "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/datatable_dplyr.clj")
+  ;(marginalia-convert "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/datatable_dplyr.clj")
 
  ; 
   )

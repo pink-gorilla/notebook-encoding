@@ -3,7 +3,9 @@
    [me.raynes.fs :as fs]
    [clojure.java.io :as io]
    [pinkgorilla.document.default-config] ; side effects
-   [pinkgorilla.import.import :refer [to-notebook]])
+   [pinkgorilla.import.import :refer [to-notebook]]
+   [pinkgorilla.encoding.marginalia] ; side-effects
+   )
   (:gen-class))
 
 (def jupyter-extensions #{"ipynb"})
@@ -30,8 +32,8 @@
       (to-notebook :jupyter #".ipynb" file-name)
 
       (clj-file? file)
-      (to-notebook :clj #".clj" file-name)
-      ;(to-notebook :marginalia #".clj" file-name)
+      ;(to-notebook :clj #".clj" file-name)
+      (to-notebook :marginalia #".clj" file-name)
 
       :else
       (println "file is neither clj nor jupyter format: " file-name))))
