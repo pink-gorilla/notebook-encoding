@@ -39,16 +39,14 @@ lein test-js
 
 # Notebook Converter
 
+For development purpose use:
+
 ```
 lein convert /tmp/import-test.clj
 ```
 clj code in /tmp/import-test.clj will be saved as a pink-gorilla notebook to /tmp/import-test.cljg
 
-You might want to add an alias to ~/.bashrc
-
-```
-alias nbconvert="cd /home/andreas/Documents/gorilla/notebook-encoding && lein convert"
-```
+If you are a user, please use lein-pinkgorilla with the same syntax.
 
 # Todo
 - add spec from notebook here
