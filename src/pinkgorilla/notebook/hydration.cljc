@@ -217,26 +217,23 @@
   (update-segment-all notebook clear-output))
 
 (defn insert-segment-at
-  [worksheet new-index new-segment]
-  (let [segment-order (:segment-order worksheet)
-        segments (:segments worksheet)
+  [notebook new-index new-segment]
+  (let [{:keys [order active segments]} notebook
         new-id (:id new-segment)
-        [head tail] (split-at new-index segment-order)]
-    (merge worksheet {:active-segment new-id
-                      :segments       (assoc segments new-id new-segment)
-                      :segment-order  (into [] (concat head (conj tail new-id)))})))
+        [head tail] (split-at new-index order)]
+    (merge notebook {:active new-id
+                     :segments       (assoc segments new-id new-segment)
+                     :order  (into [] (concat head (conj tail new-id)))})))
 
 (defn remove-segment
-  [worksheet seg-id]
-  (let [segment-order (:segment-order worksheet)
-        active-id (:active-segment worksheet)
-        seg-idx (.indexOf segment-order seg-id)
-        next-active-idx (if (and (= active-id seg-id) (> seg-idx 0))
-                          (nth segment-order (- seg-idx 1)))
-        segments (:segments worksheet)]
-    (merge worksheet {:active-segment next-active-idx
-                      :segments       (dissoc segments seg-id)
-                      :segment-order  (into [] (remove #(= seg-id %) segment-order))})))
+  [notebook seg-id]
+  (let [{:keys [order active segments]} notebook
+        seg-idx (.indexOf order seg-id)
+        next-active-idx (if (and (= active seg-id) (> seg-idx 0))
+                          (nth order (- seg-idx 1)))]
+    (merge notebook {:active next-active-idx
+                     :segments       (dissoc segments seg-id)
+                     :order  (into [] (remove #(= seg-id %) order))})))
 
 (comment
 
