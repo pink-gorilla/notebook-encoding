@@ -4,7 +4,8 @@
       :cljs [taoensso.timbre :refer-macros [info error]])
    [pinkgorilla.notebook.uuid :refer [id]]
    [pinkgorilla.encoding.protocols :refer [decode encode]]
-   [pinkgorilla.storage.protocols :refer [determine-encoding storage-load storage-save]]))
+   [pinkgorilla.storage.protocols :refer [determine-encoding storage-load storage-save]]
+   [pinkgorilla.notebook.core :refer [code->segment md->segment]]))
 
 ;; helper functions
 
@@ -144,45 +145,29 @@
 
 
 (defn create-free-segment
-  "creates a markdown segment"
-  [content]
-  {:id             (id)
-   :type           :free
-   :markup-visible false
-   :content        {:value (or content "")
-                    :type  "text/x-markdown"}})
+  [md]
+  (-> (md->segment md)
+      hydrate-segment))
 
 (defn create-code-segment
-  ([content]
-   {:id               (id)
-    :type             :code
-    :kernel           :clj
-    :content          {:value (or content "")
-                       :type  "text/x-clojure"}
-    :console-response ""
-    :value-response   {:type "html" :value [:span]}
-    :error-text       nil
-    :exception        nil}))
+  [code]
+  (->
+   (code->segment :clj code)
+   hydrate-segment))
 
 (defn to-code-segment
   [free-segment]
-  {:id               (:id free-segment)
-   :type             :code
-   :kernel           :clj
-   :content          {:value (get-in free-segment [:content :value])
-                      :type  "text/x-clojure"}
-   :console-response nil
-   :value-response   nil
-   :error-text       nil
-   :exception        nil})
+  (let [id (:id free-segment)
+        md-as-code (get-in free-segment [:content :value])]
+    (-> (code->segment :clj md-as-code)
+        (assoc :id id))))
 
 (defn to-free-segment
   [code-segment]
-  {:id             (:id code-segment)
-   :type           :free
-   :markup-visible false
-   :content        {:value (get-in code-segment [:content :value])
-                    :type  "text/x-markdown"}})
+  (let [id (:id code-segment)
+        code-as-md (get-in code-segment [:content :value])]
+    (-> (code->segment :clj code-as-md)
+        (assoc :id id))))
 
 (defn- update-segment
   [fun notebook seg-id]
