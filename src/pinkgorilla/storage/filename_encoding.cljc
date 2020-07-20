@@ -32,7 +32,7 @@
          :encoding (extension->encoding ext)}))))
 
 (defn filename->encoding [this k]
-  (debug "filename->encoding: " this)
+  ;(debug "filename->encoding: " this)
   (:encoding (split-filename (k this))))
 
 (defn filename->name [this k]
