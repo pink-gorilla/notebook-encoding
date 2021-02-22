@@ -5,7 +5,7 @@
    #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info error]])
    [pinkgorilla.document.default-config] ; side-effects
-   [pinkgorilla.notebook.template  :refer [new-notebook]]
+   [pinkgorilla.notebook.template  :refer [new-notebook snippets->notebook]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.hydration  :refer [load-notebook save-notebook hydrate dehydrate]]
    [pinkgorilla.encoding.persistence-helper :as helper]))
@@ -35,4 +35,12 @@
 ;   
    )
 
+#?(:clj
 
+   (deftest snippets-notebook
+     (let [notebook-dry (snippets->notebook ["a" "b" "c"])
+           notebook-dry-md (snippets->notebook ["a" "b" "c"] "Hello!")]
+       (is (= (count (:segments notebook-dry)) 3))
+       (is (= (count (:segments notebook-dry-md)) 4))))
+   ;
+   )

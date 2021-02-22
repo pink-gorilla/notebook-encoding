@@ -5,6 +5,21 @@
    [pinkgorilla.notebook.core :refer [empty-notebook add-md add-code]]
    [pinkgorilla.notebook.hipster :refer [make-hip-nsname]]))
 
+(defn add-md- [notebook md]
+  (if md (add-md md)
+      notebook))
+
+(defn add-code-clj [notebook code]
+  (add-code notebook :clj code))
+
+(defn snippets->notebook
+  ([snippets]
+   (reduce add-code-clj empty-notebook snippets))
+  ([snippets md]
+   (let [nb  (-> empty-notebook
+                 (add-md md))]
+     (reduce add-code-clj nb snippets))))
+
 (defn new-notebook
   "A pure function that creates a new worksheet in the browser.
   All db functions used are pure functions!"
