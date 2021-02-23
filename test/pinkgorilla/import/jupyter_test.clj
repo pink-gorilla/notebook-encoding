@@ -4,7 +4,7 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.hydration :refer [load-notebook]]
+   [pinkgorilla.notebook.persistence :refer [load-notebook]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]))
 
 (deftest import-jupyter-reload

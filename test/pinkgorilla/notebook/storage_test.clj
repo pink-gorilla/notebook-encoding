@@ -4,7 +4,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.core :refer [empty-notebook]]
-   [pinkgorilla.notebook.hydration :refer [load-notebook save-notebook]]
+   [pinkgorilla.notebook.persistence :refer [load-notebook save-notebook]]
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))
 

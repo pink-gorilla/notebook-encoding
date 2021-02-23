@@ -7,7 +7,7 @@
    [pinkgorilla.document.default-config] ; side-effects
    [pinkgorilla.notebook.template  :refer [new-notebook snippets->notebook]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.hydration  :refer [load-notebook save-notebook hydrate dehydrate]]
+   [pinkgorilla.notebook.persistence  :refer [load-notebook save-notebook]]
    [pinkgorilla.encoding.persistence-helper :as helper]))
 
 (deftest encode-new-notebook
@@ -20,18 +20,15 @@
 #?(:clj
 
    (deftest reload-new-notebook
-     (let [notebook-dry (new-notebook)
-           notebook (hydrate notebook-dry)
-        ;_ (info "hydrated notebook: " notebook)
+     (let [notebook (new-notebook)
            file-name "/tmp/notebook-new2.cljg"
            storage (create-storage {:type :file
                                     :filename file-name})
         ;_ (info "storage: " storage)
            creds {}
            _ (save-notebook storage creds notebook)
-           notebook-reloaded (load-notebook storage creds)
-           notebook-reloaded-dry (dehydrate notebook-reloaded)]
-       (is (= notebook-dry notebook-reloaded-dry))))
+           notebook-reloaded (load-notebook storage creds)]
+       (is (= notebook notebook-reloaded))))
 ;   
    )
 

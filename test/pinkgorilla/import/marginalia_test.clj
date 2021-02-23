@@ -4,7 +4,7 @@
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
-   [pinkgorilla.notebook.hydration :refer [load-notebook dehydrate]]
+   [pinkgorilla.notebook.persistence :refer [load-notebook]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]
    [pinkgorilla.encoding.marginalia] ; side-effects
    ))
@@ -37,9 +37,8 @@
         storage (create-storage {:type :file
                                  :filename "/tmp/import-marginalia.cljg"})
         tokens {}
-        notebook (load-notebook storage tokens)
-        notebook-dry (dehydrate notebook)]
-    (is (= (code-segment-count notebook-dry) 4))))
+        notebook (load-notebook storage tokens)]
+    (is (= (code-segment-count notebook) 4))))
 
 (comment
   ;(marginalia-convert "/home/andreas/Documents/gorilla/clojisr-gorilla/resources/notebooks/datatable_dplyr.clj")

@@ -3,7 +3,7 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side-effects
    [pinkgorilla.storage.protocols :as storage]
-   [pinkgorilla.notebook.hydration :refer [load-notebook]]
+   [pinkgorilla.notebook.persistence :refer [load-notebook]]
    [pinkgorilla.storage.core-test]
    [pinkgorilla.creds :refer [creds]]))
 
