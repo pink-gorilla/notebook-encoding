@@ -57,7 +57,7 @@
                          [com.fasterxml.jackson.dataformat/jackson-dataformat-smile "2.11.1"]
 
                          [cheshire "5.10.0"]
-                         [com.taoensso/encore "2.122.0"]
+                         [com.taoensso/encore "3.18.0"]
                          ; patches to get most uptodate version for certain conflicts:
                          [commons-codec "1.14"] ; selmer and clj-http (via gorilla-explore)
                          [ring/ring-codec "1.1.2"] ; ring and compojure
@@ -72,8 +72,7 @@
                   [com.cognitect/transit-js "0.8.861"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
                   [com.cognitect/transit-cljs "0.8.264"] ; used in encoding - clojurescript
                   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
-                  [com.taoensso/timbre "4.10.0"] ; cljs logging
-                  ;[org.clojure/tools.logging "0.5.0"] ; clj logging
+                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
 
                   [cheshire "5.10.0"] ; tentacles dependency
                   [irresponsible/tentacles "0.6.6" ; github api  https://github.com/clj-commons/tentacles
@@ -114,11 +113,11 @@
                                                               "-creds")))}
 
 
-  :aliases {"build-shadow-ci"
-            ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
-
-            "bump-version"
+  :aliases { "bump-version"
             ["change" "version" "leiningen.release/bump-version"]
+            
+            "build-shadow-ci"
+            ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
 
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]

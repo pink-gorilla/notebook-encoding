@@ -34,6 +34,7 @@ you can run `lein test :no-creds`
 
 cljs:
 ```
+npm install
 lein test-js
 ```
 
