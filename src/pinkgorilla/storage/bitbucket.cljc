@@ -1,12 +1,10 @@
 (ns pinkgorilla.storage.bitbucket
   (:require
-   #?(:clj [taoensso.timbre :refer [info error]]
-      :cljs [taoensso.timbre :refer-macros [info]])
-   [pinkgorilla.storage.protocols :refer [Storage query-params-to-storage]]))
+   [pinkgorilla.storage.protocols :refer [Storage create-storage]]))
 
 (defrecord StorageBitbucket [user repo revision path])
 
-(defmethod query-params-to-storage :bitbucket [_ params]
+(defmethod create-storage :bitbucket [params]
   (StorageBitbucket.
    (:user params)
    (:repo params)
@@ -16,13 +14,5 @@
 (extend-type StorageBitbucket
   Storage
   (storagetype [self] :bitbucket)
-  (external-url [self] nil)
-
-  (gorilla-path
-    [self]
-    (str "?source=bitbucket"
-         "&user=" (:user self)
-         "&repo=" (:repo self)
-         "&path=" (:path self)
-         "&revision=" (:revision self))))
+  (external-url [self] nil))
 

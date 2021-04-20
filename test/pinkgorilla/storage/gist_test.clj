@@ -3,7 +3,7 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.creds :refer [creds]]
-   [pinkgorilla.storage.github :refer [load-gist save-gist]]))
+   [pinkgorilla.storage.impl.github :refer [load-gist save-gist]]))
 
 (defn tap [s]
   (println "gist id: " s)

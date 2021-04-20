@@ -3,25 +3,21 @@
    #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info error]])))
 
-#?(:clj (defmulti query-params-to-storage (fn [t p] t))
-   :cljs (defmulti query-params-to-storage identity))
+#?(:clj (defmulti create-storage (fn [m] (:type m)))
+   :cljs (defmulti create-storage (fn [m] (:type m))))
 
-(defmethod query-params-to-storage :default [t params]
-  (error "ERROR: unknown storage type: " t " with params: " params)
-  nil)
+(defmethod create-storage :default [m]
+  (let [t (or (:type m) :type-unspecified)]
+    (error "ERROR: unknown storage type: " t " with params: " m)
+    nil))
 
-(defn create-storage [params]
-  (let [stype (:type params)]
-    (if (nil? stype)
-      (do (error "cannot create storage from nil params")
-          nil)
-      (query-params-to-storage stype params))))
+(defn storage->map [s]
+  (into {} s))
 
 (defprotocol Storage
   (storagetype [self]) ; :file :repo :gist :bitbucket
   (external-url [self]) ; to view raw persisted data in browser.
-  (gorilla-path [self])) ; to open a notebook from the sidebar
-
+  )
 
 (defprotocol Save
   (storage-save [self notebook tokens]))

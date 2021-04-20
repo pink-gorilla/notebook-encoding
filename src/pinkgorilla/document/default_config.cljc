@@ -10,12 +10,17 @@
    ;#?(:clj [pinkgorilla.encoding.marginalia]) ; clj with comments and output annotations
    #?(:clj [pinkgorilla.encoding.clj]) ; clj without comments
 
-   ; storage string <-> storage
+   ; storage map <-> storage
    [pinkgorilla.storage.file]
-   #?(:clj [pinkgorilla.storage.gist])
-   #?(:clj [pinkgorilla.storage.repo])
+   [pinkgorilla.storage.res]
+   [pinkgorilla.storage.gist]
+   [pinkgorilla.storage.repo]
    [pinkgorilla.storage.bitbucket]
-   #?(:clj [pinkgorilla.storage.github])
+
+   #?(:clj [pinkgorilla.storage.impl.file])
+   #?(:clj [pinkgorilla.storage.impl.res])
+   #?(:clj [pinkgorilla.storage.impl.gist])
+   #?(:clj [pinkgorilla.storage.impl.repo])
 
    ;[pinkgorilla.storage.direct.file]
    ;[pinkgorilla.storage.direct.gist]

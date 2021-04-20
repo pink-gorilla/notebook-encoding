@@ -1,8 +1,7 @@
-(ns pinkgorilla.storage.github
+(ns pinkgorilla.storage.impl.github
   (:require
    [clojure.string]
-   #?(:clj [taoensso.timbre :refer [debug info error]]
-      :cljs [taoensso.timbre :refer-macros [debug info]])
+   [taoensso.timbre :refer [debug info error]]
    [tentacles.gists]
    [tentacles.repos]))
 

@@ -3,7 +3,7 @@
    [clojure.test :refer :all]
    [pinkgorilla.document.default-config] ; side effects
    [pinkgorilla.creds :refer [creds]]
-   [pinkgorilla.storage.github :refer [load-repo save-repo]]
+   [pinkgorilla.storage.impl.github :refer [load-repo save-repo]]
    [pinkgorilla.storage.settings :refer [storage-data]]))
 
 (defn load-repo2 [id token]

@@ -1,23 +1,18 @@
 (ns pinkgorilla.storage.unsaved
   (:require
-   #?(:clj [taoensso.timbre :refer [info]]
-      :cljs [taoensso.timbre :refer-macros [info]])
    [clojure.string]
-   [pinkgorilla.storage.protocols :refer [Storage query-params-to-storage FromFilename]]))
+   [pinkgorilla.storage.protocols :refer [Storage create-storage FromFilename]]))
 
 (defrecord StorageUnsaved [id])
 
-(defmethod query-params-to-storage :unsaved [_ params]
+(defmethod create-storage :unsaved [params]
   (StorageUnsaved. (:id params)))
 
 (extend-type StorageUnsaved
   Storage
   (storagetype [self] :unsaved)
   (external-url [self]
-    nil)
-  (gorilla-path [self]
-    (str "?source=unsaved"
-         "&id=" (:id self))))
+    nil))
 
 (extend-type StorageUnsaved
   FromFilename
