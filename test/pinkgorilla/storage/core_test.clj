@@ -8,11 +8,13 @@
 
 (defn roundtrip [m]
   (let [s (storage/create-storage m)]
-    (storage->map m)))
+    (storage->map s)))
 
 (deftest to-map
-  (let [res {:type :res :filename "bongo.cljg"}]
+  (let [res {:type :res :filename "bongo.cljg"}
+        f {:type :file :filename "bongo.cljg"}]
     (is (= res (roundtrip res)))
+    (is (= f (roundtrip f)))
     ;
     ))
 

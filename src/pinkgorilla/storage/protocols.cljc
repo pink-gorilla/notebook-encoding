@@ -11,13 +11,14 @@
     (error "ERROR: unknown storage type: " t " with params: " m)
     nil))
 
-(defn storage->map [s]
-  (into {} s))
-
 (defprotocol Storage
   (storagetype [self]) ; :file :repo :gist :bitbucket
   (external-url [self]) ; to view raw persisted data in browser.
   )
+
+(defn storage->map [s]
+  (assoc (into {} s)
+         :type (storagetype s)))
 
 (defprotocol Save
   (storage-save [self notebook tokens]))
