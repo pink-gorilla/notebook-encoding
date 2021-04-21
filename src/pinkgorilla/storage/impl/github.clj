@@ -12,16 +12,17 @@
 
 
 (defn extract-gist-result [response]
+  (info "gist operation rep: " response)
   (if (:id response)
     {:success true :id (:id response)}
     {:success false :error-message (get-in response [:body :message])}))
 
 (defn save-gist [id description is-public filename content tokens]
   (let [files {filename content}
-        options (merge {:description description}
+        options (merge {:description (or description "")}
                        tokens)]
     (if (nil? id)
-      (do (info "creating gist: " options)
+      (do (info "creating gist: filename:" filename "opts: " options)
           (->>
            (tentacles.gists/create-gist files (assoc options :public is-public))
            (extract-gist-result)))
