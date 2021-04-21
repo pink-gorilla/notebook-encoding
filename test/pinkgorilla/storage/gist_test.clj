@@ -11,11 +11,10 @@
 
 (deftest gist-storage-creds
   (let [tokens (creds)
-        github-token (:github-token tokens)
         gist-id (:gist-id tokens)
         content (str "hello-" (rand-int 10000))
         filename "raw-str.txt"]
     (is (= content
-           (do (save-gist gist-id "unittest storage-raw" true filename content github-token) ; id=nill = create
-               (load-gist gist-id filename github-token))))))
+           (do (save-gist gist-id "unittest storage-raw" true filename content tokens) ; id=nill = create
+               (load-gist gist-id filename tokens))))))
 

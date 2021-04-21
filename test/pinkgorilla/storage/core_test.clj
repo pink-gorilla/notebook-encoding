@@ -43,7 +43,6 @@
     (is (= content (storage/storage-load s nil))) ; nil creds
     (is (= content (storage/storage-load s {}))) ; empty creds
     (is (= content (storage/storage-load s (creds)))) ; full creds
-    (is (= content (storage/storage-load s {:github-token ""}))) ; empty github token
     ))
 
 (deftest storage-gist-load
@@ -53,7 +52,6 @@
     (is (= content (storage/storage-load s nil))) ; nil creds
     (is (= content (storage/storage-load s {}))) ; empty creds
   ;  (is (= content (storage/storage-load s (creds)))) ; full creds cannot do this test because gist is user specific.
-    (is (= content (storage/storage-load s {:github-token ""}))) ; empty github token
     ))
 
 

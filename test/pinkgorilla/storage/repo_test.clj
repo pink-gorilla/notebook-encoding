@@ -29,27 +29,27 @@
            (load-repo2 :load token)))))
 
 (deftest repo-load-creds
-  (let [token (:github-token (creds))
+  (let [tokens (creds)
         content (str "hello-repo XXXX\n")]
     (is (= content
-           (load-repo2 :load token)))))
+           (load-repo2 :load tokens)))))
 
 #_(deftest repo-load-bad
-    (let [token (:github-token creds)
+    (let [tokens (creds)
           content (str "hello-repo XXXX\n")]
       (is (= content
-             (load-repo "pink-gorilla" "unittest-notebooks" "samples/uiplugin/gorillaplot/central-limit.cljg" token)))))
+             (load-repo "pink-gorilla" "unittest-notebooks" "samples/uiplugin/gorillaplot/central-limit.cljg" tokens)))))
 
 (defn tap [s]
   (println "repo: " s)
   s)
 
 (deftest repo-storage-creds
-  (let [token (:github-token (creds))
+  (let [tokens (creds)
         content (str "hello-repo " (rand-int 10000))]
     (is (= content
-           (do (save-repo2 :write content token)
-               (-> (load-repo2 :write token)
+           (do (save-repo2 :write content tokens)
+               (-> (load-repo2 :write tokens)
                    ;(tap)
                    ))))))
 

@@ -14,11 +14,10 @@
       (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
       (do
         (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
-        (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook (:github-token tokens)))))
+        (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook tokens))))
   Load
   (storage-load [self tokens]
-    (let [token (:github-token tokens)]
-      (info "Loading Notebook from gist id: " (:id self))
-      (if (or (nil? token) (clojure.string/blank? token))
-        (load-gist (:id self) (:filename self))
-        (load-gist (:id self) (:filename self) token)))))
+    (info "Loading Notebook from gist id: " (:id self))
+    (if (nil? tokens)
+      (load-gist (:id self) (:filename self))
+      (load-gist (:id self) (:filename self) tokens))))

@@ -6,8 +6,6 @@
    [tentacles.repos]))
 
 
-;defn load-gist [gist-id & [token]]
-
 
   ; :reason-phrase "Unauthorized"
   ;:status 401
@@ -18,10 +16,10 @@
     {:success true :id (:id response)}
     {:success false :error-message (get-in response [:body :message])}))
 
-(defn save-gist [id description is-public filename content token]
+(defn save-gist [id description is-public filename content tokens]
   (let [files {filename content}
-        options {:description description
-                 :oauth-token token}]
+        options (merge {:description description}
+                       tokens)]
     (if (nil? id)
       (do (info "creating gist: " options)
           (->>
@@ -33,46 +31,46 @@
            (extract-gist-result))))
     {:id id :filename filename}))
 
-(defn load-gist-all [gist-id & [token]]
+(defn load-gist-all [gist-id & [tokens]]
   (tentacles.gists/file-contents
-   (if (nil? token)
+   (if (nil? tokens)
      (tentacles.gists/specific-gist gist-id)
-     (tentacles.gists/specific-gist gist-id {:oauth-token token}))))
+     (tentacles.gists/specific-gist gist-id tokens))))
 
-(defn load-gist [gist-id filename & [token]]
+(defn load-gist [gist-id filename & [tokens]]
   (let [f (keyword filename)]
-    (->> (load-gist-all gist-id token)
+    (->> (load-gist-all gist-id tokens)
          (f))))
 
-(defn load-repo-raw [user repo path & [token]]
-  (if (nil? token)
+(defn load-repo-raw [user repo path & [tokens]]
+  (if (nil? tokens)
     (tentacles.repos/contents user repo path {:str? true})
-    (tentacles.repos/contents user repo path {:str? true :oauth-token token})))
+    (tentacles.repos/contents user repo path (merge {:str? true} tokens))))
 
-(defn load-repo [user repo path & [token]]
+(defn load-repo [user repo path & [tokens]]
   (:content
-   (if (or (nil? token) (clojure.string/blank? token))
+   (if (nil? tokens)
      (tentacles.repos/contents user repo path {:str? true})
-     (tentacles.repos/contents user repo path {:str? true :oauth-token token}))))
+     (tentacles.repos/contents user repo path (merge {:str? true}  tokens)))))
 
 
 ;; body :message
 
 
-(defn save-repo [user repo path content token]
+(defn save-repo [user repo path content tokens]
   (let [commit-message "pinkgorilla notebook save"
-        existing-file (load-repo-raw user repo path token)
+        existing-file (load-repo-raw user repo path tokens)
         sha (:sha existing-file)
         _ (info "existing git repo sha is: " sha)
-        result (tentacles.repos/update-contents user repo path commit-message content sha {:oauth-token token})]
+        result (tentacles.repos/update-contents user repo path commit-message content sha tokens)]
     (debug "save response: " result)
     {:sha sha}))
 
 (comment
 
-  (def creds {:github-token ""})
-
-  (save-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" "test!" (:github-token creds))
-
-  (load-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" (:github-token creds)))
+  (def creds {:oauth-token ""})
+  (save-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" "test!" creds)
+  (load-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" creds)
+ ; 
+  )
 
