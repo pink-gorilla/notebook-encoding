@@ -20,8 +20,10 @@
 (defn load-notebook [storage tokens]
   (if-let [format (determine-encoding storage)]
     (do (info "loading notebook with format: " format)
-        (->> (storage-load storage tokens)
-             (decode format)))
+        (if-let [content (storage-load storage tokens)]
+          (decode format content)
+          (do (error "cannot decode. content is nil")
+              nil)))
     (do
       (error "cannot load notebook - format cannot be determined! " storage)
       nil)))
