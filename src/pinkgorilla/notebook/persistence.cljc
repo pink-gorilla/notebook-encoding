@@ -18,9 +18,10 @@
         {:success false :error "could not determine storage-format!"})))
 
 (defn load-notebook [storage tokens]
-  (if-let [encoding-type (determine-encoding storage)]
-    (->> (storage-load storage tokens)
-         (decode encoding-type))
+  (if-let [format (determine-encoding storage)]
+    (do (info "loading notebook with format: " format)
+        (->> (storage-load storage tokens)
+             (decode format)))
     (do
       (error "cannot load notebook - format cannot be determined! " storage)
       nil)))

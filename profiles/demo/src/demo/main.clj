@@ -1,25 +1,43 @@
 (ns demo.main
   (:require
    [taoensso.timbre :refer [debug info error]]
+   [pinkgorilla.document.default-config] ; side-effects
    [pinkgorilla.storage.impl.github :refer [save-gist save-repo]]
-   [pinkgorilla.creds :refer [creds]])
+   [pinkgorilla.creds :refer [creds]]
+   [pinkgorilla.storage.protocols :refer [create-storage]]
+   [pinkgorilla.notebook.persistence :refer [load-notebook]]
+   )
   (:gen-class))
+
+
+(defn raw [tokens]
+   (let [
+         id nil
+         description "d"
+         is-public true
+         filename "abs.clj"
+         content "123"]
+     (info "gist-result: " (save-gist id description is-public filename content tokens))
+     (info "repo-result: " (save-repo "pink-junkjard" "unittest-notebooks" "bongo.txt" "contents" tokens))
+
+    ; error
+     (error "gist-result: " (save-gist id description is-public filename content {}))
+     (error "repo-result: " (save-repo "pink-junkjard" "bad-unittest-notebooks" "bongo.txt" "contents" tokens)))
+  )
 
 
 (defn -main []
   (let [tokens (creds)
         ;tokens {:oauth-token ""}
-        id nil
-        description "d"
-        is-public true
-        filename "abs.clj"
-        content "123"]
-    (info "gist-result: " (save-gist id description is-public filename content tokens))
-    (info "repo-result: " (save-repo "pink-junkjard" "unittest-notebooks" "bongo.txt" "contents" tokens))
-
-    ; error
-    (error "gist-result: " (save-gist id description is-public filename content {}))
-    (error "repo-result: " (save-repo "pink-junkjard" "bad-unittest-notebooks" "bongo.txt" "contents" tokens))))
+        
+        s (create-storage  {:user "pink-gorilla", :repo "gorilla-ui", :filename "notebooks/vega.cljg", :type :repo}
+                           #_{:type :res :filename "bongo.cljg"})]
+    
+    ;(raw tokens)
+    (info (load-notebook s tokens))
+    
+    )
+ )
 
 
 
