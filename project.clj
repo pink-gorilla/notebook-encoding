@@ -25,21 +25,21 @@
   :target-path  "target/jar"
 
   :plugins []
-  :dependencies  [[org.clojure/clojure "1.10.1"]
+  :dependencies  [[org.clojure/clojure "1.10.3"]
                   [instaparse "1.4.10"] ; used in decoding
                   [com.cognitect/transit-clj "1.0.324"] ; used in encoding - clojure
-                  [com.cognitect/transit-js "0.8.861"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
+                  [com.cognitect/transit-js "0.8.867"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
                   [com.cognitect/transit-cljs "0.8.264"] ; used in encoding - clojurescript
                   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
                   [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
 
                   [cheshire "5.10.0"] ; tentacles dependency
-                  [irresponsible/tentacles "0.6.6" ; github api  https://github.com/clj-commons/tentacles
+                  [irresponsible/tentacles "0.6.8" ; github api  https://github.com/clj-commons/tentacles
                    :exclusions [cheshire]]
                   ;[cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
                   [me.raynes/fs "1.4.6"]
-                  [org.clojure/clojurescript "1.10.773"]  ; for marginalia
-                  [org.clojure/tools.cli "1.0.194"] ; for marginalia
+                  ;[org.clojure/clojurescript "1.10.844"]  ; for marginalia
+                  [org.clojure/tools.cli "1.0.206"] ; for marginalia
                   [marginalia "0.9.1"
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
@@ -54,8 +54,11 @@
                                    "test"]}
 
              :dev {:resource-paths ["test/resources"]
-                   :dependencies [[thheller/shadow-cljs "2.8.81"]
-                                  [clj-kondo "2020.06.21"]]
+                   :dependencies [ ;[org.pinkgorilla/webly "0.2.5"]
+                                  [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
+                                  [thheller/shadow-cljs "2.12.5"
+                                   :exclusions [org.clojure/data.json]]
+                                  [clj-kondo "2021.03.31"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
                                   [lein-ancient "0.6.15"]
@@ -84,8 +87,12 @@
             "build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
 
+     
+
             "test-js" ^{:doc "Test compiled JavaScript."}
-            ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
+            ["do" 
+             "build-shadow-ci" 
+             ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
 
             "lint"  ^{:doc "Lint for dummies"}
             ["clj-kondo"
