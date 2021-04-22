@@ -3,7 +3,7 @@
    TODO: parse output, console"
   (:require
    [pinkgorilla.encoding.helper :refer [from-json]]
-   [pinkgorilla.notebook.core :refer [empty-notebook assoc-meta add-segments md->segment code->segment]]
+   [pinkgorilla.notebook.core :refer [md->segment code->segment]]
    [pinkgorilla.encoding.protocols :refer [decode]]))
 
 (defn- parse-cell [cell]
@@ -41,8 +41,8 @@
   ; :nbformat 4, 
   ; :nbformat_minor 2}
 
-  (decode :jupyter (slurp "test/notebooks/basic-concepts.ipynb"))
-  (decode :gorilla (slurp "test/notebooks/reagent-manipulate.cljg"))
+  ;(decode :jupyter (slurp "test/notebooks/basic-concepts.ipynb"))
+  ;(decode :gorilla (slurp "test/notebooks/reagent-manipulate.cljg"))
 
 
 ; comment end

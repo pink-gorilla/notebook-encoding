@@ -1,7 +1,5 @@
 (ns pinkgorilla.storage.filename-encoding
   (:require
-   #?(:clj [taoensso.timbre :refer [trace debug info error]]
-      :cljs [taoensso.timbre :refer-macros [trace debug info]])
    [clojure.string :as str]))
 
 (defn encoding->extension [encoding]

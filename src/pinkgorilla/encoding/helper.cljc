@@ -14,23 +14,26 @@
              {:writer writer :out out})
      :cljs (t/writer :json {:transform t/write-meta})))
 
-(defn to-json [writer o]
-  #?(:clj  (do (t/write (:writer writer) o)
-               (String. (.toByteArray (:out writer))))
-     :cljs (do ;(println "encoding: " o)
-             (try
-               (t/write writer o)
-               (catch js/Object ex
-                 (println "encode exception object: " o " ex: "  ex)
-                 "{}")))))
+#?(:clj
+   (defn to-json [writer o]
+     (t/write (:writer writer) o)
+     (String. (.toByteArray (:out writer)))))
+
+#?(:cljs
+   (defn to-json [writer o]
+     (try
+       (t/write writer o)
+       (catch js/Object ex
+         (println "encode exception object: " o " ex: "  ex)
+         "{}"))))
 
 (defn from-json [s]
   #?(:clj
      (try
        (do
-         (def in (ByteArrayInputStream. (.getBytes s "UTF-8")))
-         (def reader (t/reader in :json))
-         (t/read reader))
+         (let [in (ByteArrayInputStream. (.getBytes s "UTF-8"))
+               reader (t/reader in :json)]
+           (t/read reader)))
        (catch Exception ex
          (println "decode json exception: " s)
          nil))

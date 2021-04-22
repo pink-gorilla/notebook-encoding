@@ -2,7 +2,7 @@
   (:require
    [clojure.string]
    [pinkgorilla.storage.filename-encoding :refer [filename->encoding filename->name]]
-   [pinkgorilla.storage.protocols :refer [FromFilename Storage create-storage Save Load]]))
+   [pinkgorilla.storage.protocols :refer [FromFilename Storage create-storage]]))
 
 (defrecord StorageRes [filename])
 

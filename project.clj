@@ -87,6 +87,11 @@
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
 
+            "lint"  ^{:doc "Lint for dummies"}
+            ["clj-kondo"
+             "--config" "clj-kondo.edn"
+             "--lint" "src"]
+
             "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
             ["with-profile" "convert" "run"]
 

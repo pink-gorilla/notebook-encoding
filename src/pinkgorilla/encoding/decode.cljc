@@ -170,7 +170,7 @@
         ;_ (println "version: " version)
         ]
     ; awb99: a case would be good here, however it does not work
-    ; cheshire has condp - but only for cloure, nut we also need cljs
+    ; cheshire has condp - but only for clojure, nut we also need cljs
     (if (= (type nb) vector-type)
       (let [segments (rest (nth nb 2))
             segments (vec (map process-segment segments))

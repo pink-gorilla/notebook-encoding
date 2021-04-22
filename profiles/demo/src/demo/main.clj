@@ -2,7 +2,8 @@
   (:require
    [taoensso.timbre :refer [debug info error]]
    [pinkgorilla.document.default-config] ; side-effects
-   [pinkgorilla.storage.impl.github :refer [save-gist save-repo]]
+   [pinkgorilla.storage.impl.gist :refer [save-gist]]
+    [pinkgorilla.storage.impl.repo :refer [save-repo]]
    [pinkgorilla.creds :refer [creds]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.persistence :refer [load-notebook]]

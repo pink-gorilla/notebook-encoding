@@ -2,19 +2,15 @@
   (:require
    [taoensso.timbre :refer [info error]]
    [clojure.java.io :as io]
-   [pinkgorilla.storage.protocols :refer [FromFilename Storage create-storage Save Load]])
+   [pinkgorilla.storage.protocols :refer [Save Load]])
   (:import
    [pinkgorilla.storage.res  StorageRes]))
 
 (extend-type StorageRes
-     ;Save
-  #_(storage-save [self notebook tokens]
-                  (if (nil? notebook)
-                    (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
-                    (do
-                      (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
-                      (spit (:filename self) notebook)
-                      {:filename (:filename self)})))
+  Save
+  (storage-save [self notebook tokens]
+    {:success :false
+     :error-message "resources cannot be saved"})
   Load
   (storage-load [self tokens]
     (let [res-name (str "notebooks/" (:filename self))
