@@ -13,7 +13,7 @@
       (do
         (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
         (spit (:filename self) notebook)
-        {:filename (:filename self)})))
+        {:success true :filename (:filename self)})))
   Load
   (storage-load [self tokens]
        ;(info "Loading Notebook from file: " (:filename self))

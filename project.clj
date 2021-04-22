@@ -48,6 +48,11 @@
 
   :profiles {:convert {; converts clj file to notebook
                        :main ^:skip-aot pinkgorilla.import.convert-main}
+
+             :demo {:main  demo.main
+                    :source-paths ["profiles/demo/src"
+                                   "test"]}
+
              :dev {:resource-paths ["test/resources"]
                    :dependencies [[thheller/shadow-cljs "2.8.81"]
                                   [clj-kondo "2020.06.21"]]
@@ -73,9 +78,9 @@
                                                               "-creds")))}
 
 
-  :aliases { "bump-version"
+  :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
-            
+
             "build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
 
@@ -83,6 +88,9 @@
             ["do" "build-shadow-ci" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
 
             "convert" ^{:doc "Converts clj file to notebook. Needs filename parameter"}
-            ["with-profile" "convert" "run"]})
+            ["with-profile" "convert" "run"]
+
+            "demo"
+            ["with-profile" "demo" "run"]})
 
 

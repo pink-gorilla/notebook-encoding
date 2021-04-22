@@ -32,7 +32,7 @@
          (type (storage/create-storage {:type :res :filename "test.cljg"})))))
 
 (deftest storage-res-load
-  (let [s (storage/create-storage {:type :res :filename "bongo.cljg"})
+  (let [s (storage/create-storage     {:type :res :filename "bongo.cljg"})
         s-nil (storage/create-storage {:type :res :filename "bongo-not-existing.cljg"})]
     (is (= "{:bongo 1}" (storage/storage-load s nil)))
     (is (= nil (storage/storage-load s-nil nil)))))
