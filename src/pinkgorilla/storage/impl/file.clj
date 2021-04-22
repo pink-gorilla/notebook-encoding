@@ -9,7 +9,7 @@
   Save
   (storage-save [self notebook tokens]
     (if (nil? notebook)
-      (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+      {:success false :error-message "NOT Saving EMPTY Notebook "}
       (do
         (info "Saving Notebook to file: " (:filename self) " size:" (count notebook))
         (spit (:filename self) notebook)

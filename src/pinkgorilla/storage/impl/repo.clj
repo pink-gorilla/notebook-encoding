@@ -62,9 +62,9 @@
   Save
   (storage-save [self notebook tokens]
     (if (nil? tokens)
-      (throw (Exception. (str "NOT Saving Notebook without token: " (:filename self))))
+      {:success false :error-message "NOT Saving Notebook without token"}
       (if (nil? notebook)
-        (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
+        {:success false :error-message  "NOT Saving EMPTY Notebook"}
         (do
           (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
           (save-repo (:user self) (:repo self) (:filename self) notebook tokens)))))

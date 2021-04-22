@@ -72,11 +72,13 @@
 (extend-type StorageGist
   Save
   (storage-save [self notebook tokens]
-    (if (nil? notebook)
-      (throw (Exception. (str "NOT Saving EMPTY Notebook to file: " (:filename self))))
-      (do
-        (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
-        (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook tokens))))
+    (if (nil? tokens)
+      {:success false :error-message "NOT Saving Notebook without token"}
+      (if (nil? notebook)
+        {:success false :error-message "NOT Saving EMPTY Notebook"}
+        (do
+          (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
+          (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook tokens)))))
   Load
   (storage-load [self tokens]
     (info "Loading Notebook from gist id: " (:id self))
