@@ -23,6 +23,7 @@
   :source-paths ["src"]
   :test-paths ["test"]
   :target-path  "target/jar"
+  :resource-paths ["resources"]
 
   :plugins []
   :dependencies  [[org.clojure/clojure "1.10.3"]
@@ -86,8 +87,6 @@
 
             "build-shadow-ci"
             ["run" "-m" "shadow.cljs.devtools.cli" "compile" ":ci"]
-
-     
 
             "test-js" ^{:doc "Test compiled JavaScript."}
             ["do" 
