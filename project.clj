@@ -6,11 +6,6 @@
                                      :username :env/release_username
                                      :password :env/release_password
                                      :sign-releases false}]]
-
-
-    ;; TODO: prep tasks breaks alias???
-  ;; :prep-tasks ["build-shadow-ci"]
-
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -24,7 +19,6 @@
   :test-paths ["test"]
   :target-path  "target/jar"
   :resource-paths ["resources"]
-
   :plugins []
   :dependencies  [[org.clojure/clojure "1.10.3"]
                   [instaparse "1.4.10"] ; used in decoding
@@ -33,11 +27,9 @@
                   [com.cognitect/transit-cljs "0.8.264"] ; used in encoding - clojurescript
                   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
                   [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
-
                   [cheshire "5.10.0"] ; tentacles dependency
                   [irresponsible/tentacles "0.6.8" ; github api  https://github.com/clj-commons/tentacles
                    :exclusions [cheshire]]
-                  ;[cheshire "5.7.1"] ; tentacles dependency, JSON and JSON SMILE (binary json format) encoding/decoding
                   [me.raynes/fs "1.4.6"]
                   ;[org.clojure/clojurescript "1.10.844"]  ; for marginalia
                   [org.clojure/tools.cli "1.0.206"] ; for marginalia
