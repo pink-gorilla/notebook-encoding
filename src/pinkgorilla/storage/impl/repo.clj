@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.impl.repo
   (:require
    [clojure.string]
-   [taoensso.timbre :refer [trace info error]]
+   [taoensso.timbre :refer [trace debug info error]]
    [tentacles.repos]
    [pinkgorilla.storage.protocols :refer [Save Load]])
   (:import
@@ -41,7 +41,7 @@
   (let [commit-message "pinkgorilla notebook save"
         existing-file (load-repo-raw user repo path tokens)
         sha (:sha existing-file)
-        _ (info "existing git repo sha is: " sha)
+        _ (debug "existing git repo sha is: " sha)
         result (tentacles.repos/update-contents user repo path commit-message content sha tokens)]
     (trace "save response: " result)
     {:sha sha}
@@ -66,11 +66,11 @@
       (if (nil? notebook)
         {:success false :error-message  "NOT Saving EMPTY Notebook"}
         (do
-          (info "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
+          (debug "Saving Notebook to repo: " (:repo self) " size: " (count notebook))
           (save-repo (:user self) (:repo self) (:filename self) notebook tokens)))))
   Load
   (storage-load [self tokens]
-    (info "Loading Notebook from repo: " (:repo self) "user: " (:user self) " filename: " (:filename self))
+    (debug "Loading Notebook from repo: " (:repo self) "user: " (:user self) " filename: " (:filename self))
     (if (nil? tokens)
       (load-repo (:user self) (:repo self) (:filename self))
       (load-repo (:user self) (:repo self) (:filename self) tokens))))

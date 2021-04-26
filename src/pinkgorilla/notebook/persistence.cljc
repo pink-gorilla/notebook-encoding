@@ -1,6 +1,6 @@
 (ns pinkgorilla.notebook.persistence
   (:require
-   #?(:clj [taoensso.timbre :refer [info error]]
+   #?(:clj [taoensso.timbre :refer [debug info error]]
       :cljs [taoensso.timbre :refer-macros [info error]])
    [pinkgorilla.encoding.protocols :refer [decode encode]]
    [pinkgorilla.storage.protocols :refer [determine-encoding storage-load storage-save]]))
@@ -10,7 +10,7 @@
 
 (defn save-notebook [storage tokens notebook]
   (if-let [format (determine-encoding storage)]
-    (do (info "saving notebook with format: " format)
+    (do (debug "saving notebook with format: " format)
         (->> notebook
              (encode format)
              (save-nb storage tokens))) ;save-nb returns :success true/false
@@ -19,7 +19,7 @@
 
 (defn load-notebook [storage tokens]
   (if-let [format (determine-encoding storage)]
-    (do (info "loading notebook with format: " format)
+    (do (debug "loading notebook with format: " format)
         (if-let [content (storage-load storage tokens)]
           (decode format content)
           (do (error "cannot decode. content is nil")

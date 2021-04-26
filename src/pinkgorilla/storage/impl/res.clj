@@ -1,6 +1,6 @@
 (ns pinkgorilla.storage.impl.res
   (:require
-   [taoensso.timbre :refer [info error]]
+   [taoensso.timbre :refer [info debug error]]
    [clojure.java.io :as io]
    [pinkgorilla.storage.protocols :refer [Save Load]])
   (:import
@@ -15,7 +15,7 @@
   (storage-load [self tokens]
     (let [res-name (str "notebooks/" (:filename self))
           r (io/resource res-name)]
-      (info "Loading Notebook from resource: ")
+      (debug "Loading Notebook from resource: ")
       (if r
         (slurp r)
         (do (error "error: resource not found: " res-name)

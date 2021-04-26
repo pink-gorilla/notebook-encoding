@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.impl.gist
   (:require
    [clojure.string]
-   [taoensso.timbre :refer [trace info error]]
+   [taoensso.timbre :refer [trace debug info error]]
    [tentacles.gists]
    [pinkgorilla.storage.protocols :refer [Save Load]])
   (:import
@@ -49,11 +49,11 @@
         options (merge {:description (or description "")}
                        tokens)]
     (if (nil? id)
-      (do (info "creating gist: filename:" filename "opts: " options)
+      (do (debug "creating gist: filename:" filename "opts: " options)
           (->>
            (tentacles.gists/create-gist files (assoc options :public is-public))
            (extract-gist-result filename)))
-      (do (info "updating gist: " id  " : " options)
+      (do (debug "updating gist: " id  " : " options)
           (->>
            (tentacles.gists/edit-gist id (assoc options :files {filename {:content content}}))
            (extract-gist-result filename))))))
@@ -77,11 +77,11 @@
       (if (nil? notebook)
         {:success false :error-message "NOT Saving EMPTY Notebook"}
         (do
-          (info "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
+          (debug "Saving Notebook to gist: " (:filename self) " size:" (count notebook))
           (save-gist (:id self) (:description self) (:is-public self) (:filename self) notebook tokens)))))
   Load
   (storage-load [self tokens]
-    (info "Loading Notebook from gist id: " (:id self))
+    (debug "Loading Notebook from gist id: " (:id self))
     (if (nil? tokens)
       (load-gist (:id self) (:filename self))
       (load-gist (:id self) (:filename self) tokens))))
