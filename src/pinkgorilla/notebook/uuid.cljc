@@ -7,7 +7,7 @@
   #?(:clj (-> (.toString (java.util.UUID/randomUUID)) keyword)
      :cljs  (-> (uuid-cljs/make-random-uuid) uuid-cljs/uuid-string keyword)))
 
-(def current (atom 0))
+(defonce current (atom 0))
 
 (defn id []
   (swap! current inc)
