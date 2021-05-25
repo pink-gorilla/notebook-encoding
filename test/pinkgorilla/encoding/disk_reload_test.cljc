@@ -7,7 +7,7 @@
   (:require
    #?(:clj [clojure.test :refer :all]
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.encoding.persistence-helper :refer [load-notebook save-notebook]]))
 
 
@@ -15,13 +15,21 @@
 ;(def nb (slurp "test/notebooks/demo.cljg"))
 
 
+(defn nb-no-seg-id [nb]
+  (let [segs (:segments nb)
+        segs-no-id (into []
+                         (map #(dissoc % :id) segs))]
+    (assoc nb :segments segs-no-id)))
+
 (def f "test/notebooks/reagent-manipulate.cljg")
 
 (deftest reload-existing-notebook
   (let [notebook (load-notebook f)
         f-out "/tmp/notebook-unittest.cljg"
         _ (save-notebook f-out notebook)
-        notebook-reloaded (load-notebook f-out)]
+        notebook-reloaded (load-notebook f-out)
+        notebook-reloaded (nb-no-seg-id  notebook-reloaded)
+        notebook (nb-no-seg-id notebook)]
     (is (= notebook notebook-reloaded))))
 
 (def f2 "test/notebooks/diff.cljg")

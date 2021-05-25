@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.core-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.storage.protocols :as storage :refer [storage->map]]
    [pinkgorilla.creds :refer [creds]]
    [pinkgorilla.storage.settings :refer [storage-data]]))
@@ -46,7 +46,7 @@
     ))
 
 (deftest storage-gist-load
-  (let [content ";; gorilla-repl.fileformat = 2\n\n;; @@ [meta]\n{:test 789}\n\n;; @@\n"
+  (let [content ";; gorilla-repl.fileformat = 2\n\n;; @@ [meta]\n{:test 789, :id 99}\n\n;; @@\n"
         s (storage/create-storage (:gist-load storage-data))]
 
     (is (= content (storage/storage-load s nil))) ; nil creds

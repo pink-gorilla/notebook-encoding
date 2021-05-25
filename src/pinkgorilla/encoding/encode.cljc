@@ -6,18 +6,20 @@
 
 (defmulti to-clojure :type)
 
-(defmethod to-clojure :free
-  [free-segment]
-  (str ";; **\n"
-       (make-clojure-comment (get-in free-segment [:content :value]))
-       "\n;; **\n"))
+(defmethod to-clojure :md
+  [md-segment]
+  (let [s (str ";; **\n"
+               (make-clojure-comment (get-in md-segment [:data]))
+               "\n;; **\n")]
+    ;(println "encoded md:" s)
+    s))
 
 (def output-start ";; =>\n")
 (def output-end "\n;; <=\n")
 
 (defn encode-output [code-segment]
   (let [w (create-writer)]
-    (if-let [ot (:value-response code-segment)]
+    (if-let [ot (get-in code-segment [:state :picasso])]
       (str output-start (make-clojure-comment (to-json w ot)) output-end)
       "")))
 
@@ -25,7 +27,7 @@
 (def console-end "\n;; <-\n")
 
 (defn encode-console [code-segment]
-  (if-let [ct (:console-response code-segment)]
+  (if-let [ct (get-in code-segment [:state :out])]
     (str console-start (make-clojure-comment ct) console-end)
     ""))
 
@@ -35,13 +37,17 @@
 (def end-tag "\n;; @@\n")
 
 (defn encode-code [code-segment]
-  ;(println "encode-code: " code-segment)
-  (str
-   start-tag
-   (name (:kernel code-segment))
-   start-end-tag
-   (get-in code-segment [:content :value])
-   end-tag))
+
+  (let [kernel (get-in code-segment [:data :kernel])
+        code (get-in code-segment [:data :code])
+        ;_  (println "encode-code: kernel:" kernel " code: " code)
+        s (str start-tag
+               (name kernel)
+               start-end-tag
+               code
+               end-tag)]
+    ;(println "encoded code: " s)
+    s))
 
 (defmethod to-clojure :code
   [code-segment]
@@ -56,19 +62,15 @@
 
 (defn meta-to-segment [meta]
   {:type :code
-   :kernel :meta
-   :content  {:value (prn-str meta)
-              ;s:type "text/x-clojure"
-              }})
+   :data {:kernel :meta
+          :code (prn-str meta)}})
 
 (defn- encode-notebook
   "encodes a dehydrated notebook"
   [notebook]
-  (let [;segments (:segments notebook)
-        meta (meta-to-segment (or (:meta notebook) {}))
-        segments (into [meta] (:segments notebook))
-        ;_ (println "encoding " segments)
-        ]
+  (let [meta (meta-to-segment (or (:meta notebook) {}))
+        segments (into [meta] (:segments notebook))]
+    ;(println "encoding " segments)
     (str ";; gorilla-repl.fileformat = 2\n\n"
          (->> (map to-clojure segments)
               (str/join "\n")))))

@@ -1,7 +1,9 @@
-(ns pinkgorilla.notebook.core)
+(ns pinkgorilla.notebook.core
+  (:require
+   [pinkgorilla.notebook.uuid :refer [guuid]]))
 
 (def empty-notebook
-  {:meta {}
+  {:meta {:id (guuid)}
    :segments []})
 
 (defn assoc-meta
@@ -9,16 +11,14 @@
   (assoc-in notebook [:meta tag] value))
 
 (defn md->segment [md]
-  {:type :free
-   :markup-visible false
-   :content {:value (or md "")
-             :type "text/x-markdown"}})
+  {:type :md
+   :data (or md "")})
 
 (defn code->segment [kernel code]
   {:type :code
-   :kernel (or kernel :clj)
-   :content  {:value (or code "")
-              :type "text/x-clojure"}})
+   :data {:kernel (or kernel :clj)
+          :code (or code "")}
+   :state {}})
 
 (defn add-segments [notebook segments]
   (let [segments (into []

@@ -2,7 +2,7 @@
   (:require
    #?(:clj  [clojure.test :refer :all]
       :cljs [cljs.test :refer-macros [async deftest is testing]])
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.encoding.helper :refer [make-clojure-comment unmake-clojure-comment]]
    [pinkgorilla.encoding.protocols :refer [decode encode]]))
 

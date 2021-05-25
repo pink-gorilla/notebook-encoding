@@ -1,7 +1,7 @@
 (ns demo.main
   (:require
    [taoensso.timbre :refer [debug info error]]
-   [pinkgorilla.document.default-config] ; side-effects
+   [pinkgorilla.encoding.default-config] ; side-effects
    [pinkgorilla.storage.impl.gist :refer [save-gist]]
     [pinkgorilla.storage.impl.repo :refer [save-repo]]
    [pinkgorilla.creds :refer [creds]]

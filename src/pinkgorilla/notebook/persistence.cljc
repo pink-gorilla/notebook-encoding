@@ -1,7 +1,7 @@
 (ns pinkgorilla.notebook.persistence
   (:require
    #?(:clj [taoensso.timbre :refer [debug info error]]
-      :cljs [taoensso.timbre :refer-macros [info error]])
+      :cljs [taoensso.timbre :refer-macros [debug info error]])
    [pinkgorilla.encoding.protocols :refer [decode encode]]
    [pinkgorilla.storage.protocols :refer [determine-encoding storage-load storage-save]]))
 
@@ -13,6 +13,7 @@
     (do (debug "saving notebook with format: " format)
         (->> notebook
              (encode format)
+             ;(println "encoded: ")
              (save-nb storage tokens))) ;save-nb returns :success true/false
     (do (error "could not save notebook, because encoding cannot be determined: " storage)
         {:success false :error "could not determine storage-format!"})))

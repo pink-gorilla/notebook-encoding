@@ -2,7 +2,7 @@
   (:require
    [me.raynes.fs :as fs]
    [clojure.java.io :as io]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.import.import :refer [to-notebook]]
    ;[pinkgorilla.encoding.marginalia] ; side-effects
    )

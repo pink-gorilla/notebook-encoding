@@ -4,17 +4,24 @@
       :cljs  [cljs.test :refer-macros [async deftest is testing]])
    #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info error]])
-   [pinkgorilla.document.default-config] ; side-effects
+   [pinkgorilla.encoding.default-config] ; side-effects
    [pinkgorilla.notebook.template  :refer [new-notebook snippets->notebook]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.persistence  :refer [load-notebook save-notebook]]
    [pinkgorilla.encoding.persistence-helper :as helper]))
 
+(defn nb-no-seg-id [nb]
+  (let [segs (:segments nb)
+        segs-no-id (into []
+                         (map #(dissoc % :id) segs))]
+    (assoc nb :segments segs-no-id)))
+
 (deftest encode-new-notebook
   (let [nb (new-notebook)
         f "/tmp/notebook-new.cljg"
         _ (helper/save-notebook f nb)
-        nb-reloaded (helper/load-notebook f)]
+        nb-reloaded (helper/load-notebook f)
+        nb-reloaded (nb-no-seg-id nb-reloaded)]
     (is (= nb nb-reloaded))))
 
 #?(:clj
@@ -27,8 +34,9 @@
         ;_ (info "storage: " storage)
            creds {}
            _ (save-notebook storage creds notebook)
-           notebook-reloaded (load-notebook storage creds)]
-       (is (= notebook notebook-reloaded))))
+           notebook-reloaded (load-notebook storage creds)
+           notebook-reloaded-no-id (nb-no-seg-id notebook-reloaded)]
+       (is (= notebook notebook-reloaded-no-id))))
 ;   
    )
 

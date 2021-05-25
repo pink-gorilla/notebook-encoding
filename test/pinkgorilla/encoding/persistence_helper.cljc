@@ -5,7 +5,7 @@
    time the same test notebooks as for clojure are available in
    clojurescript"
   (:require
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode encode]])
   #?(:cljs (:require-macros [pinkgorilla.macros :refer [inline-resource]])))
 

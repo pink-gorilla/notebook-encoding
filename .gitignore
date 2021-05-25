@@ -17,3 +17,5 @@ pom.xml.asc
 .project
 .settings/
 /.lsp
+demo-nb.cljg
+demo2-nb.cljg

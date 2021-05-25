@@ -58,18 +58,18 @@
          (str/join "\n"))))
 
 (defn unmake-line [l]
-  (if (nil? l)
-    (do (println "unmake-line called with nil.")
-        "")
+  (if (or (nil? l) (str/blank? l))
+    (do (println "unmake-line called with nil / blank.")
+        nil)
     (let [c (count l)]
       (if (< c 4)
-        (do (println "unmake-line called with less than 4 characters: " l)
+        (do (println "unmake-line called with less than 4 characters: ]" l "[")
             l)
         (subs l 4 c)))))
 
 (defn unmake-clojure-comment
   [code]
-  (if (nil? code)
+  (if (or (nil? code) (str/blank? code))
     ""
     (->> (str/split-lines code)
          (map unmake-line)

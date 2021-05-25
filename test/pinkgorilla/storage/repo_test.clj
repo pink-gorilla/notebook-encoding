@@ -1,7 +1,7 @@
 (ns pinkgorilla.storage.repo-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.creds :refer [creds]]
    [pinkgorilla.storage.impl.repo :refer [load-repo save-repo]]
    [pinkgorilla.storage.settings :refer [storage-data]]))
@@ -38,7 +38,7 @@
     (let [tokens (creds)
           content (str "hello-repo XXXX\n")]
       (is (= content
-             (load-repo "pink-gorilla" "unittest-notebooks" "samples/uiplugin/gorillaplot/central-limit.cljg" tokens)))))
+             (load-repo "pink-junkjard" "unittest-notebooks" "samples/uiplugin/gorillaplot/central-limit.cljg" tokens)))))
 
 (defn tap [s]
   (println "repo: " s)

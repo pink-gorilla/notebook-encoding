@@ -43,6 +43,7 @@
                        :main ^:skip-aot pinkgorilla.import.convert-main}
 
              :demo {:main  demo.main
+                    :dependencies [[org.pinkgorilla/picasso "3.1.27"]]
                     :source-paths ["profiles/demo/src"
                                    "test"]}
 
@@ -94,6 +95,11 @@
             ["with-profile" "convert" "run"]
 
             "demo"
-            ["with-profile" "demo" "run"]})
+            ["with-profile" "demo" "run"]
+            
+            "notebook"
+            ["with-profile" "+demo" "run" "-m" "demo.notebook"]
+            
+            })
 
 

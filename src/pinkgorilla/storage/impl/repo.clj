@@ -53,8 +53,8 @@
 (comment
 
   (def creds {:oauth-token ""})
-  (save-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" "test!" creds)
-  (load-repo "pink-gorilla" "unittest-notebooks" "unittest.txt" creds)
+  (save-repo "pink-junkjard" "unittest-notebooks" "unittest.txt" "test!" creds)
+  (load-repo "pink-junkjard" "unittest-notebooks" "unittest.txt" creds)
  ; 
   )
 

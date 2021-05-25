@@ -3,6 +3,7 @@
    [clojure.string :as str]
    [clojure.edn :as edn]
    [instaparse.core :as insta]
+   [pinkgorilla.notebook.uuid :refer [guuid]]
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.encoding.helper :refer [unmake-clojure-comment from-json]]))
 
@@ -69,11 +70,8 @@
     (str/join "\n" slines)))
 
 (defn process-md [seg]
-  {:type :free
-   :markup-visible false
-   :content
-   {:value (or (unmake-clojure-comment (get-lines seg)) "")
-    :type  "text/x-markdown"}})
+  {:type :md
+   :data (or (unmake-clojure-comment (get-lines seg)) "")})
 
 (defn is-type [kw data]
   (let [t (first data)
@@ -85,33 +83,40 @@
   (first (filter (partial is-type kw) (rest data))))
 
 (defn kernel-s-to-kw [skernel]
-  (case skernel
-    " [clj]" :clj
-    " [cljs]" :cljs
-    " [mock]" :mock
-    " [meta]" :meta
-    :unknown))
+  ; " [clj]" " [cljs]"
+  (let [r (re-matches #".*\[(.*)\]" skernel) ;["abcxyz" "xyz"]
+        kernel (if r
+                 (keyword (second r))
+                 :unknown)]
+    ;(println "kernel: " kernel " str: " skernel)
+    kernel))
 
 (defn create-code-segment [inp]
   ;(println "code input is: " inp)  
   (let [lines (find-element inp :LINES)
         kernel (find-element inp :KERNEL)
+        kernel-kw (if (nil? kernel) :clj (kernel-s-to-kw (second kernel)))
         ;_ (println "k is:" kernel)
         ]
     {:type :code
-     :kernel (if (nil? kernel) :clj (kernel-s-to-kw (second kernel)))
-     :content    {:value (or (get-lines lines) "")
-                  :type  "text/x-clojure"}}))
+     :data {:kernel kernel-kw
+            :code (or (get-lines lines) "")}
+     :state {}}))
 
 (defn add-console-response [segment con]
-  (assoc segment
-         :console-response
-         (or (unmake-clojure-comment (get-lines (second con))) "")))
+  (let [lines (get-lines (second con))
+        lines-no-comment (unmake-clojure-comment lines)]
+    (if (or (nil? lines-no-comment) (str/blank? lines-no-comment))
+      segment
+      (assoc-in segment [:state :out] lines-no-comment))))
 
 (defn add-value-response [segment val]
-  (assoc segment
-         :value-response
-         (from-json (or (unmake-clojure-comment (get-lines (second val))) ""))))
+  (let [lines (get-lines (second val))
+        lines-no-comment (unmake-clojure-comment lines)
+        picasso (when lines-no-comment
+                  (from-json lines-no-comment))]
+    ;(println "val lines: " lines)
+    (assoc-in segment [:state :picasso] picasso)))
 
 (defn add-addon [segment addon]
   (let [addon-type (first addon)
@@ -147,13 +152,17 @@
 
 (defn meta? [segment]
   (and (= (:type segment) :code)
-       (= (:kernel segment) :meta)))
+       (= (get-in segment [:data :kernel]) :meta)))
 
 (defn get-meta [segments]
-  (let [meta-segment (first (filter meta? segments))]
-    (if (nil? meta-segment)
-      {}
-      (edn/read-string (get-in meta-segment [:content :value])))))
+  (let [meta-segment (first (filter meta? segments))
+        meta (if (nil? meta-segment)
+               {}
+               (edn/read-string (get-in meta-segment [:data :code])))
+        id (:id meta)]
+    (if id
+      meta
+      (assoc meta :id (guuid)))))
 
 (def vector-type
   #?(:clj clojure.lang.PersistentVector
@@ -174,10 +183,12 @@
     (if (= (type nb) vector-type)
       (let [segments (rest (nth nb 2))
             segments (vec (map process-segment segments))
-            segments-no-meta (vec (remove meta? segments))]
+            segments-no-meta (remove meta? segments)
+            segments-no-meta-id (vec (map #(assoc % :id (guuid)) segments-no-meta))
+            meta (get-meta segments)]
         {;:version version
-         :meta (get-meta segments)
-         :segments segments-no-meta})
+         :meta meta
+         :segments segments-no-meta-id})
       (do (when (not (nil? nb))
             ; ;instaparse.gll.Failure
             (println "notebook format is invalid. error:" nb))

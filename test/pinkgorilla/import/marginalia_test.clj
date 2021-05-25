@@ -1,7 +1,7 @@
 (ns pinkgorilla.import.marginalia-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.persistence :refer [load-notebook]]

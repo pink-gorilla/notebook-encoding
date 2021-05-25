@@ -1,7 +1,7 @@
 (ns pinkgorilla.import.clj-test
   (:require
    [clojure.test :refer :all]
-   [pinkgorilla.document.default-config] ; side effects
+   [pinkgorilla.encoding.default-config] ; side effects
    [pinkgorilla.encoding.protocols :refer [decode]]
    [pinkgorilla.import.convert-main :refer [to-gorilla]]
    [pinkgorilla.encoding.clj :refer [read-forms str->topforms-with-metadata]]))
