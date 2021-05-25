@@ -2,7 +2,7 @@
   (:require
    [pinkgorilla.notebook.uuid :refer [guuid]]))
 
-(def empty-notebook
+(defn empty-notebook []
   {:meta {:id (guuid)}
    :segments []})
 

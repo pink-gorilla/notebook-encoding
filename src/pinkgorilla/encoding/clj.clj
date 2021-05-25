@@ -43,7 +43,7 @@
        (str->topforms-with-metadata str)))
 
 (defmethod decode :clj [_ source-str]
-  (let [notebook (assoc-meta empty-notebook :msg "imported from clj")
+  (let [notebook (assoc-meta (empty-notebook) :msg "imported from clj")
         forms (read-forms source-str)
         segment-forms (map (partial code->segment :clj) forms)]
     (add-segments notebook segment-forms)))

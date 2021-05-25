@@ -19,7 +19,7 @@
         store (create-storage {:type :file
                                :filename "/tmp/meta1.cljg"})
         meta {:test 123 :id 77}
-        nb empty-notebook
+        nb (empty-notebook)
         nb (assoc nb :meta meta)]
     (is (= meta
            (do (save-notebook store tokens nb)
@@ -35,7 +35,7 @@
                                :id id
                                :description "unittest-meta1"})
         meta {:test 789 :id 99}
-        nb empty-notebook
+        nb (empty-notebook)
         nb (assoc nb :meta meta)]
     (is (= meta
            (do (save-notebook store tokens nb)
@@ -51,7 +51,7 @@
                                :id id
                                :description "unittest-meta1"})
         meta {:test 789 :id 99}
-        nb empty-notebook
+        nb (empty-notebook)
         nb (assoc nb :meta meta)]
     (is (= meta
            (do (save-notebook store tokens nb)
@@ -66,7 +66,7 @@
                                :repo "unittest-notebooks"
                                :filename "unittest-meta2.cljg"})
         meta {:test 456 :id 99}
-        nb empty-notebook
+        nb (empty-notebook)
         nb (assoc nb :meta meta)]
     (is (= meta
            (do (save-notebook store tokens nb)

@@ -14,9 +14,9 @@
 
 (defn snippets->notebook
   ([snippets]
-   (reduce add-code-clj empty-notebook snippets))
+   (reduce add-code-clj (empty-notebook) snippets))
   ([snippets md]
-   (let [nb  (-> empty-notebook
+   (let [nb  (-> (empty-notebook)
                  (add-md md))]
      (reduce add-code-clj nb snippets))))
 
@@ -26,7 +26,7 @@
   ([]
    (new-notebook (make-hip-nsname)))
   ([hip-nsname]
-   (-> empty-notebook
+   (-> (empty-notebook)
        (add-md "# Pink Gorilla \n\n"
                "Shift + enter evaluates code. "
                "Hit CTRL+g twice in quick succession or click the menu icon (upper-right corner) for more commands.\n\n"
