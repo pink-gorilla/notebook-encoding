@@ -23,8 +23,8 @@
   :dependencies  [[org.clojure/clojure "1.10.3"]
                   [instaparse "1.4.10"] ; used in decoding
                   [com.cognitect/transit-clj "1.0.324"] ; used in encoding - clojure
-                  [com.cognitect/transit-js "0.8.867"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
-                  [com.cognitect/transit-cljs "0.8.264"] ; used in encoding - clojurescript
+                  [com.cognitect/transit-js "0.8.874"] ;transit-cljs has old dependency that does not work with meta-data, see: https://github.com/cognitect/transit-cljs/issues/48
+                  [com.cognitect/transit-cljs "0.8.269"] ; used in encoding - clojurescript
                   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ; uuid - clojurescript
                   [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                   [cheshire "5.10.0"] ; tentacles dependency
@@ -37,13 +37,14 @@
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
                                 org.clojure/tools.cli]] ; clj parser
+                  [org.pinkgorilla/picasso "3.1.35"] 
                   ]
 
   :profiles {:convert {; converts clj file to notebook
                        :main ^:skip-aot pinkgorilla.import.convert-main}
 
              :demo {:main  demo.main
-                    :dependencies [[org.pinkgorilla/picasso "3.1.27"]]
+                    :dependencies []
                     :source-paths ["profiles/demo/src"
                                    "test"]}
 
@@ -52,7 +53,7 @@
                                   [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
                                   [thheller/shadow-cljs "2.12.5"
                                    :exclusions [org.clojure/data.json]]
-                                  [clj-kondo "2021.03.31"]]
+                                  [clj-kondo "2021.04.23"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
                                   [lein-ancient "0.6.15"]

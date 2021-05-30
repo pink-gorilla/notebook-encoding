@@ -5,8 +5,7 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.string :as str]
-  ; dependencies needed to be in cljs bundle:  
-   [pinkgorilla.notebook.core :refer [add-segments empty-notebook assoc-meta code->segment]]
+   [notebook.core :refer [add-segments new-notebook set-meta-key code-segment]]
    [pinkgorilla.encoding.protocols :refer [decode]])
   (:import [java.io PushbackReader]))
 
@@ -43,7 +42,7 @@
        (str->topforms-with-metadata str)))
 
 (defmethod decode :clj [_ source-str]
-  (let [notebook (assoc-meta (empty-notebook) :msg "imported from clj")
+  (let [notebook (set-meta-key (new-notebook) :msg "imported from clj")
         forms (read-forms source-str)
-        segment-forms (map (partial code->segment :clj) forms)]
+        segment-forms (map (partial code-segment :clj) forms)]
     (add-segments notebook segment-forms)))
