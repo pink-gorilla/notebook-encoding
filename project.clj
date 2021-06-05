@@ -37,7 +37,7 @@
                    :exclusions [org.clojure/clojure
                                 org.clojure/clojurescript
                                 org.clojure/tools.cli]] ; clj parser
-                  [org.pinkgorilla/picasso "3.1.35"] 
+                  [org.pinkgorilla/picasso "3.1.42"] 
                   ]
 
   :profiles {:convert {; converts clj file to notebook

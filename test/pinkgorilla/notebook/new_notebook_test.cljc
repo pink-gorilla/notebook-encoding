@@ -5,7 +5,7 @@
    #?(:clj [taoensso.timbre :refer [info error]]
       :cljs [taoensso.timbre :refer-macros [info error]])
    [pinkgorilla.encoding.default-config] ; side-effects
-   [notebook.template  :refer [make-notebook snippets->notebook]]
+   [notebook.template.core  :refer [make-notebook snippets->notebook]]
    [pinkgorilla.storage.protocols :refer [create-storage]]
    [pinkgorilla.notebook.persistence  :refer [load-notebook save-notebook]]
    [pinkgorilla.encoding.persistence-helper :as helper]))
@@ -51,5 +51,3 @@
        (is (= (count (:segments notebook-dry-md)) 4))))
    ;
    )
-
-
